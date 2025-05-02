@@ -4,7 +4,7 @@ body {
   background: #fafafa;
   color: #111;
   line-height: 1.6;
-  font-size: 1.3rem;
+  font-size: 1.15rem;
 }
 
 header {
@@ -18,8 +18,13 @@ header h1 {
 }
 
 nav {
-  text-align: center;
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  display: inline-block;
+  padding: 0.5rem 1rem;
   margin-top: 1rem;
+  text-align: center;
 }
 
 nav a {
@@ -43,10 +48,16 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.2rem;
   padding: 2rem 0;
   border-top: 1px solid #ccc;
   flex-wrap: wrap;
+}
+
+footer .icon-group {
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
 }
 
 footer a {
@@ -64,14 +75,10 @@ footer img {
   height: 32px;
 }
 
-/* Subtle dark mode toggle styling */
-#darkModeToggle {
-  display: block;
-  margin: 2rem auto 1rem;
+footer #darkModeToggle {
   padding: 0.4rem 1rem;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   background: rgba(0, 0, 0, 0.05);
-  color: #333;
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -80,7 +87,7 @@ footer img {
   transition: background 0.2s, opacity 0.2s;
 }
 
-#darkModeToggle:hover {
+footer #darkModeToggle:hover {
   background: rgba(0, 0, 0, 0.1);
   opacity: 1;
 }
@@ -95,7 +102,22 @@ body.dark-mode .card {
   color: #eee;
 }
 
-body.dark-mode #darkModeToggle {
+body.dark-mode footer #darkModeToggle {
   background: rgba(255, 255, 255, 0.08);
   color: #f0f0f0;
+}
+
+.card img,
+.image-container img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin: 1rem 0;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
 }
