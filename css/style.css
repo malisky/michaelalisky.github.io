@@ -399,3 +399,27 @@ footer {
   border: none;
   filter: grayscale(100%) sepia(50%) hue-rotate(45deg) saturate(0.7);
 }
+
+/* Fix for map drawer visibility on hover */
+.map-drawer-preview {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  overflow: hidden;
+  transition: height 0.3s ease;
+  background: linear-gradient(to top, #f3f3ed, transparent);
+  z-index: -1;
+}
+
+.map-drawer-preview:hover {
+  height: 400px;
+}
+
+.map-embed {
+  width: 100%;
+  height: 100%;
+  border: none;
+  filter: grayscale(100%) sepia(50%) hue-rotate(45deg) saturate(0.7);
+}
