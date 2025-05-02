@@ -4,8 +4,8 @@ body {
   font-family: 'Space Grotesk', sans-serif;
   background: #fafafa;
   color: #111;
-  font-size: 1.25rem;
-  line-height: 1.85;
+  font-size: 1.35rem;
+  line-height: 1.9;
 }
 
 body.dark-mode {
@@ -49,8 +49,8 @@ nav a {
   text-decoration: none;
   color: #444;
   font-weight: 500;
-  font-size: 1.1rem;
   padding: 0.3rem 0.6rem;
+  font-size: 1.25rem;
   transition: color 0.2s;
 }
 
@@ -104,7 +104,7 @@ body.dark-mode .nav-toggle {
 }
 
 .intro-text {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   color: #444;
   max-width: 720px;
   margin: 0 auto;
@@ -130,7 +130,7 @@ main {
 }
 
 .card h2 {
-  font-size: 1.7rem;
+  font-size: 1.9rem;
   font-weight: 600;
   margin-bottom: 0.6rem;
 }
@@ -138,8 +138,8 @@ main {
 .card p,
 .card a,
 .card li {
-  font-size: 1.2rem;
-  line-height: 1.95;
+  font-size: 1.25rem;
+  line-height: 2;
 }
 
 body.dark-mode .card {
@@ -181,14 +181,10 @@ img:hover {
   gap: 1rem;
 }
 
-/* Newsletter hover lift */
+/* Newsletter: no container hover effects */
 .newsletter-entry {
-  transition: transform 0.25s ease, box-shadow 0.2s;
-}
-
-.newsletter-entry:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  color: inherit;
 }
 
 /* Footer */
