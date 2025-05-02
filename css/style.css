@@ -153,6 +153,10 @@ main {
   line-height: 2;
 }
 
+.card ul li {
+  padding-bottom: 0.4rem;
+}
+
 body.dark-mode .card {
   background: #1e1e1e;
   color: #eee;
@@ -162,6 +166,15 @@ body.dark-mode .card div[style*="background"] {
   background: #2a2a2a !important;
   color: #ddd;
   border: 1px solid #444;
+}
+
+/* Global links */
+a {
+  color: #336b5d;
+}
+
+a:hover {
+  color: #0e4030;
 }
 
 body.dark-mode a {
@@ -248,26 +261,23 @@ footer img {
   background: rgba(0, 0, 0, 0.35);
 }
 
-/* Artistic Dark Mode Transition */
+/* Dark Mode Transition Overlay */
 .theme-transition {
   position: fixed;
   top: 0;
-  left: 0;
+  left: -100%;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at center, #121212 0%, #000000 100%);
-  opacity: 0;
+  background: #121212;
   z-index: 9999;
   pointer-events: none;
-  transition: opacity 1.2s ease, transform 1.2s ease;
-  transform: scale(0.92);
+  transition: left 0.5s ease;
 }
 
 body.dark-mode .theme-transition {
-  background: radial-gradient(circle at center, #fafafa 0%, #ffffff 100%);
+  background: #fafafa;
 }
 
 body.animating-theme .theme-transition {
-  opacity: 1;
-  transform: scale(1);
+  left: 0;
 }
