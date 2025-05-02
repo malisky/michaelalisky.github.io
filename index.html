@@ -1,46 +1,47 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<title>Michael Alisky</title>
-<link href="/css/style.css" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&amp;display=swap" rel="stylesheet"/></head>
-<body style="display:flex;flex-direction:column;align-items:center;text-align:center;"><button id="darkModeToggle">Toggle Dark Mode</button>
-<header>
-<h1>Michael Alisky</h1>
-<nav>
-<a href="/">Home</a>
-<a href="/research.html">Research</a>
-<a href="/newsletter/newsletter.html">Newsletter</a>
+  <meta charset="utf-8"/>
+  <title>Michael Alisky</title>
+  <link href="/css/style.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <button id="darkModeToggle">Toggle Dark Mode</button>
 
-</nav>
-</header>
-<section class="intro-container">
-<p class="intro-text">
-    Welcome to my personal site. Get yourself a cup of tea or something. More to come soon.
-  </p>
-</section>
-<footer>
-<div style="display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
-<span>© 2025 Michael Alisky</span>
-<a href="https://github.com/malisky" style="display: inline-flex; align-items: center;" target="_blank">
-<img alt="GitHub" loading="lazy" src="/images/github-icon.svg"/>
-</a>
-<a href="https://linkedin.com/in/michaelalisky" style="display: inline-flex; align-items: center;" target="_blank">
-<img alt="LinkedIn" loading="lazy" src="/images/linkedin-icon.svg"/>
-</a>
-</div>
-</footer>
-<script src="js/enhancements.js"></script>
-<script>
-        const toggle = document.getElementById('darkModeToggle');
-        toggle.addEventListener('click', () => {
-          document.body.classList.toggle('dark-mode');
-          localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
-        });
-        if (localStorage.getItem('darkMode') === 'true') {
-          document.body.classList.add('dark-mode');
-        }
-        </script></body>
+  <header>
+    <h1>Michael Alisky</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/research.html">Research</a>
+      <a href="/newsletter/newsletter.html">Newsletter</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="intro-container">
+      <p class="intro-text">
+        Welcome to my personal site. Get yourself a cup of tea or something. More to come soon.
+      </p>
+    </section>
+  </main>
+
+  <footer style="text-align:center;margin-top:2rem;padding:1rem 0;border-top:1px solid #ccc;">
+    <a href="mailto:malisky@stanford.edu"><img src="/images/email.svg" alt="Email" width="24" height="24"></a>
+    <a href="https://www.linkedin.com/in/michaelalisky" target="_blank"><img src="/images/linkedin.svg" alt="LinkedIn" width="24" height="24"></a>
+    <a href="https://scholar.google.com/citations?user=b4EtdL4AAAAJ&hl=en" target="_blank"><img src="/images/scholar-icon.svg" alt="Google Scholar" width="24" height="24"></a>
+  </footer>
+
+  <script src="/js/enhancements.js"></script>
+  <script>
+    const toggle = document.getElementById('darkModeToggle');
+    toggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    });
+    if (localStorage.getItem('darkMode') === 'true') {
+      document.body.classList.add('dark-mode');
+    }
+  </script>
+</body>
 </html>
