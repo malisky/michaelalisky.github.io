@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
+  <meta charset="utf-8" />
   <title>Michael Alisky</title>
-  <link href="/css/style.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link href="/css/style.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="/images/favicon.svg" rel="icon" type="image/svg+xml" />
 </head>
 <body>
   <div class="container">
@@ -16,7 +17,7 @@
       <a href="/">Home</a>
       <a href="/research.html">Research</a>
       <a href="/newsletter/newsletter.html">Newsletter</a>
-      <button class="nav-toggle" id="darkModeToggle" title="Toggle dark mode">🌙</button>
+      <button class="nav-toggle" id="darkModeToggle" title="Toggle dark mode">🌔</button>
     </nav>
 
     <main>
@@ -30,13 +31,13 @@
     <footer>
       <div class="icon-group">
         <a href="https://github.com/malisky" target="_blank">
-          <img src="/images/github-icon.svg" alt="GitHub">
+          <img src="/images/github-icon.svg" alt="GitHub" />
         </a>
         <a href="https://www.linkedin.com/in/michaelalisky" target="_blank">
-          <img src="/images/linkedin-icon.svg" alt="LinkedIn">
+          <img src="/images/linkedin-icon.svg" alt="LinkedIn" />
         </a>
         <a href="https://scholar.google.com/citations?user=b4EtdL4AAAAJ&hl=en" target="_blank">
-          <img src="/images/scholar-icon.svg" alt="Google Scholar">
+          <img src="/images/scholar-icon.svg" alt="Google Scholar" />
         </a>
       </div>
     </footer>
@@ -44,7 +45,7 @@
 
   <script src="/js/enhancements.js"></script>
   <script>
-    const toggle = document.getElementById('darkModeToggle') || document.getElementById('footerToggle');
+    const toggle = document.getElementById('darkModeToggle');
     toggle.addEventListener('click', () => {
       document.body.classList.toggle('dark-mode');
       localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
