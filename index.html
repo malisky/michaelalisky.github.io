@@ -5,7 +5,8 @@
   <title>Michael Alisky</title>
   <link href="/css/style.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link href="/images/favicon.svg" rel="icon" type="image/svg+xml" />
+  <link rel="icon" href="/images/favicon.svg" type="image/svg+xml" />
+  <script src="/js/enhancements.js" defer></script>
 </head>
 <body class="home">
   <div class="container">
@@ -43,30 +44,7 @@
     </footer>
   </div>
 
-  <!-- Dark mode transition overlay -->
   <div class="theme-transition"></div>
-
-  <script>
-    const toggle = document.getElementById('darkModeToggle');
-    const transitionOverlay = document.querySelector('.theme-transition');
-
-    toggle.addEventListener('click', () => {
-      document.body.classList.add('animating-theme');
-      transitionOverlay.style.left = '0';
-
-      setTimeout(() => {
-        document.body.classList.toggle('dark-mode');
-        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
-        transitionOverlay.style.left = '-100%';
-        setTimeout(() => {
-          document.body.classList.remove('animating-theme');
-        }, 500);
-      }, 50);
-    });
-
-    if (localStorage.getItem('darkMode') === 'true') {
-      document.body.classList.add('dark-mode');
-    }
-  </script>
+  <div class="scroll-top">↑</div>
 </body>
 </html>
