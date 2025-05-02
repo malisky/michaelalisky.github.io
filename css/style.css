@@ -248,7 +248,7 @@ footer img {
   background: rgba(0, 0, 0, 0.35);
 }
 
-/* Dark Mode Transition Overlay */
+/* Artistic Dark Mode Transition */
 .theme-transition {
   position: fixed;
   top: 0;
@@ -259,7 +259,8 @@ footer img {
   opacity: 0;
   z-index: 9999;
   pointer-events: none;
-  transition: opacity 0.7s ease;
+  transition: opacity 1.2s ease, transform 1.2s ease;
+  transform: scale(0.92);
 }
 
 body.dark-mode .theme-transition {
@@ -268,4 +269,5 @@ body.dark-mode .theme-transition {
 
 body.animating-theme .theme-transition {
   opacity: 1;
+  transform: scale(1);
 }
