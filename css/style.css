@@ -350,3 +350,52 @@ body.home {
   border: none;
   filter: grayscale(100%) sepia(50%) hue-rotate(45deg) saturate(0.7);
 }
+
+/* Continuous scroll for newsletter cards */
+.newsletter-scroll-wrapper {
+  display: flex;
+  overflow-x: scroll;
+  gap: 2rem;
+  padding: 2rem;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+}
+
+.newsletter-entry {
+  flex: 0 0 300px;
+  scroll-snap-align: center;
+  transition: transform 0.3s ease;
+}
+
+.newsletter-entry:hover {
+  transform: scale(1.05);
+}
+
+/* Fix footer and map z-index for visibility */
+footer {
+  z-index: 1;
+  position: relative;
+}
+
+.map-drawer-preview {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  overflow: hidden;
+  transition: height 0.6s ease;
+  background: linear-gradient(to top, #f3f3ed, transparent);
+  z-index: -1;
+}
+
+.map-drawer-preview:hover {
+  height: 400px;
+}
+
+.map-embed {
+  width: 100%;
+  height: 100%;
+  border: none;
+  filter: grayscale(100%) sepia(50%) hue-rotate(45deg) saturate(0.7);
+}
