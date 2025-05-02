@@ -22,7 +22,19 @@ document.addEventListener("DOMContentLoaded", function() {
     if (event.clientY > window.innerHeight - 50) {
       mapDrawer.style.height = '400px';
     } else {
-      mapDrawer.style.height = '100px';
+      mapDrawer.style.height = '80px';
     }
+  });
+
+  // Horizontal scroll functionality with arrows
+  const container = document.getElementById('newsletter-container');
+  const scrollLeft = document.querySelector('.scroll-arrow.left');
+  const scrollRight = document.querySelector('.scroll-arrow.right');
+
+  scrollLeft.addEventListener('click', () => {
+    container.scrollBy({ left: -400, behavior: 'smooth' });
+  });
+  scrollRight.addEventListener('click', () => {
+    container.scrollBy({ left: 400, behavior: 'smooth' });
   });
 });
