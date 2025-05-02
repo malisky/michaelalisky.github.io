@@ -4,8 +4,8 @@ body {
   font-family: 'Space Grotesk', sans-serif;
   background: #fafafa;
   color: #111;
-  font-size: 1.7rem;
-  line-height: 2.4;
+  font-size: 1.2rem;
+  line-height: 1.7;
 }
 
 body.dark-mode {
@@ -278,4 +278,11 @@ body.dark-mode .theme-transition {
 
 body.animating-theme .theme-transition {
   left: 0;
+}
+
+
+/* Home page should still feel bold and oversized */
+body.home {
+  font-size: 1.7rem;
+  line-height: 2.4;
 }
