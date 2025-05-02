@@ -4,8 +4,8 @@ body {
   font-family: 'Space Grotesk', sans-serif;
   background: #fafafa;
   color: #111;
-  font-size: 1.6rem;
-  line-height: 2.2;
+  font-size: 1.7rem;
+  line-height: 2.4;
 }
 
 body.dark-mode {
@@ -142,7 +142,7 @@ main {
 }
 
 .card h2 {
-  font-size: 2.2rem;
+  font-size: 2.4rem;
   font-weight: 600;
   margin-bottom: 1rem;
 }
@@ -150,8 +150,8 @@ main {
 .card p,
 .card a,
 .card li {
-  font-size: 1.4rem;
-  line-height: 2.2;
+  font-size: 1.6rem;
+  line-height: 2.5;
 }
 
 body.dark-mode .card {
