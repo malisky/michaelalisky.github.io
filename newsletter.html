@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Newsletter - Michael Alisky</title>
+  <title>Newsletter – Michael Alisky</title>
   <link rel="stylesheet" href="/css/style.css" />
   <script defer src="/js/newsletter.js"></script>
 </head>
@@ -15,6 +15,16 @@
       <a href="/newsletter.html">Newsletter</a>
     </nav>
   </header>
-  <main id="newsletter-container"></main>
+  <main class="newsletter-horizontal">
+    <div class="scroll-arrow left" onclick="scrollLeft()">&#9664;</div>
+    <section class="newsletter-scroll-wrapper" id="newsletter-container"></section>
+    <div class="scroll-arrow right" onclick="scrollRight()">&#9654;</div>
+  </main>
+  <footer>
+    <p style="text-align:center;">© Michael Alisky</p>
+  </footer>
+  <div class="map-drawer-preview">
+    <iframe src="/map.html" class="map-embed"></iframe>
+  </div>
 </body>
 </html>
