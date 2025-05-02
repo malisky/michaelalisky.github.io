@@ -1,38 +1,46 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Michael Alisky</title>
-  <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-  <header>
-    <h1>Michael Alisky</h1>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/research.html">Research</a>
-      <a href="/newsletter/newsletter.html">Newsletter</a>
-    <a href="https://scholar.google.com/citations?user=b4EtdL4AAAAJ&hl=en" target="_blank"><img src="images/scholar-icon.svg" alt="Google Scholar" style="height:1.5em;margin-left:10px;"></a>
-</nav>
-  </header>
+<meta charset="utf-8"/>
+<title>Michael Alisky</title>
+<link href="/css/style.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&amp;display=swap" rel="stylesheet"/></head>
+<body style="display:flex;flex-direction:column;align-items:center;text-align:center;"><button id="darkModeToggle">Toggle Dark Mode</button>
+<header>
+<h1>Michael Alisky</h1>
+<nav>
+<a href="/">Home</a>
+<a href="/research.html">Research</a>
+<a href="/newsletter/newsletter.html">Newsletter</a>
 
- <section class="intro-container">
-  <p class="intro-text">
+</nav>
+</header>
+<section class="intro-container">
+<p class="intro-text">
     Welcome to my personal site. Get yourself a cup of tea or something. More to come soon.
   </p>
 </section>
-
-  <footer>
-    <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
-      <span>&copy; 2025 Michael Alisky</span>
-      <a href="https://github.com/malisky" target="_blank" style="display: inline-flex; align-items: center;">
-        <img src="/images/github-icon.svg" alt="GitHub" loading="lazy">
-      </a>
-      <a href="https://linkedin.com/in/michaelalisky" target="_blank" style="display: inline-flex; align-items: center;">
-        <img src="/images/linkedin-icon.svg" alt="LinkedIn" loading="lazy">
-      </a>
-    </div>
-  </footer>
-  <script src="js/enhancements.js"></script>
-</body>
+<footer>
+<div style="display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+<span>© 2025 Michael Alisky</span>
+<a href="https://github.com/malisky" style="display: inline-flex; align-items: center;" target="_blank">
+<img alt="GitHub" loading="lazy" src="/images/github-icon.svg"/>
+</a>
+<a href="https://linkedin.com/in/michaelalisky" style="display: inline-flex; align-items: center;" target="_blank">
+<img alt="LinkedIn" loading="lazy" src="/images/linkedin-icon.svg"/>
+</a>
+</div>
+</footer>
+<script src="js/enhancements.js"></script>
+<script>
+        const toggle = document.getElementById('darkModeToggle');
+        toggle.addEventListener('click', () => {
+          document.body.classList.toggle('dark-mode');
+          localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        });
+        if (localStorage.getItem('darkMode') === 'true') {
+          document.body.classList.add('dark-mode');
+        }
+        </script></body>
 </html>
