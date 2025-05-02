@@ -2,107 +2,121 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Travel Newsletter - Michael Alisky</title>
+  <title>Travel Newsletter – Michael Alisky</title>
   <link href="/css/style.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link href="/images/favicon.svg" rel="icon" type="image/svg+xml" />
+  <link rel="icon" href="/images/favicon.svg" type="image/svg+xml" />
+  <script src="/js/enhancements.js" defer></script>
 </head>
 <body>
-  <header>
-    <h1>Newsletter</h1>
-    <nav>
+  <div class="container">
+    <header>
+      <h1>Newsletter</h1>
+    </header>
+
+    <nav class="sticky">
       <a href="/">Home</a>
       <a href="/research.html">Research</a>
       <a href="/newsletter/newsletter.html">Newsletter</a>
-      <button class="nav-toggle" id="darkModeToggle">🌓</button>
+      <button class="nav-toggle" id="darkModeToggle" title="Toggle dark mode">🌓</button>
     </nav>
-  </header>
 
-  <main>
-    <p class="intro-text">
-      Starting in the summer of 2024, I began writing a travel newsletter for my close friends and family to share stories, pictures, and perfunctory attempts at international relations discourse. In an effort to serve the interests of humanity more broadly, I've recorded those entries here. Enjoy.
-    </p>
+    <main>
+      <section class="intro-container">
+        <p class="intro-text">
+          Starting in the summer of 2024, I began writing a travel newsletter for my close friends and family to share stories, pictures, and perfunctory attempts at international relations discourse. In an effort to serve the interests of humanity more broadly, I've recorded those entries here. Enjoy.
+        </p>
+      </section>
 
-    <!-- Newsletter Entry Cards -->
-    <div class="card">
-      <a class="newsletter-entry" href="/newsletter/taiwan.html">
-        <div class="image-container">
-          <img src="/images/zhishan.jpeg" alt="Zhishan Garden" loading="lazy" />
+      <div class="newsletter-container">
+        <div class="card">
+          <a class="newsletter-entry" href="/newsletter/taiwan.html">
+            <div class="image-container">
+              <img src="/images/zhishan.jpeg" alt="Zhishan Garden">
+            </div>
+            <h2>April 3: Taiwan Dispatch</h2>
+            <p><em>Tea tastings, hot springs, karaoke, and koalas.</em></p>
+          </a>
         </div>
-        <h2>April 3: Taiwan Dispatch</h2>
-        <p><em>Tea tastings, hot springs, karaoke, and koalas.</em></p>
-      </a>
-    </div>
 
-    <div class="card">
-      <a class="newsletter-entry" href="/newsletter/mongolia.html">
-        <div class="image-container">
-          <img src="/images/camelCrop.jpeg" alt="Bob the Bactrian Camel" loading="lazy" />
+        <div class="card">
+          <a class="newsletter-entry" href="/newsletter/mongolia.html">
+            <div class="image-container">
+              <img src="/images/camelCrop.jpeg" alt="Bob the Bactrian Camel">
+            </div>
+            <h2>March 27: Mongolia Adventures</h2>
+            <p><em>Sand and storms, and also sandstorms.</em></p>
+          </a>
         </div>
-        <h2>March 27: Mongolia Adventures</h2>
-        <p><em>Sand and storms, and also sandstorms.</em></p>
-      </a>
-    </div>
 
-    <div class="card">
-      <a class="newsletter-entry" href="/newsletter/spain.html">
-        <div class="image-container">
-          <img src="/images/alhambra.jpeg" alt="Alhambra Palace" loading="lazy" />
+        <div class="card">
+          <a class="newsletter-entry" href="/newsletter/spain.html">
+            <div class="image-container">
+              <img src="/images/alhambra.jpeg" alt="Alhambra Palace">
+            </div>
+            <h2>December 24: Spanish Study</h2>
+            <p><em>Tapas, drinks, and tapas.</em></p>
+          </a>
         </div>
-        <h2>December 24: Spanish Study</h2>
-        <p><em>Tapas, drinks, and tapas.</em></p>
-      </a>
-    </div>
 
-    <div class="card">
-      <a class="newsletter-entry" href="/newsletter/georgia.html">
-        <div class="image-container">
-          <img src="/images/cave-monastery.jpeg" alt="Cave Monastery" loading="lazy" />
+        <div class="card">
+          <a class="newsletter-entry" href="/newsletter/georgia.html">
+            <div class="image-container">
+              <img src="/images/cave-monastery.jpeg" alt="Cave Monastery">
+            </div>
+            <h2>December 4: Georgian Dream</h2>
+            <p><em>Bulochka and khinkali.</em></p>
+          </a>
         </div>
-        <h2>December 4: Georgian Dream</h2>
-        <p><em>Bulochka and khinkali.</em></p>
-      </a>
-    </div>
 
-    <div class="card">
-      <a class="newsletter-entry" href="/newsletter/november.html">
-        <div class="image-container">
-          <img src="/images/brno-overlook.jpeg" alt="Brno overlook" loading="lazy" />
+        <div class="card">
+          <a class="newsletter-entry" href="/newsletter/november.html">
+            <div class="image-container">
+              <img src="/images/brno-overlook.jpeg" alt="Brno overlook">
+            </div>
+            <h2>November 25: November News</h2>
+            <p><em>Mulled wine, time capsules, and San Marino's music scene.</em></p>
+          </a>
         </div>
-        <h2>November 25: November News</h2>
-        <p><em>Mulled wine, time capsules, and San Marino's music scene.</em></p>
-      </a>
-    </div>
 
-    <div class="card">
-      <a class="newsletter-entry" href="/newsletter/slovenia.html">
-        <div class="image-container">
-          <img src="/images/lake-bled.jpeg" alt="View of Lake Bled" loading="lazy" />
+        <div class="card">
+          <a class="newsletter-entry" href="/newsletter/slovenia.html">
+            <div class="image-container">
+              <img src="/images/lake-bled.jpeg" alt="View of Lake Bled">
+            </div>
+            <h2>November 5: Slovenia Stories</h2>
+            <p><em>Dragons, dolines, and dairy.</em></p>
+          </a>
         </div>
-        <h2>November 5: Slovenia Stories</h2>
-        <p><em>Dragons, dolines, and dairy.</em></p>
-      </a>
-    </div>
 
-    <div class="card">
-      <a class="newsletter-entry" href="/newsletter/turkey.html">
-        <div class="image-container">
-          <img src="/images/turkey.jpeg" alt="Istanbul Mosque" loading="lazy" />
+        <div class="card">
+          <a class="newsletter-entry" href="/newsletter/turkey.html">
+            <div class="image-container">
+              <img src="/images/turkey.jpeg" alt="Istanbul Mosque">
+            </div>
+            <h2>October 22: Turkey Tales</h2>
+            <p><em>A cat named Yusuf.</em></p>
+          </a>
         </div>
-        <h2>October 22: Turkey Tales</h2>
-        <p><em>A cat named Yusuf.</em></p>
-      </a>
-    </div>
-  </main>
+      </div>
+    </main>
 
-  <footer>
-    <div class="icon-group">
-      <a href="https://github.com/malisky" target="_blank"><img src="/images/github-icon.svg" alt="GitHub" /></a>
-      <a href="https://www.linkedin.com/in/michaelalisky" target="_blank"><img src="/images/linkedin-icon.svg" alt="LinkedIn" /></a>
-      <a href="https://scholar.google.com/citations?user=b4EtdL4AAAAJ&hl=en" target="_blank"><img src="/images/scholar-icon.svg" alt="Google Scholar" /></a>
-    </div>
-  </footer>
+    <footer>
+      <div class="icon-group">
+        <a href="https://github.com/malisky" target="_blank">
+          <img src="/images/github-icon.svg" alt="GitHub" />
+        </a>
+        <a href="https://www.linkedin.com/in/michaelalisky" target="_blank">
+          <img src="/images/linkedin-icon.svg" alt="LinkedIn" />
+        </a>
+        <a href="https://scholar.google.com/citations?user=b4EtdL4AAAAJ&hl=en" target="_blank">
+          <img src="/images/scholar-icon.svg" alt="Google Scholar" />
+        </a>
+      </div>
+    </footer>
+  </div>
 
-  <script src="/js/enhancements.js"></script>
+  <div class="theme-transition"></div>
+  <div class="scroll-top">↑</div>
 </body>
 </html>
