@@ -1,4 +1,4 @@
-/* Base styles (from your original) */
+
 body {
   margin: 0;
   font-family: 'Space Grotesk', sans-serif;
@@ -9,11 +9,11 @@ body {
 
 header {
   text-align: center;
-  padding: 3rem 1rem 1rem;
+  padding: 2rem 1rem 1rem;
 }
 
 header h1 {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   margin: 0;
 }
 
@@ -35,260 +35,30 @@ nav a:hover {
 
 main {
   max-width: 800px;
-  margin: 3rem auto;
-  padding: 0 1rem;
+  margin: 2rem auto;
+  padding: 1rem;
 }
 
-footer {
-  text-align: center;
-  font-size: 0.9rem;
-  color: #777;
-  padding: 2rem 1rem;
-}
-
-/* Newsletter layout */
-.newsletter-container {
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-  padding: 2rem;
-  max-width: 800px;
-  margin: auto;
-}
-
-.newsletter-entry {
+.card {
   background: white;
   border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  padding: 1.5rem;
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-
-.newsletter-entry h2 {
-  margin-top: 0;
-  font-size: 1.6rem;
-}
-
-.newsletter-entry p {
-  margin-bottom: 0.8rem;
-}
-
-.newsletter-entry p a {
-  color: inherit;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.newsletter-entry p a:hover {
-  color: #555;
-}
-
-.image-container {
-  position: relative;
-  margin: 1rem 0;
-  overflow: hidden;
-  border-radius: 8px;
-  max-width: 100%;
-}
-
-.newsletter-image {
-  width: 100%;
-  height: 400px;
-  object-fit: cover;
-  display: block;
-  border-radius: 0;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-.image-container img:not(.newsletter-image) {
-  width: 100%;
-  max-height: 600px;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-.image-container img:hover {
-  transform: scale(1.04);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
-.image-grid {
-  display: flex;
-  gap: 1rem;
-  margin: 1.5rem 0;
-}
-
-.image-grid .image-container {
-  flex: 1;
-  margin: 0;
-}
-
-@media (max-width: 600px) {
-  .image-grid {
-    flex-direction: column;
-  }
-}
-
-.intro-container {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 0 2rem;
-}
-
-.intro-text {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  color: #333;
-  font-weight: 400;
-  text-align: center;
-}
-
-.back-button {
-  text-align: center;
-  margin: 2rem auto 0;
-}
-
-.back-button a {
-  display: inline-block;
-  background: #eee;
-  color: #111;
-  text-decoration: none;
-  font-weight: 500;
-  padding: 0.6rem 1.2rem;
-  border-radius: 8px;
-  transition: background 0.3s ease;
-}
-
-.back-button a:hover {
-  background: #ddd;
-}
-
-/* Dark mode */
-body.dark-mode {
-  background-color: #121212;
-  color: #e0e0e0;
-}
-
-.dark-mode a { color: #9dcfff; }
-
-.dark-mode img { filter: brightness(0.85); }
-
-.toggle-darkmode {
-  position: fixed;
-  bottom: 1rem;
-  right: 1rem;
-  background: #444;
-  color: white;
-  border: none;
-  padding: 0.5rem 0.75rem;
-  border-radius: 6px;
-  cursor: pointer;
-  z-index: 1000;
-  font-size: 0.9rem;
-}
-
-.scroll-top {
-  position: fixed;
-  bottom: 4rem;
-  right: 1rem;
-  background: #444;
-  color: white;
-  padding: 0.5rem;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  display: none;
-  cursor: pointer;
-  z-index: 999;
-}
-
-/* Smooth scroll behavior */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Ensure link color is readable */
-a {
-  color: #0366d6;
-}
-
-body.dark-mode a {
-  color: #8ab4f8 !important;
-}
-
-/* Newsletter layout fix */
-.newsletter-container {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   padding: 2rem;
+  margin-bottom: 2rem;
 }
 
-.newsletter-entry {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  text-decoration: none;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  overflow: hidden;
-  background-color: #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
-}
-
-.newsletter-entry:hover {
-  transform: scale(1.01);
-}
-
-.image-container {
-  flex-shrink: 0;
-  width: 40%;
-}
-
-.newsletter-image {
+.card img {
   width: 100%;
   height: auto;
-  display: block;
+  border-radius: 6px;
+  margin: 1rem 0;
 }
 
-.newsletter-text {
-  padding: 1rem;
-  color: #333;
-  font-family: 'Space Grotesk', sans-serif;
+.card h2 {
+  font-size: 1.8rem;
+  margin-top: 0;
 }
 
-/* Responsive fix for small screens */
-@media (max-width: 768px) {
-  .newsletter-entry {
-    flex-direction: column;
-  }
-
-  .image-container {
-    width: 100%;
-  }
+.card p {
+  margin-bottom: 1rem;
 }
-
-.newsletter-container .card-content {
-  column-count: 1 !important;
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 1rem;
-}
-.cards .card {
-  max-width: 700px;
-  margin: 2rem auto;
-  box-shadow: none;
-  border: none;
-}
-.newsletter-container {
-  padding: 2rem 1rem;
-}
-.back-button,
-.footer-nav {
-  text-align: center;
-  margin-top: 2rem;
-}
-
