@@ -1,130 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
+  <meta charset="utf-8" />
   <title>Travel Newsletter - Michael Alisky</title>
-  <link href="/css/style.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet"/>
-  <link href="/images/favicon.svg" rel="icon" type="image/svg+xml"/>
-  <link href="/css/newsletter.css" rel="stylesheet"/>
+  <link href="/css/style.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="/images/favicon.svg" rel="icon" type="image/svg+xml" />
 </head>
 <body>
-  <button id="darkModeToggle">Toggle Dark Mode</button>
-
   <header>
     <h1>Newsletter</h1>
     <nav>
       <a href="/">Home</a>
       <a href="/research.html">Research</a>
-      <a href="/newsletter/newsletter.html">Back to Newsletter</a>
+      <a href="/newsletter/newsletter.html">Newsletter</a>
+      <button class="nav-toggle" id="darkModeToggle">🌓</button>
     </nav>
   </header>
 
   <main>
-    <div class="newsletter-container">
-      <div class="card">
-        <div class="card-content">
-          <section class="intro-container">
-            <p class="intro-text">
-              Starting in the summer of 2024, I began writing a travel newsletter for my close friends and family to share stories, pictures, and perfunctory attempts at international relations discourse. In an effort to serve the interests of humanity more broadly, I've recorded those entries here. Enjoy.
-            </p>
-          </section>
+    <p class="intro-text">
+      Starting in the summer of 2024, I began writing a travel newsletter for my close friends and family to share stories, pictures, and perfunctory attempts at international relations discourse. In an effort to serve the interests of humanity more broadly, I've recorded those entries here. Enjoy.
+    </p>
 
-          <section class="newsletter-container">
-
-            <a class="newsletter-entry" href="/newsletter/taiwan.html">
-              <div class="image-container">
-                <img src="/images/zhishan.jpeg" alt="Zhishan Garden" class="newsletter-image" loading="lazy"/>
-              </div>
-              <div class="newsletter-text">
-                <h2>April 3: Taiwan Dispatch</h2>
-                <p><em>Tea tastings, hot springs, karaoke, and koalas.</em></p>
-              </div>
-            </a>
-
-            <a class="newsletter-entry" href="/newsletter/mongolia.html">
-              <div class="image-container">
-                <img src="/images/camelCrop.jpeg" alt="Bob the Bactrian Camel" class="newsletter-image" loading="lazy"/>
-              </div>
-              <div class="newsletter-text">
-                <h2>March 27: Mongolia Adventures</h2>
-                <p><em>Sand and storms, and also sandstorms.</em></p>
-              </div>
-            </a>
-
-            <a class="newsletter-entry" href="/newsletter/spain.html">
-              <div class="image-container">
-                <img src="/images/alhambra.jpeg" alt="Alhambra Palace" class="newsletter-image" loading="lazy"/>
-              </div>
-              <div class="newsletter-text">
-                <h2>December 24: Spanish Study</h2>
-                <p><em>Tapas, drinks, and tapas.</em></p>
-              </div>
-            </a>
-
-            <a class="newsletter-entry" href="/newsletter/georgia.html">
-              <div class="image-container">
-                <img src="/images/cave-monastery.jpeg" alt="Cave Monastery" class="newsletter-image" loading="lazy"/>
-              </div>
-              <div class="newsletter-text">
-                <h2>December 4: Georgian Dream</h2>
-                <p><em>Bulochka and khinkali.</em></p>
-              </div>
-            </a>
-
-            <a class="newsletter-entry" href="/newsletter/november.html">
-              <div class="image-container">
-                <img src="/images/brno-overlook.jpeg" alt="Brno overlook" class="newsletter-image" loading="lazy"/>
-              </div>
-              <div class="newsletter-text">
-                <h2>November 25: November News</h2>
-                <p><em>Mulled wine, time capsules, and San Marino's music scene.</em></p>
-              </div>
-            </a>
-
-            <a class="newsletter-entry" href="/newsletter/slovenia.html">
-              <div class="image-container">
-                <img src="/images/lake-bled.jpeg" alt="View of Lake Bled" class="newsletter-image" loading="lazy"/>
-              </div>
-              <div class="newsletter-text">
-                <h2>November 5: Slovenia Stories</h2>
-                <p><em>Dragons, dolines, and dairy.</em></p>
-              </div>
-            </a>
-
-            <a class="newsletter-entry" href="/newsletter/turkey.html">
-              <div class="image-container">
-                <img src="/images/turkey.jpeg" alt="Istanbul Mosque" class="newsletter-image" loading="lazy"/>
-              </div>
-              <div class="newsletter-text">
-                <h2>October 22: Turkey Tales</h2>
-                <p><em>A cat named Yusuf.</em></p>
-              </div>
-            </a>
-
-          </section>
+    <!-- Newsletter Entry Cards -->
+    <div class="card">
+      <a class="newsletter-entry" href="/newsletter/taiwan.html">
+        <div class="image-container">
+          <img src="/images/zhishan.jpeg" alt="Zhishan Garden" loading="lazy" />
         </div>
-      </div>
+        <h2>April 3: Taiwan Dispatch</h2>
+        <p><em>Tea tastings, hot springs, karaoke, and koalas.</em></p>
+      </a>
+    </div>
+
+    <div class="card">
+      <a class="newsletter-entry" href="/newsletter/mongolia.html">
+        <div class="image-container">
+          <img src="/images/camelCrop.jpeg" alt="Bob the Bactrian Camel" loading="lazy" />
+        </div>
+        <h2>March 27: Mongolia Adventures</h2>
+        <p><em>Sand and storms, and also sandstorms.</em></p>
+      </a>
+    </div>
+
+    <div class="card">
+      <a class="newsletter-entry" href="/newsletter/spain.html">
+        <div class="image-container">
+          <img src="/images/alhambra.jpeg" alt="Alhambra Palace" loading="lazy" />
+        </div>
+        <h2>December 24: Spanish Study</h2>
+        <p><em>Tapas, drinks, and tapas.</em></p>
+      </a>
+    </div>
+
+    <div class="card">
+      <a class="newsletter-entry" href="/newsletter/georgia.html">
+        <div class="image-container">
+          <img src="/images/cave-monastery.jpeg" alt="Cave Monastery" loading="lazy" />
+        </div>
+        <h2>December 4: Georgian Dream</h2>
+        <p><em>Bulochka and khinkali.</em></p>
+      </a>
+    </div>
+
+    <div class="card">
+      <a class="newsletter-entry" href="/newsletter/november.html">
+        <div class="image-container">
+          <img src="/images/brno-overlook.jpeg" alt="Brno overlook" loading="lazy" />
+        </div>
+        <h2>November 25: November News</h2>
+        <p><em>Mulled wine, time capsules, and San Marino's music scene.</em></p>
+      </a>
+    </div>
+
+    <div class="card">
+      <a class="newsletter-entry" href="/newsletter/slovenia.html">
+        <div class="image-container">
+          <img src="/images/lake-bled.jpeg" alt="View of Lake Bled" loading="lazy" />
+        </div>
+        <h2>November 5: Slovenia Stories</h2>
+        <p><em>Dragons, dolines, and dairy.</em></p>
+      </a>
+    </div>
+
+    <div class="card">
+      <a class="newsletter-entry" href="/newsletter/turkey.html">
+        <div class="image-container">
+          <img src="/images/turkey.jpeg" alt="Istanbul Mosque" loading="lazy" />
+        </div>
+        <h2>October 22: Turkey Tales</h2>
+        <p><em>A cat named Yusuf.</em></p>
+      </a>
     </div>
   </main>
 
-  <footer style="text-align:center;margin-top:2rem;padding:1rem 0;border-top:1px solid #ccc;">
-    <a href="mailto:malisky@stanford.edu"><img src="/images/email.svg" alt="Email" width="24" height="24"></a>
-    <a href="https://github.com/malisky" target="_blank"><img src="/images/github-icon.svg" alt="GitHub" width="24" height="24"></a>
-    <a href="https://www.linkedin.com/in/michaelalisky" target="_blank"><img src="/images/linkedin.svg" alt="LinkedIn" width="24" height="24"></a>
-    <a href="https://scholar.google.com/citations?user=b4EtdL4AAAAJ&hl=en" target="_blank"><img src="/images/scholar-icon.svg" alt="Google Scholar" width="24" height="24"></a>
+  <footer>
+    <div class="icon-group">
+      <a href="https://github.com/malisky" target="_blank"><img src="/images/github-icon.svg" alt="GitHub" /></a>
+      <a href="https://www.linkedin.com/in/michaelalisky" target="_blank"><img src="/images/linkedin-icon.svg" alt="LinkedIn" /></a>
+      <a href="https://scholar.google.com/citations?user=b4EtdL4AAAAJ&hl=en" target="_blank"><img src="/images/scholar-icon.svg" alt="Google Scholar" /></a>
+    </div>
   </footer>
 
   <script src="/js/enhancements.js"></script>
-  <script>
-    const toggle = document.getElementById('darkModeToggle');
-    toggle.addEventListener('click', () => {
-      document.body.classList.toggle('dark-mode');
-      localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
-    });
-    if (localStorage.getItem('darkMode') === 'true') {
-      document.body.classList.add('dark-mode');
-    }
-  </script>
 </body>
 </html>
