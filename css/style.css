@@ -17,6 +17,7 @@ header h1 {
   margin: 0;
 }
 
+/* Updated nav bar */
 nav {
   background: #f5f5f5;
   border: 1px solid #ddd;
@@ -25,8 +26,9 @@ nav {
   margin: 1.5rem auto 0;
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 2rem;
-  max-width: 420px;
+  max-width: 480px;
 }
 
 nav a {
@@ -39,6 +41,36 @@ nav a:hover {
   color: #000;
 }
 
+/* Dark mode nav styles */
+body.dark-mode nav {
+  background: #1c1c1c;
+  border-color: #333;
+}
+
+body.dark-mode nav a {
+  color: #ccc;
+}
+
+body.dark-mode nav a:hover {
+  color: #fff;
+}
+
+/* Sleek emoji dark mode toggle in nav */
+.nav-toggle {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  opacity: 0.7;
+  line-height: 1;
+  padding: 0;
+}
+
+.nav-toggle:hover {
+  opacity: 1;
+}
+
+/* Introduction */
 .intro-container {
   margin-top: 1.25rem;
   text-align: center;
@@ -50,6 +82,7 @@ main {
   padding: 1rem;
 }
 
+/* Card layout */
 .card {
   background: white;
   border-radius: 10px;
@@ -67,6 +100,7 @@ main {
   margin: 1rem 0;
 }
 
+/* Image grid for newsletter entries */
 .image-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -82,6 +116,7 @@ main {
   margin-bottom: 1.1rem;
 }
 
+/* Footer */
 footer {
   display: flex;
   flex-direction: column;
@@ -112,6 +147,7 @@ footer img {
   height: 32px;
 }
 
+/* Footer toggle if ever used */
 footer #darkModeToggle {
   padding: 0.4rem 1rem;
   font-size: 0.9rem;
@@ -129,6 +165,32 @@ footer #darkModeToggle:hover {
   opacity: 1;
 }
 
+body.dark-mode footer #darkModeToggle {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f0f0f0;
+}
+
+/* Scroll to top */
+.scroll-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  font-size: 2rem;
+  background: rgba(0, 0, 0, 0.2);
+  color: white;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  display: none;
+  z-index: 999;
+  transition: background 0.2s ease;
+}
+
+.scroll-top:hover {
+  background: rgba(0, 0, 0, 0.35);
+}
+
+/* Dark mode body and card styling */
 body.dark-mode {
   background-color: #121212;
   color: #f0f0f0;
@@ -137,9 +199,4 @@ body.dark-mode {
 body.dark-mode .card {
   background: #1e1e1e;
   color: #eee;
-}
-
-body.dark-mode footer #darkModeToggle {
-  background: rgba(255, 255, 255, 0.08);
-  color: #f0f0f0;
 }
