@@ -1,30 +1,41 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const toggleBtn = document.getElementById("darkModeToggle");
-  if (toggleBtn) {
-    toggleBtn.onclick = () => {
-      document.body.classList.toggle("dark-mode");
-      localStorage.setItem("darkMode", document.body.classList.contains("dark-mode") ? "on" : "off");
-    };
-  }
+// enhancements.js
 
-  if (localStorage.getItem("darkMode") === "on") {
-    document.body.classList.add("dark-mode");
-  }
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.getElementById("darkModeToggle");
+  const transitionOverlay = document.querySelector(".theme-transition");
 
-  const topBtn = document.createElement("div");
-  topBtn.innerHTML = "↑";
-  topBtn.className = "scroll-top";
-  topBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
-  document.body.appendChild(topBtn);
+  if (toggle && transitionOverlay) {
+    toggle.addEventListener("click", () => {
+      document.body.classList.add("animating-theme");
+      transitionOverlay.style.opacity = "1";
 
-  window.addEventListener("scroll", () => {
-    topBtn.style.display = window.scrollY > 300 ? "block" : "none";
-  });
+      setTimeout(() => {
+        document.body.classList.toggle("dark-mode");
+        localStorage.setItem(
+          "darkMode",
+          document.body.classList.contains("dark-mode")
+        );
+        transitionOverlay.style.opacity = "0";
 
-  document.querySelectorAll("a[href^='http']").forEach(link => {
-    if (!link.href.includes(location.hostname)) {
-      link.target = "_blank";
-      link.rel = "noopener";
+        setTimeout(() => {
+          document.body.classList.remove("animating-theme");
+        }, 700); // match CSS transition
+      }, 50);
+    });
+
+    if (localStorage.getItem("darkMode") === "true") {
+      document.body.classList.add("dark-mode");
     }
-  });
+  }
+
+  // Optional: Scroll to top button behavior
+  const topBtn = document.querySelector(".scroll-top");
+  if (topBtn) {
+    window.addEventListener("scroll", () => {
+      topBtn.style.display = window.scrollY > 300 ? "block" : "none";
+    });
+    topBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
 });
