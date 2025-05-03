@@ -7,7 +7,6 @@
   <script defer src="/js/newsletter.js"></script>
 </head>
 <body>
-  <!-- Sticky Navbar -->
   <header class="navbar">
     <h1>Newsletter</h1>
     <nav>
@@ -18,19 +17,18 @@
     </nav>
   </header>
 
-  <main class="newsletter-horizontal">
-    <section class="newsletter-scroll-wrapper" id="newsletter-container"></section>
-    <div class="scroll-arrow left" onclick="scrollLeft()">&#9664;</div>
-    <div class="scroll-arrow right" onclick="scrollRight()">&#9654;</div>
+  <main class="newsletter-scroll-area">
+    <div class="newsletter-scroll-wrapper" id="newsletter-container"></div>
+    <div class="scroll-zone left"></div>
+    <div class="scroll-zone right"></div>
   </main>
+
+  <section class="map-section">
+    <iframe src="/map.html" class="map-embed" loading="lazy"></iframe>
+  </section>
 
   <footer>
     <p style="text-align:center;">© Michael Alisky</p>
   </footer>
-
-  <!-- Map Section (acts like a second part of the page) -->
-  <div class="map-section" id="map-section">
-    <iframe src="/map.html" class="map-embed"></iframe>
-  </div>
 </body>
 </html>

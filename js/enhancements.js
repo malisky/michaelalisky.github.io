@@ -1,7 +1,7 @@
 // enhancements.js
 
 document.addEventListener("DOMContentLoaded", () => {
-  const toggle = document.getElementById("darkModeToggle");
+  const toggle = document.getElementById("night-toggle");
   const transitionOverlay = document.querySelector(".theme-transition");
 
   if (toggle && transitionOverlay) {
