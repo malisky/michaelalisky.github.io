@@ -12,8 +12,7 @@
   <script src="/js/enhancements.js" defer></script>
 </head>
 <body>
-  <!-- Header and navigation are still within container -->
-  <div class="container header-container">
+  <div class="container">
     <header>
       <h1>Newsletter</h1>
     </header>
@@ -21,7 +20,7 @@
     <nav class="sticky">
       <a href="/">Home</a>
       <a href="/research.html">Research</a>
-      <a href="/newsletter.html" class="active">Newsletter</a>
+      <a href="/newsletter.html">Newsletter</a>
       <button id="night-toggle" class="nav-toggle" title="Toggle dark mode">🌓</button>
     </nav>
 
@@ -32,13 +31,11 @@
     </section>
   </div>
   
-  <!-- Map container goes outside the container to be edge-to-edge -->
   <div class="map-full-width">
     <div class="map-gradient"></div>
     <div id="newsletter-map"></div>
   </div>
   
-  <!-- Footer back in container -->
   <div class="container">
     <footer>
       <div class="icon-group">
@@ -63,12 +60,12 @@
       // Initialize the map
       const map = L.map('newsletter-map', {
         zoomControl: true,
-        scrollWheelZoom: false, // Disable scroll wheel zoom
+        scrollWheelZoom: false,
         maxZoom: 18,
         minZoom: 2,
-        attributionControl: false, // Hide attribution for cleaner look
-        doubleClickZoom: false // Disable double click zoom for consistency
-      }).setView([30, 20], 2.5); // Zoomed in more
+        attributionControl: false,
+        doubleClickZoom: false
+      }).setView([30, 20], 2.5);
       
       // Move zoom control to the right
       map.zoomControl.setPosition('topright');
@@ -84,12 +81,12 @@
         prefix: false
       }).addTo(map);
       
-      // Custom icon for markers - increased size
+      // Custom icon for markers
       const markerIcon = L.divIcon({
         className: 'custom-marker-icon',
         html: '<div class="marker-dot"></div>',
-        iconSize: [18, 18], // Increased from 14x14
-        iconAnchor: [9, 9]  // Adjusted anchor point
+        iconSize: [18, 18],
+        iconAnchor: [9, 9]
       });
       
       // Load newsletter data
