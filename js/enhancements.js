@@ -1,56 +1,71 @@
-// Simplified yet enhanced version of enhancements.js
-document.addEventListener("DOMContentLoaded", () => {
-  // Theme toggle functionality
-  const toggle = document.getElementById("night-toggle");
-  const transitionOverlay = document.querySelector(".theme-transition");
+document.addEventListener('DOMContentLoaded', function() {
+  // Dark mode toggle
+  const darkModeToggle = document.getElementById('night-toggle');
   
-  if (toggle && transitionOverlay) {
-    // Handle dark mode toggle (without delay and animation checks)
-    toggle.addEventListener("click", () => {
-      // Just toggle the class immediately
-      document.body.classList.toggle("dark-mode");
+  if (darkModeToggle) {
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('darkMode');
+    
+    // Apply saved theme or default to system preference
+    if (savedTheme === 'true' || 
+        (savedTheme === null && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.body.classList.add('dark-mode');
+    }
+    
+    // Handle toggle click
+    darkModeToggle.addEventListener('click', function() {
+      // Add transitioning class for animation
+      document.body.classList.add('theme-transitioning');
       
-      // Save preference
-      localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
+      // Toggle dark mode class
+      document.body.classList.toggle('dark-mode');
+      
+      // Save preference to localStorage
+      localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+      
+      // Remove transitioning class after animation
+      setTimeout(() => {
+        document.body.classList.remove('theme-transitioning');
+      }, 500);
     });
-    
-    // Apply theme from storage
-    if (localStorage.getItem("darkMode") === "true") {
-      document.body.classList.add("dark-mode");
-    }
-    
-    // Simple system preference check
-    if (localStorage.getItem("darkMode") === null && 
-        window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      document.body.classList.add("dark-mode");
-    }
   }
   
   // Scroll to top button
-  const topBtn = document.querySelector(".scroll-top");
-  if (topBtn) {
-    // Show/hide based on scroll position
-    window.addEventListener("scroll", () => {
-      topBtn.style.display = window.scrollY > 300 ? "block" : "none";
-    }, { passive: true });
+  const scrollTopButton = document.querySelector('.scroll-top');
+  
+  if (scrollTopButton) {
+    // Show/hide scroll button based on scroll position
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > 300) {
+        scrollTopButton.classList.add('visible');
+      } else {
+        scrollTopButton.classList.remove('visible');
+      }
+    });
     
-    // Scroll to top on click
-    topBtn.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+    // Scroll to top when button clicked
+    scrollTopButton.addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     });
   }
   
-  // Basic sticky navigation
-  const nav = document.querySelector("nav");
-  if (nav) {
-    const navTop = nav.offsetTop;
+  // Set active navigation link based on current page
+  const currentPath = window.location.pathname;
+  const navLinks = document.querySelectorAll('nav a');
+  
+  navLinks.forEach(link => {
+    const linkPath = link.getAttribute('href');
     
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > navTop) {
-        nav.classList.add("sticky");
-      } else {
-        nav.classList.remove("sticky");
-      }
-    }, { passive: true });
-  }
+    // If the link's href matches the current path or special cases
+    if (linkPath === currentPath || 
+        (currentPath.includes('/newsletter/') && linkPath === '/newsletter.html') ||
+        (currentPath.includes('/research/') && linkPath === '/research.html')) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+  });
 });
