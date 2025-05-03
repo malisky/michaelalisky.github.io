@@ -7,9 +7,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const savedTheme = localStorage.getItem('darkMode');
     
     // Apply saved theme or default to system preference
-    if (savedTheme === 'true' || 
-        (savedTheme === null && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    const isDarkMode = savedTheme === 'true' || 
+                      (savedTheme === null && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    
+    if (isDarkMode) {
       document.body.classList.add('dark-mode');
+      darkModeToggle.textContent = '🌗'; // Third quarter moon for dark mode
+    } else {
+      darkModeToggle.textContent = '🌓'; // First quarter moon for light mode
     }
     
     // Handle toggle click
@@ -17,16 +22,32 @@ document.addEventListener('DOMContentLoaded', function() {
       // Add transitioning class for animation
       document.body.classList.add('theme-transitioning');
       
+      // Change moon emoji with animation
+      darkModeToggle.style.transition = 'transform 0.3s ease';
+      darkModeToggle.style.transform = 'translateY(-5px)';
+      
       // Toggle dark mode class
+      const willBeDarkMode = !document.body.classList.contains('dark-mode');
       document.body.classList.toggle('dark-mode');
       
       // Save preference to localStorage
-      localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+      localStorage.setItem('darkMode', willBeDarkMode);
+      
+      // Animate the emoji change
+      setTimeout(() => {
+        if (willBeDarkMode) {
+          darkModeToggle.textContent = '🌗'; // Third quarter moon for dark mode
+        } else {
+          darkModeToggle.textContent = '🌓'; // First quarter moon for light mode
+        }
+        
+        darkModeToggle.style.transform = 'translateY(0)';
+      }, 150);
       
       // Remove transitioning class after animation
       setTimeout(() => {
         document.body.classList.remove('theme-transitioning');
-      }, 500);
+      }, 300);
     });
   }
   
@@ -52,6 +73,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
+  // Map footer layout class addition
+  if (document.getElementById('newsletter-map')) {
+    document.body.classList.add('map-layout');
+  }
+  
   // Set active navigation link based on current page
   const currentPath = window.location.pathname;
   const navLinks = document.querySelectorAll('nav a');
@@ -66,6 +92,16 @@ document.addEventListener('DOMContentLoaded', function() {
       link.classList.add('active');
     } else {
       link.classList.remove('active');
+    }
+  });
+  
+  // Fix line breaks after hyperlinks in newsletters
+  const newsletterLinks = document.querySelectorAll('.card p a');
+  newsletterLinks.forEach(link => {
+    // Check if link is followed by a <br> tag
+    const nextSibling = link.nextSibling;
+    if (nextSibling && nextSibling.nodeType === Node.ELEMENT_NODE && nextSibling.tagName === 'BR') {
+      nextSibling.remove();
     }
   });
 });
