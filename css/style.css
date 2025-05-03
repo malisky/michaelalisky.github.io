@@ -825,3 +825,35 @@ footer {
   height: 100%;
   border: none;
 }
+
+
+.newsletter-entry {
+  flex: 0 0 auto;
+  width: 200px;
+  background: transparent;
+  border-radius: 12px;
+  transition: transform 0.4s ease;
+  text-align: center;
+}
+
+.newsletter-entry img {
+  width: 100%;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.newsletter-entry h3 {
+  margin: 0.5rem 0 0.2rem;
+  font-size: 1rem;
+  color: #111;
+}
+
+.newsletter-entry .date {
+  font-size: 0.8rem;
+  color: #777;
+}
+
+.newsletter-entry:hover {
+  transform: scale(1.25);
+  z-index: 5;
+}

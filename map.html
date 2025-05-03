@@ -16,10 +16,17 @@
 <body>
   <div id="map"></div>
   <script>
-    const map = L.map('map').setView([48.5, 15.5], 4);  // Zoomed on Europe
+    const map = L.map('map').setView([30, 10], 2.3);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
+
+    const articles = {"taiwan.html": [23.6978, 120.9605], "mongolia.html": [47.8864, 106.9057], "spain.html": [40.4168, -3.7038], "georgia.html": [41.7151, 44.8271], "slovenia.html": [46.1512, 14.9955], "turkey.html": [39.9208, 32.8541], "november.html": [48.2082, 16.3738]};
+
+    for (const [slug, coords] of Object.entries(articles)) {
+      const marker = L.marker(coords).addTo(map);
+      marker.bindPopup(`<a href="/newsletter/${slug}" target="_top">${slug.replace('.html', '').replace(/\b\w/g, c => c.toUpperCase())}</a>`);
+    }
   </script>
 </body>
 </html>
