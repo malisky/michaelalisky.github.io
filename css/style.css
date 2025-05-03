@@ -470,3 +470,17 @@ body.dark-mode .leaflet-control-zoom-out {
 body.dark-mode .popup-date {
   color: #aaa;
 }
+
+/* Footer icon standardization */
+.icon-group img, 
+footer img {
+  width: 24px;
+  height: 24px;
+  margin: 0 0.5rem;
+  transition: opacity 0.2s ease;
+}
+
+.icon-group a:hover img,
+footer a:hover img {
+  opacity: 0.8;
+}
