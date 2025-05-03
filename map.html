@@ -1,10 +1,11 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>Map</title>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="/css/style.css" />
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <style>
     html, body, #map {
@@ -16,31 +17,82 @@
 <body>
   <div id="map"></div>
   
-<script>
-  const map = L.map('map').setView([30, 10], 2.3);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors'
-  }).addTo(map);
-
-  const articles = {"taiwan.html": [23.6978, 120.9605], "mongolia.html": [47.8864, 106.9057], "spain.html": [40.4168, -3.7038], "georgia.html": [41.7151, 44.8271], "slovenia.html": [46.1512, 14.9955], "turkey.html": [39.9208, 32.8541], "november.html": [48.2082, 16.3738]};
-  const markers = {};
-
-  for (const [slug, coords] of Object.entries(articles)) {
-    const marker = L.marker(coords).addTo(map);
-    marker.bindPopup(`<a href="/newsletter/${slug}" target="_top">${slug.replace('.html', '').replace(/\b\w/g, c => c.toUpperCase())}</a>`);
-    markers[slug] = marker;
-  }
-
-  window.addEventListener("message", (event) => {
-    const {{ slug, coords }} = event.data;
-    if (!coords || !slug) return;
-
-    map.setView(coords, 5, { animate: true, duration: 0.7 });
-    if (markers[slug]) {
-      markers[slug].openPopup();
-    }
-  }, false);
-</script>
-
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize the map
+      const map = L.map('map').setView([30, 10], 2.3);
+      
+      // Add tile layer
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map);
+      
+      // Storage for markers
+      const markers = {};
+      
+      // Load newsletter data
+      fetch('/newsletter/newsletters.json')
+        .then(res => res.json())
+        .then(data => {
+          // Create markers for each newsletter
+          data.forEach(entry => {
+            if (entry.location) {
+              // Extract the slug from the link
+              const slug = entry.link.replace(/^.*\//, "");
+              
+              // Create popup content
+              const popup = `
+                <div class="map-popup">
+                  <a href="${entry.link}" target="_top">
+                    <img src="${entry.image}" alt="${entry.title}">
+                    <div class="popup-title">${entry.title}</div>
+                  </a>
+                </div>`;
+              
+              // Add marker
+              const marker = L.marker([entry.location.lat, entry.location.lng]).addTo(map);
+              marker.bindPopup(popup);
+              markers[slug] = marker;
+            }
+          });
+          
+          // Signal that map is ready
+          window.parent.postMessage({ type: 'map-ready' }, '*');
+        })
+        .catch(error => {
+          console.error('Error loading newsletter data:', error);
+        });
+      
+      // Listen for messages from parent window
+      window.addEventListener("message", (event) => {
+        // Check if we have a valid message
+        if (!event.data || typeof event.data !== 'object') return;
+        
+        const { type, slug, coords } = event.data;
+        
+        // Handle location selection message
+        if ((type === 'select-location' || !type) && (slug || coords)) {
+          // If we have coords, use them; otherwise try to use the slug
+          if (coords) {
+            // Zoom to the location
+            map.setView(coords, 6, { animate: true, duration: 0.7 });
+            
+            // Open the popup if we have a marker for this slug
+            if (slug && markers[slug]) {
+              setTimeout(() => {
+                markers[slug].openPopup();
+              }, 800);
+            }
+          }
+          
+          // Acknowledge receipt
+          window.parent.postMessage({ 
+            type: 'location-selected',
+            slug: slug
+          }, '*');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
