@@ -56,14 +56,14 @@ document.addEventListener("DOMContentLoaded", function() {
       // Trigger continuous scroll
       setInterval(continuousScroll, 10);
     });
-
-  // Map section simplified: just show and scroll down on click
+  
+  // Map section hover effect to scroll down
   const mapSection = document.getElementById('map-section');
-  mapSection.addEventListener('click', () => {
-    mapSection.style.height = '400px';
-    window.scrollTo({
-      top: mapSection.offsetTop,
-      behavior: 'smooth'
-    });
+  document.body.addEventListener('mousemove', (event) => {
+    if (event.clientY > window.innerHeight - 50) {
+      mapSection.classList.add('expanded');
+    } else {
+      mapSection.classList.remove('expanded');
+    }
   });
 });
