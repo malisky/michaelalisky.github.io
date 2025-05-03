@@ -100,49 +100,13 @@
                 icon: markerIcon
               }).addTo(map);
               
-              // Create popup content
-              const popupHtml = `
-                <div class="custom-popup">
-                  <img src="${entry.image}" alt="${entry.title}" class="custom-popup-image">
-                  <div class="popup-content">
-                    <h3 class="custom-popup-title">${entry.title}</h3>
-                    <div class="custom-popup-date">${entry.date || ''}</div>
-                    <a href="${entry.link}" class="popup-link">Read more →</a>
-                  </div>
-                </div>`;
-              
-              // Configure popup
-              const popup = L.popup({
-                maxWidth: 280,
-                minWidth: 250,
-                className: 'custom-marker-popup',
-                closeButton: false
-              }).setContent(popupHtml);
-              
-              // Add popup on hover
-              marker.bindPopup(popup);
-              
-              // Show popup on hover
-              marker.on('mouseover', function() {
-                this.openPopup();
+              // Add direct click to navigate to the newsletter page
+              marker.on('click', function() {
+                window.location.href = entry.link;
               });
               
-              // Don't close popup on mouseout to allow clicking the link
-              // Instead add a small delay before closing
-              marker.on('mouseout', function() {
-                setTimeout(() => {
-                  if (!document.querySelector('.custom-marker-popup:hover')) {
-                    this.closePopup();
-                  }
-                }, 300);
-              });
-              
-              // Keep popup open when hovering over it
-              document.addEventListener('mouseover', function(e) {
-                if (e.target.closest('.custom-marker-popup')) {
-                  marker.openPopup();
-                }
-              });
+              // Make cursor change to pointer on hover
+              marker.getElement().style.cursor = 'pointer';
             }
           });
         })
