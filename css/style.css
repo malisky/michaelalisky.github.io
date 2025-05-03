@@ -474,8 +474,8 @@ body.dark-mode .popup-date {
 /* Footer icon standardization */
 .icon-group img, 
 footer img {
-  width: 24px;
-  height: 24px;
+  width: 72px;
+  height: 72px;
   margin: 0 0.5rem;
   transition: opacity 0.2s ease;
 }
