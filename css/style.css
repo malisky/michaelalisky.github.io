@@ -686,3 +686,45 @@ footer {
 .map-section:hover {
   height: 66vh;
 }
+
+
+/* Refined layout and transitions */
+.newsletter-scroll-area {
+  position: relative;
+  height: 33vh;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  transition: height 0.6s ease-in-out;
+}
+
+.map-section {
+  height: 67vh;
+  transition: height 0.6s ease-in-out;
+}
+
+.map-section.expanded {
+  height: 100vh;
+}
+
+.newsletter-scroll-area.shrunk {
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.newsletter-entry {
+  flex: 0 0 auto;
+  width: 240px;
+  background: #f2f2f2;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.newsletter-entry:hover {
+  transform: translateY(-5px);
+}
