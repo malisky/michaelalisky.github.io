@@ -4,15 +4,15 @@
   --bg-color: #fff;
   --card-bg: #fff;
   --border-color: #eaeaea;
-  --link-color: #0066cc;
-  --link-hover: #004499;
+  --link-color: #3e8e41; /* Duller green theme */
+  --link-hover: #2c6a30; /* Darker duller green */
   --header-color: #222;
-  --nav-active: #0066cc;
+  --nav-active: #3e8e41; /* Duller green theme */
   --toggle-bg: #f0f0f0;
   --shadow-color: rgba(0, 0, 0, 0.1);
   --secondary-text: #666;
-  --marker-color: #0066cc;
-  --transition-speed: 0.3s;
+  --marker-color: #3e8e41; /* Duller green theme */
+  --transition-speed: 0.2s; /* Faster transition */
 }
 
 .dark-mode {
@@ -20,14 +20,14 @@
   --bg-color: #121212;
   --card-bg: #1e1e1e;
   --border-color: #333;
-  --link-color: #6ab0ff;
-  --link-hover: #90c8ff;
+  --link-color: #5fa463; /* Duller lighter green for dark mode */
+  --link-hover: #75b579; /* Even lighter duller green for hover in dark mode */
   --header-color: #f0f0f0;
-  --nav-active: #6ab0ff;
+  --nav-active: #5fa463; /* Duller lighter green for dark mode */
   --toggle-bg: #333;
   --shadow-color: rgba(0, 0, 0, 0.4);
   --secondary-text: #aaa;
-  --marker-color: #6ab0ff;
+  --marker-color: #5fa463; /* Duller lighter green for dark mode */
 }
 
 * {
@@ -91,6 +91,11 @@ em {
   font-style: italic;
 }
 
+/* Fix for hyperlinks in paragraphs */
+p a {
+  display: inline;
+}
+
 /* Header and Navigation */
 header {
   text-align: center;
@@ -147,11 +152,12 @@ nav a:hover::after {
   color: var(--text-color);
   padding: 0.3rem 0.5rem;
   border-radius: 4px;
-  transition: background-color var(--transition-speed);
+  transition: all var(--transition-speed);
 }
 
 .nav-toggle:hover {
   background-color: var(--toggle-bg);
+  transform: translateY(-2px);
 }
 
 /* Cards and content */
@@ -199,6 +205,22 @@ nav a:hover::after {
   margin-bottom: 0;
 }
 
+/* Featured image handling for newsletters */
+.featured-image {
+  width: 100%;
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.featured-image img {
+  width: 100%;
+  display: block;
+  max-height: 500px;
+  object-fit: cover;
+}
+
 /* Newsletter specific */
 .newsletter-entry {
   margin-top: 1rem;
@@ -211,9 +233,9 @@ nav a:hover::after {
 /* Map styles */
 .map-full-width {
   width: 100%;
-  height: 400px;
+  height: 500px; /* Increased height */
   position: relative;
-  margin-bottom: 2rem;
+  margin-bottom: 0; /* Removed margin to have footer hover over it */
 }
 
 #newsletter-map {
@@ -227,8 +249,8 @@ nav a:hover::after {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, transparent 20%);
+  height: 80px; /* Taller gradient */
+  background: linear-gradient(to bottom, var(--bg-color) 0%, rgba(255,255,255,0) 100%);
   pointer-events: none;
   z-index: 2;
 }
@@ -238,7 +260,7 @@ nav a:hover::after {
   height: 14px;
   background-color: var(--marker-color);
   border-radius: 50%;
-  box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.3);
+  box-shadow: 0 0 0 4px rgba(62, 142, 65, 0.3); /* Duller green shadow */
   transition: transform 0.2s;
 }
 
@@ -249,15 +271,31 @@ nav a:hover::after {
 /* Footer */
 footer {
   padding: 2rem 0;
-  margin-top: 2rem;
+  margin-top: 0; /* Removed top margin when over map */
   text-align: center;
   border-top: 1px solid var(--border-color);
+  background-color: var(--bg-color);
+  position: relative;
+  z-index: 10; /* Higher z-index to hover over map */
+}
+
+/* For the footer in the newsletter page (over map) */
+.map-layout footer {
+  margin-top: -100px; /* Negative margin to overlap with map */
+  padding-top: 0;
+  background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, var(--bg-color) 40px, var(--bg-color) 100%);
+  border-top: none;
+}
+
+.dark-mode .map-layout footer {
+  background: linear-gradient(to bottom, rgba(18,18,18,0) 0%, var(--bg-color) 40px, var(--bg-color) 100%);
 }
 
 .icon-group {
   display: flex;
   justify-content: center;
   gap: 1.5rem;
+  padding-top: 60px; /* Add padding to push icons down in the gradient */
 }
 
 .icon-group a {
@@ -331,7 +369,7 @@ footer {
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.5s;
+  transition: opacity 0.3s; /* Faster transition */
 }
 
 .theme-transitioning .theme-transition {
@@ -364,7 +402,15 @@ footer {
   }
   
   .map-full-width {
-    height: 300px;
+    height: 400px;
+  }
+  
+  .map-layout footer {
+    margin-top: -80px;
+  }
+  
+  .icon-group {
+    padding-top: 40px;
   }
 }
 
@@ -385,5 +431,9 @@ footer {
   
   .icon-group {
     gap: 1rem;
+  }
+  
+  .map-full-width {
+    height: 350px;
   }
 }
