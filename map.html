@@ -1,28 +1,25 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <title>Newsletter Map – Michael Alisky</title>
+  <title>Map</title>
+  <meta charset="utf-8" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <link rel="stylesheet" href="/css/style.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <style>
-    #map { height: 600px; width: 100%; margin-top: 2rem; }
-    .leaflet-popup-content img { width: 100px; border-radius: 8px; }
+    html, body, #map {
+      height: 100%;
+      margin: 0;
+    }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Newsletter World Map</h1>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/research.html">Research</a>
-      <a href="/newsletter.html">Newsletter</a>
-    </nav>
-  </header>
-  <main>
-    <div id="map"></div>
-  </main>
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="/js/map.js"></script>
+  <div id="map"></div>
+  <script>
+    const map = L.map('map').setView([48.5, 15.5], 4);  // Zoomed on Europe
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+  </script>
 </body>
 </html>

@@ -9,10 +9,11 @@ document.addEventListener("DOMContentLoaded", function () {
         const card = document.createElement("div");
         card.classList.add("newsletter-entry");
         card.innerHTML = `
-          <img src="${entry.image}" alt="${entry.title}" />
-          <h2>${entry.title}</h2>
-          <p>${entry.description}</p>
-          <a href="${entry.link}">Read more →</a>
+          <a href="/newsletter/${entry.link}" style="text-decoration: none; color: inherit;">
+            <img src="${entry.image}" alt="${entry.title}" />
+            <h2>${entry.title}</h2>
+            <p>${entry.description}</p>
+          </a>
         `;
         container.appendChild(card);
       });
@@ -44,4 +45,13 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll(".scroll-zone").forEach((el) =>
     el.addEventListener("mouseleave", stopScrolling)
   );
+
+  // Map expand interaction
+  const mapSection = document.querySelector(".map-section");
+  const scrollArea = document.querySelector(".newsletter-scroll-area");
+
+  mapSection.addEventListener("click", () => {
+    mapSection.classList.toggle("expanded");
+    scrollArea.classList.toggle("shrunk");
+  });
 });
