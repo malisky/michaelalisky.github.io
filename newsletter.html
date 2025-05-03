@@ -36,92 +36,21 @@
     <div id="newsletter-map"></div>
   </div>
   
-  <div class="container">
-    <footer>
-      <div class="icon-group">
-        <a href="https://github.com/malisky" target="_blank">
-          <img src="/images/github-icon.svg" alt="GitHub" />
-        </a>
-        <a href="https://www.linkedin.com/in/michaelalisky" target="_blank">
-          <img src="/images/linkedin-icon.svg" alt="LinkedIn" />
-        </a>
-        <a href="https://scholar.google.com/citations?user=b4EtdL4AAAAJ&hl=en" target="_blank">
-          <img src="/images/scholar-icon.svg" alt="Google Scholar" />
-        </a>
-      </div>
-    </footer>
-  </div>
+  <footer>
+    <div class="icon-group">
+      <a href="https://github.com/malisky" target="_blank">
+        <img src="/images/github-icon.svg" alt="GitHub" />
+      </a>
+      <a href="https://www.linkedin.com/in/michaelalisky" target="_blank">
+        <img src="/images/linkedin-icon.svg" alt="LinkedIn" />
+      </a>
+      <a href="https://scholar.google.com/citations?user=b4EtdL4AAAAJ&hl=en" target="_blank">
+        <img src="/images/scholar-icon.svg" alt="Google Scholar" />
+      </a>
+    </div>
+  </footer>
   
   <div class="theme-transition"></div>
   <div class="scroll-top">↑</div>
-  
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Initialize the map
-      const map = L.map('newsletter-map', {
-        zoomControl: true,
-        scrollWheelZoom: false,
-        maxZoom: 18,
-        minZoom: 2,
-        attributionControl: false,
-        doubleClickZoom: false
-      }).setView([30, 20], 2.5);
-      
-      // Move zoom control to the right
-      map.zoomControl.setPosition('topright');
-      
-      // Add custom styled tile layer
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-      }).addTo(map);
-      
-      // Add small attribution in bottom corner
-      L.control.attribution({
-        position: 'bottomright',
-        prefix: false
-      }).addTo(map);
-      
-      // Custom icon for markers
-      const markerIcon = L.divIcon({
-        className: 'custom-marker-icon',
-        html: '<div class="marker-dot"></div>',
-        iconSize: [18, 18],
-        iconAnchor: [9, 9]
-      });
-      
-      // Load newsletter data
-      fetch('/newsletter/newsletters.json')
-        .then(res => res.json())
-        .then(data => {
-          // Create markers for each newsletter
-          data.forEach(entry => {
-            if (entry.location) {
-              // Create marker
-              const marker = L.marker([entry.location.lat, entry.location.lng], { 
-                icon: markerIcon
-              }).addTo(map);
-              
-              // Add direct click to navigate to the newsletter page
-              marker.on('click', function() {
-                window.location.href = entry.link;
-              });
-              
-              // Make cursor change to pointer on hover
-              marker.getElement().style.cursor = 'pointer';
-            }
-          });
-        })
-        .catch(error => {
-          console.error('Error loading newsletter data:', error);
-          
-          // Show error message
-          const mapContainer = document.querySelector('.map-full-width');
-          const errorDiv = document.createElement('div');
-          errorDiv.className = 'map-error';
-          errorDiv.textContent = 'Could not load newsletter locations';
-          mapContainer.appendChild(errorDiv);
-        });
-    });
-  </script>
 </body>
 </html>
