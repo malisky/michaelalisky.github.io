@@ -196,6 +196,7 @@ nav a:hover::after {
   object-fit: cover;
 }
 
+/* Default 2-column grid */
 .image-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -203,8 +204,24 @@ nav a:hover::after {
   margin-bottom: 1.5rem;
 }
 
-.image-grid .image-container {
+/* 3-column grid - new! */
+.image-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.image-grid .image-container,
+.image-grid-3 .image-container {
   margin-bottom: 0;
+}
+
+/* Image containers in 3-column grids might need height adjustment */
+.image-grid-3 .image-container img {
+  max-height: 400px;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* Featured image handling for newsletters */
@@ -441,7 +458,7 @@ footer {
     font-size: 1.5rem;
   }
   
-  .image-grid {
+  .image-grid, .image-grid-3 {
     grid-template-columns: 1fr;
   }
   
@@ -487,5 +504,12 @@ footer {
   
   .intro-container {
     margin-bottom: 2rem;
+  }
+}
+
+/* Medium screens - 2 columns for 3-column grids */
+@media (min-width: 481px) and (max-width: 768px) {
+  .image-grid-3 {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
