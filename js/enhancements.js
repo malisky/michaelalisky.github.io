@@ -1,25 +1,17 @@
+// Simplified yet enhanced version of enhancements.js
 document.addEventListener("DOMContentLoaded", () => {
   // Theme toggle functionality
   const toggle = document.getElementById("night-toggle");
   const transitionOverlay = document.querySelector(".theme-transition");
   
   if (toggle && transitionOverlay) {
-    // Handle dark mode toggle
+    // Handle dark mode toggle (without delay and animation checks)
     toggle.addEventListener("click", () => {
-      if (document.body.classList.contains("animating-theme")) return;
+      // Just toggle the class immediately
+      document.body.classList.toggle("dark-mode");
       
-      document.body.classList.add("animating-theme");
-      transitionOverlay.style.opacity = "1";
-      
-      setTimeout(() => {
-        document.body.classList.toggle("dark-mode");
-        localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
-        
-        transitionOverlay.style.opacity = "0";
-        setTimeout(() => {
-          document.body.classList.remove("animating-theme");
-        }, 700);
-      }, 50);
+      // Save preference
+      localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
     });
     
     // Apply theme from storage
