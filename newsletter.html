@@ -5,13 +5,11 @@
   <title>Newsletter – Michael Alisky</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link href="/images/favicon.svg" rel="icon" type="image/svg+xml"/>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
   <script src="/js/enhancements.js" defer></script>
-  <script src="/js/newsletter.js" defer></script>
 </head>
 <body>
   <div class="container">
@@ -29,21 +27,13 @@
     <main>
       <section class="intro-container">
         <p class="intro-text">
-          Travel dispatches from around the world.
+          Starting in the summer of 2024, I began writing a travel newsletter for my close friends and family. In the interest of serving humanity more broadly, I've uploaded those entries here. Enjoy.
         </p>
       </section>
       
-      <section class="newsletter-carousel">
-        <button id="arrow-left" class="scroll-arrow">←</button>
-        <div class="newsletter-scroll-wrapper">
-          <div id="newsletter-container" class="newsletter-container"></div>
-        </div>
-        <button id="arrow-right" class="scroll-arrow">→</button>
-      </section>
-      
-      <section class="map-container">
-        <iframe src="/map.html" id="map-frame" loading="lazy"></iframe>
-      </section>
+      <div class="map-container">
+        <div id="newsletter-map"></div>
+      </div>
     </main>
 
     <footer>
@@ -63,5 +53,91 @@
   
   <div class="theme-transition"></div>
   <div class="scroll-top">↑</div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize the map
+      const map = L.map('newsletter-map', {
+        zoomControl: true,
+        scrollWheelZoom: true,
+        maxZoom: 18,
+        minZoom: 2
+      }).setView([20, 10], 2);
+      
+      // Move zoom control to the right
+      map.zoomControl.setPosition('topright');
+      
+      // Add tile layer
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+      }).addTo(map);
+      
+      // Custom icon creator
+      function createCustomIcon() {
+        return L.divIcon({
+          className: 'custom-marker-icon',
+          iconSize: [12, 12],
+          iconAnchor: [6, 6]
+        });
+      }
+      
+      // Load newsletter data
+      fetch('/newsletter/newsletters.json')
+        .then(res => res.json())
+        .then(data => {
+          // Create markers for each newsletter
+          data.forEach(entry => {
+            if (entry.location) {
+              // Extract the slug from the link
+              const slug = entry.link.replace(/^.*\//, "");
+              
+              // Create popup content
+              const popupHtml = `
+                <div class="custom-popup">
+                  <img src="${entry.image}" alt="${entry.title}" class="custom-popup-image">
+                  <div class="popup-content">
+                    <h3 class="custom-popup-title">${entry.title}</h3>
+                    <div class="custom-popup-date">${entry.date || ''}</div>
+                    <a href="${entry.link}" style="display: block; text-align: right; font-size: 0.9rem; margin-top: 0.5rem;">Read more →</a>
+                  </div>
+                </div>`;
+              
+              // Add marker
+              const marker = L.marker([entry.location.lat, entry.location.lng], { 
+                icon: createCustomIcon()
+              }).addTo(map);
+              
+              // Configure popup
+              const popup = L.popup({
+                maxWidth: 250,
+                minWidth: 220,
+                className: 'custom-marker-popup'
+              }).setContent(popupHtml);
+              
+              marker.bindPopup(popup);
+              
+              // Make marker bigger on hover
+              marker.on('mouseover', function() {
+                this._icon.style.transform = 'translate3d(-6px, -6px, 0) scale(1.5)';
+              });
+              
+              marker.on('mouseout', function() {
+                this._icon.style.transform = 'translate3d(-6px, -6px, 0)';
+              });
+            }
+          });
+        })
+        .catch(error => {
+          console.error('Error loading newsletter data:', error);
+          
+          // Show error message
+          const mapContainer = document.querySelector('.map-container');
+          const errorDiv = document.createElement('div');
+          errorDiv.className = 'map-error';
+          errorDiv.textContent = 'Could not load newsletter locations';
+          mapContainer.appendChild(errorDiv);
+        });
+    });
+  </script>
 </body>
 </html>
