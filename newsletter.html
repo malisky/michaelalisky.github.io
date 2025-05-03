@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="/css/style.css" />
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+  <script src="/js/enhancements.js" defer></script>
   <script type="module" src="/js/newsletter.js" defer></script>
 </head>
 <body>
@@ -17,19 +18,18 @@
       <button id="night-toggle">🌓</button>
     </nav>
   </header>
-
   <main class="newsletter-wrapper">
     <section class="newsletter-carousel">
-      <div class="scroll-zone left"></div>
-      <div id="newsletter-container" class="newsletter-container"></div>
-      <div class="scroll-zone right"></div>
+      <button id="arrow-left" class="scroll-arrow">←</button>
+      <div class="newsletter-scroll-wrapper">
+        <div id="newsletter-container" class="newsletter-container"></div>
+      </div>
+      <button id="arrow-right" class="scroll-arrow">→</button>
     </section>
-
     <section class="map-container" id="map-container">
       <iframe src="/map.html" id="map-frame" loading="lazy"></iframe>
     </section>
   </main>
-
   <footer>
     <div style="text-align:center; padding: 1rem;">
       <a href="https://scholar.google.com/citations?user=YOUR_ID" target="_blank" style="margin: 0 0.5rem;">
@@ -43,5 +43,7 @@
       </a>
     </div>
   </footer>
+  <div class="theme-transition"></div>
+  <div class="scroll-top">↑</div>
 </body>
 </html>
