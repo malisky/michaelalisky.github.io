@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
   // Dark mode toggle
   const darkModeToggle = document.getElementById('night-toggle');
+  const newsletterMap = document.getElementById('newsletter-map');
   
   if (darkModeToggle) {
     // Check for saved theme preference
@@ -48,6 +49,14 @@ document.addEventListener('DOMContentLoaded', function() {
       setTimeout(() => {
         document.body.classList.remove('theme-transitioning');
       }, 300);
+      
+      // Update map tiles if map exists
+      if (newsletterMap && window.leafletMap) {
+        setTimeout(() => {
+          // Force a redraw of the map tiles
+          window.leafletMap.invalidateSize();
+        }, 400);
+      }
     });
   }
   
@@ -74,8 +83,11 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // Map footer layout class addition
-  if (document.getElementById('newsletter-map')) {
+  if (newsletterMap) {
     document.body.classList.add('map-layout');
+    
+    // Initialize the map
+    initMap();
   }
   
   // Set active navigation link based on current page
@@ -105,3 +117,74 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
+
+// Map initialization function
+function initMap() {
+  // Initialize the map
+  const map = L.map('newsletter-map', {
+    zoomControl: true,
+    scrollWheelZoom: false,
+    maxZoom: 18,
+    minZoom: 2,
+    attributionControl: false,
+    doubleClickZoom: false
+  }).setView([30, 20], 2.5);
+  
+  // Store map reference globally so we can access it for dark mode toggle
+  window.leafletMap = map;
+  
+  // Move zoom control to the right
+  map.zoomControl.setPosition('topright');
+  
+  // Add custom styled tile layer
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+  }).addTo(map);
+  
+  // Add small attribution in bottom corner
+  L.control.attribution({
+    position: 'bottomright',
+    prefix: false
+  }).addTo(map);
+  
+  // Custom icon for markers
+  const markerIcon = L.divIcon({
+    className: 'custom-marker-icon',
+    html: '<div class="marker-dot"></div>',
+    iconSize: [18, 18],
+    iconAnchor: [9, 9]
+  });
+  
+  // Load newsletter data
+  fetch('/newsletter/newsletters.json')
+    .then(res => res.json())
+    .then(data => {
+      // Create markers for each newsletter
+      data.forEach(entry => {
+        if (entry.location) {
+          // Create marker
+          const marker = L.marker([entry.location.lat, entry.location.lng], { 
+            icon: markerIcon
+          }).addTo(map);
+          
+          // Add direct click to navigate to the newsletter page
+          marker.on('click', function() {
+            window.location.href = entry.link;
+          });
+          
+          // Make cursor change to pointer on hover
+          marker.getElement().style.cursor = 'pointer';
+        }
+      });
+    })
+    .catch(error => {
+      console.error('Error loading newsletter data:', error);
+      
+      // Show error message
+      const mapContainer = document.querySelector('.map-full-width');
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'map-error';
+      errorDiv.textContent = 'Could not load newsletter locations';
+      mapContainer.appendChild(errorDiv);
+    });
+}
