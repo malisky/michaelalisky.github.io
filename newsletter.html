@@ -5,44 +5,62 @@
   <title>Newsletter – Michael Alisky</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link href="/images/favicon.svg" rel="icon" type="image/svg+xml"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
   <script src="/js/enhancements.js" defer></script>
-  <script type="module" src="/js/newsletter.js" defer></script>
+  <script src="/js/newsletter.js" defer></script>
 </head>
 <body>
-  <header class="navbar clean-navbar">
-    <nav class="nav-links">
+  <div class="container">
+    <header>
+      <h1>Newsletter</h1>
+    </header>
+    
+    <nav class="sticky">
       <a href="/">Home</a>
       <a href="/research.html">Research</a>
       <a href="/newsletter.html" class="active">Newsletter</a>
-      <button id="night-toggle">🌓</button>
+      <button id="night-toggle" class="nav-toggle" title="Toggle dark mode">🌓</button>
     </nav>
-  </header>
-  <main class="newsletter-wrapper">
-    <section class="newsletter-carousel">
-      <button id="arrow-left" class="scroll-arrow">←</button>
-      <div class="newsletter-scroll-wrapper">
-        <div id="newsletter-container" class="newsletter-container"></div>
+
+    <main>
+      <section class="intro-container">
+        <p class="intro-text">
+          Travel dispatches from around the world.
+        </p>
+      </section>
+      
+      <section class="newsletter-carousel">
+        <button id="arrow-left" class="scroll-arrow">←</button>
+        <div class="newsletter-scroll-wrapper">
+          <div id="newsletter-container" class="newsletter-container"></div>
+        </div>
+        <button id="arrow-right" class="scroll-arrow">→</button>
+      </section>
+      
+      <section class="map-container">
+        <iframe src="/map.html" id="map-frame" loading="lazy"></iframe>
+      </section>
+    </main>
+
+    <footer>
+      <div class="icon-group">
+        <a href="https://github.com/malisky" target="_blank">
+          <img src="/images/github-icon.svg" alt="GitHub" />
+        </a>
+        <a href="https://www.linkedin.com/in/michaelalisky" target="_blank">
+          <img src="/images/linkedin-icon.svg" alt="LinkedIn" />
+        </a>
+        <a href="https://scholar.google.com/citations?user=b4EtdL4AAAAJ&hl=en" target="_blank">
+          <img src="/images/scholar-icon.svg" alt="Google Scholar" />
+        </a>
       </div>
-      <button id="arrow-right" class="scroll-arrow">→</button>
-    </section>
-    <section class="map-container" id="map-container">
-      <iframe src="/map.html" id="map-frame" loading="lazy"></iframe>
-    </section>
-  </main>
-  <footer>
-    <div style="text-align:center; padding: 1rem;">
-      <a href="https://scholar.google.com/citations?user=YOUR_ID" target="_blank" style="margin: 0 0.5rem;">
-        <img src="/images/scholar-icon.svg" alt="Google Scholar" width="24" height="24" />
-      </a>
-      <a href="https://www.linkedin.com/in/malisky" target="_blank" style="margin: 0 0.5rem;">
-        <img src="/images/linkedin-icon.svg" alt="LinkedIn" width="24" height="24" />
-      </a>
-      <a href="https://github.com/malisky" target="_blank" style="margin: 0 0.5rem;">
-        <img src="/images/github-icon.svg" alt="GitHub" width="24" height="24" />
-      </a>
-    </div>
-  </footer>
+    </footer>
+  </div>
+  
   <div class="theme-transition"></div>
   <div class="scroll-top">↑</div>
 </body>
