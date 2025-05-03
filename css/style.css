@@ -4,15 +4,15 @@
   --bg-color: #fff;
   --card-bg: #fff;
   --border-color: #eaeaea;
-  --link-color: #4a6f4a; 
-  --link-hover: #2f4f2f; 
+  --link-color: #4a6f4a; /* More elegant, muted sage green */
+  --link-hover: #2f4f2f; /* Darker forest green */
   --header-color: #222;
-  --nav-active: #4a6f4a; 
+  --nav-active: #4a6f4a; /* Elegant sage green */
   --toggle-bg: #f0f0f0;
   --shadow-color: rgba(0, 0, 0, 0.1);
   --secondary-text: #666;
-  --marker-color: #4a6f4a; 
-  --transition-speed: 0.2s; 
+  --marker-color: #4a6f4a; /* Elegant sage green */
+  --transition-speed: 0.2s; /* Faster transition */
 }
 
 .dark-mode {
@@ -20,14 +20,14 @@
   --bg-color: #121212;
   --card-bg: #1e1e1e;
   --border-color: #333;
-  --link-color: #8bac89; 
-  --link-hover: #a1c39f; 
+  --link-color: #8bac89; /* Softer sage green for dark mode */
+  --link-hover: #a1c39f; /* Lighter sage for hover in dark mode */
   --header-color: #f0f0f0;
-  --nav-active: #8bac89; 
+  --nav-active: #8bac89; /* Softer sage green for dark mode */
   --toggle-bg: #333;
   --shadow-color: rgba(0, 0, 0, 0.4);
   --secondary-text: #aaa;
-  --marker-color: #8bac89; 
+  --marker-color: #8bac89; /* Softer sage green for dark mode */
 }
 
 * {
@@ -47,6 +47,8 @@ body {
   color: var(--text-color);
   line-height: 1.6;
   font-size: 16px;
+  /* Make everything slightly smaller to fit better */
+  font-size: 95%;
 }
 
 .container {
@@ -99,14 +101,14 @@ p a {
 /* Header and Navigation */
 header {
   text-align: center;
-  padding: 2rem 0 1rem;
+  padding: 1.8rem 0 0.8rem; /* Slightly reduced padding */
 }
 
 nav.sticky {
   position: sticky;
   top: 0;
-  padding: 0.8rem 0;
-  margin-bottom: 2rem;
+  padding: 0.7rem 0; /* Slightly reduced padding */
+  margin-bottom: 1.8rem; /* Slightly reduced margin */
   background-color: var(--bg-color);
   border-bottom: 1px solid var(--border-color);
   display: flex;
@@ -171,11 +173,11 @@ nav a:hover::after {
 
 .intro-container {
   text-align: center;
-  margin-bottom: 3.5rem; /* Increased space before map */
+  margin-bottom: 3rem; /* Adjusted space before map */
 }
 
 .intro-text {
-  font-size: 1.2rem;
+  font-size: 1.15rem; /* Slightly smaller */
   color: var(--secondary-text);
   max-width: 600px;
   margin: 0 auto;
@@ -233,9 +235,9 @@ nav a:hover::after {
 /* Map styles */
 .map-full-width {
   width: 100%;
-  height: 500px; 
+  height: 480px; /* Slightly reduced height */
   position: relative;
-  margin-bottom: 0; 
+  margin-bottom: 0;
 }
 
 #newsletter-map {
@@ -277,7 +279,7 @@ nav a:hover::after {
   top: 0;
   left: 0;
   width: 100%;
-  height: 80px; /* Taller gradient */
+  height: 80px;
   background: linear-gradient(to bottom, var(--bg-color) 0%, rgba(255,255,255,0) 100%);
   pointer-events: none;
   z-index: 2;
@@ -292,7 +294,7 @@ nav a:hover::after {
   height: 14px;
   background-color: var(--marker-color);
   border-radius: 50%;
-  box-shadow: 0 0 0 4px rgba(74, 111, 74, 0.3);
+  box-shadow: 0 0 0 4px rgba(74, 111, 74, 0.3); /* Elegant sage green shadow */
   transition: transform 0.2s;
 }
 
@@ -303,19 +305,19 @@ nav a:hover::after {
 /* Footer */
 footer {
   padding: 2rem 0;
-  margin-top: 0; /* Removed top margin when over map */
+  margin-top: 0;
   text-align: center;
   border-top: 1px solid var(--border-color);
   background-color: var(--bg-color);
   position: relative;
-  z-index: 10; /* Higher z-index to hover over map */
+  z-index: 10;
 }
 
 /* For the footer in the newsletter page (over map) */
 .map-layout footer {
-  margin-top: -60px; /* Reduced negative margin to just show icons */
+  margin-top: -60px;
   padding-top: 0;
-  background: transparent; /* No gradient, just floating icons */
+  background: transparent;
   border-top: none;
 }
 
@@ -323,25 +325,35 @@ footer {
   display: flex;
   justify-content: center;
   gap: 1.5rem;
-  padding: 1rem;
-  background-color: var(--bg-color);
-  border-radius: 30px;
-  box-shadow: 0 2px 8px var(--shadow-color);
-  display: inline-flex; /* Make it only as wide as needed */
+  /* Removed padding, background, and box-shadow for floating icons */
 }
 
 .map-layout .icon-group {
-  padding: 0.75rem 1.5rem;
+  /* Adjust for floating freely over the map */
+  padding: 0;
 }
 
 .icon-group a {
   display: inline-block;
+  /* Add individual icon styling */
+  transition: all 0.3s ease;
+}
+
+.icon-group a:hover {
+  transform: translateY(-3px);
 }
 
 .icon-group img {
   width: 24px;
   height: 24px;
   transition: opacity var(--transition-speed);
+  /* Add subtle drop shadow for better visibility over the map */
+  filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.15));
+}
+
+.dark-mode .icon-group img {
+  /* Brighter icons for dark mode */
+  filter: brightness(1.1) drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.25));
 }
 
 .icon-group img:hover {
@@ -405,7 +417,7 @@ footer {
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s; /* Faster transition */
+  transition: opacity 0.3s;
 }
 
 .theme-transitioning .theme-transition {
@@ -467,7 +479,6 @@ footer {
   
   .icon-group {
     gap: 1rem;
-    padding: 0.5rem 1rem;
   }
   
   .map-full-width {
