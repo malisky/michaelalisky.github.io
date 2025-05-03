@@ -728,3 +728,100 @@ footer {
 .newsletter-entry:hover {
   transform: translateY(-5px);
 }
+
+
+.clean-navbar {
+  background: transparent;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.nav-links a {
+  color: #222;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav-links a.active {
+  border-bottom: 2px solid #111;
+}
+
+.newsletter-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.newsletter-carousel {
+  flex: 1;
+  display: flex;
+  position: relative;
+  background: #fff;
+  align-items: center;
+  overflow: hidden;
+  padding: 2rem;
+}
+
+.newsletter-container {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 1rem;
+  width: 100%;
+}
+
+.newsletter-entry {
+  flex: 0 0 auto;
+  width: 240px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.newsletter-entry:hover {
+  transform: translateY(-4px);
+}
+
+.newsletter-entry img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.scroll-zone {
+  position: absolute;
+  top: 0;
+  width: 5%;
+  height: 100%;
+  z-index: 2;
+}
+
+.scroll-zone.left { left: 0; }
+.scroll-zone.right { right: 0; }
+
+.map-container {
+  height: 33vh;
+  transition: height 0.6s ease;
+}
+
+.map-container.expanded {
+  height: 67vh;
+}
+
+#map-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
