@@ -24,7 +24,7 @@
       <button id="night-toggle" class="nav-toggle" title="Toggle dark mode">🌓</button>
     </nav>
 
-    <main>
+    <main class="full-width">
       <section class="intro-container">
         <p class="intro-text">
           Starting in the summer of 2024, I began writing a travel newsletter for my close friends and family. In the interest of serving humanity more broadly, I've uploaded those entries here. Enjoy.
@@ -32,6 +32,7 @@
       </section>
       
       <div class="map-container">
+        <div class="map-gradient"></div>
         <div id="newsletter-map"></div>
       </div>
     </main>
@@ -61,25 +62,31 @@
         zoomControl: true,
         scrollWheelZoom: true,
         maxZoom: 18,
-        minZoom: 2
-      }).setView([20, 10], 2);
+        minZoom: 2,
+        attributionControl: false // Hide attribution for cleaner look
+      }).setView([30, 20], 2.5); // Zoomed in more
       
       // Move zoom control to the right
       map.zoomControl.setPosition('topright');
       
-      // Add tile layer
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+      // Add custom styled tile layer
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
       }).addTo(map);
       
-      // Custom icon creator
-      function createCustomIcon() {
-        return L.divIcon({
-          className: 'custom-marker-icon',
-          iconSize: [12, 12],
-          iconAnchor: [6, 6]
-        });
-      }
+      // Add small attribution in bottom corner
+      L.control.attribution({
+        position: 'bottomright',
+        prefix: false
+      }).addTo(map);
+      
+      // Custom icon for markers
+      const markerIcon = L.divIcon({
+        className: 'custom-marker-icon',
+        html: '<div class="marker-dot"></div>',
+        iconSize: [14, 14],
+        iconAnchor: [7, 7]
+      });
       
       // Load newsletter data
       fetch('/newsletter/newsletters.json')
@@ -88,8 +95,10 @@
           // Create markers for each newsletter
           data.forEach(entry => {
             if (entry.location) {
-              // Extract the slug from the link
-              const slug = entry.link.replace(/^.*\//, "");
+              // Create marker
+              const marker = L.marker([entry.location.lat, entry.location.lng], { 
+                icon: markerIcon
+              }).addTo(map);
               
               // Create popup content
               const popupHtml = `
@@ -98,31 +107,41 @@
                   <div class="popup-content">
                     <h3 class="custom-popup-title">${entry.title}</h3>
                     <div class="custom-popup-date">${entry.date || ''}</div>
-                    <a href="${entry.link}" style="display: block; text-align: right; font-size: 0.9rem; margin-top: 0.5rem;">Read more →</a>
+                    <a href="${entry.link}" class="popup-link">Read more →</a>
                   </div>
                 </div>`;
               
-              // Add marker
-              const marker = L.marker([entry.location.lat, entry.location.lng], { 
-                icon: createCustomIcon()
-              }).addTo(map);
-              
               // Configure popup
               const popup = L.popup({
-                maxWidth: 250,
-                minWidth: 220,
-                className: 'custom-marker-popup'
+                maxWidth: 280,
+                minWidth: 250,
+                className: 'custom-marker-popup',
+                closeButton: false
               }).setContent(popupHtml);
               
+              // Add popup on hover
               marker.bindPopup(popup);
               
-              // Make marker bigger on hover
+              // Show popup on hover
               marker.on('mouseover', function() {
-                this._icon.style.transform = 'translate3d(-6px, -6px, 0) scale(1.5)';
+                this.openPopup();
               });
               
+              // Don't close popup on mouseout to allow clicking the link
+              // Instead add a small delay before closing
               marker.on('mouseout', function() {
-                this._icon.style.transform = 'translate3d(-6px, -6px, 0)';
+                setTimeout(() => {
+                  if (!document.querySelector('.custom-marker-popup:hover')) {
+                    this.closePopup();
+                  }
+                }, 300);
+              });
+              
+              // Keep popup open when hovering over it
+              document.addEventListener('mouseover', function(e) {
+                if (e.target.closest('.custom-marker-popup')) {
+                  marker.openPopup();
+                }
               });
             }
           });
