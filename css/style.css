@@ -865,3 +865,96 @@ footer {
   line-height: 1.7;
   font-size: 1.1rem;
 }
+
+
+/* Newsletter Card Styling */
+.newsletter-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.newsletter-carousel {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 2rem 0;
+}
+
+.newsletter-container {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 1rem 2rem;
+  transition: filter 0.5s ease;
+}
+
+.newsletter-container.blurred {
+  filter: blur(5px);
+}
+
+.newsletter-card {
+  flex: 0 0 auto;
+  width: 200px;
+  padding: 1rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+}
+
+.newsletter-card img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.newsletter-card h3 {
+  font-size: 1.2rem;
+  margin: 0.25rem 0;
+}
+
+.newsletter-card .date {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.newsletter-card .blurb {
+  font-size: 1rem;
+  color: #333;
+  margin-top: 0.5rem;
+}
+
+.newsletter-card .blurb.hidden {
+  display: none;
+}
+
+.scroll-zone {
+  position: absolute;
+  top: 0;
+  width: 100px;
+  height: 100%;
+  z-index: 5;
+}
+
+.scroll-zone.left { left: 0; }
+.scroll-zone.right { right: 0; }
+
+.map-container {
+  width: 100%;
+  max-width: 1000px;
+  height: 400px;
+  padding: 0 2rem;
+}
+
+.map-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 12px;
+}
