@@ -12,7 +12,8 @@
   <script src="/js/enhancements.js" defer></script>
 </head>
 <body>
-  <div class="container">
+  <!-- Header and navigation are still within container -->
+  <div class="container header-container">
     <header>
       <h1>Newsletter</h1>
     </header>
@@ -24,19 +25,21 @@
       <button id="night-toggle" class="nav-toggle" title="Toggle dark mode">🌓</button>
     </nav>
 
-    <main class="full-width">
-      <section class="intro-container">
-        <p class="intro-text">
-          Starting in the summer of 2024, I began writing a travel newsletter for my close friends and family to share perfunctory IR analysis. In the interest of serving humanity more broadly, I've uploaded those entries here. Enjoy.
-        </p>
-      </section>
-      
-      <div class="map-container">
-        <div class="map-gradient"></div>
-        <div id="newsletter-map"></div>
-      </div>
-    </main>
-
+    <section class="intro-container">
+      <p class="intro-text">
+        Starting in the summer of 2024, I began writing a travel newsletter for my close friends and family. In the interest of serving humanity more broadly, I've uploaded those entries here. Enjoy.
+      </p>
+    </section>
+  </div>
+  
+  <!-- Map container goes outside the container to be edge-to-edge -->
+  <div class="map-full-width">
+    <div class="map-gradient"></div>
+    <div id="newsletter-map"></div>
+  </div>
+  
+  <!-- Footer back in container -->
+  <div class="container">
     <footer>
       <div class="icon-group">
         <a href="https://github.com/malisky" target="_blank">
@@ -60,10 +63,11 @@
       // Initialize the map
       const map = L.map('newsletter-map', {
         zoomControl: true,
-        scrollWheelZoom: true,
+        scrollWheelZoom: false, // Disable scroll wheel zoom
         maxZoom: 18,
         minZoom: 2,
-        attributionControl: false // Hide attribution for cleaner look
+        attributionControl: false, // Hide attribution for cleaner look
+        doubleClickZoom: false // Disable double click zoom for consistency
       }).setView([30, 20], 2.5); // Zoomed in more
       
       // Move zoom control to the right
@@ -80,12 +84,12 @@
         prefix: false
       }).addTo(map);
       
-      // Custom icon for markers
+      // Custom icon for markers - increased size
       const markerIcon = L.divIcon({
         className: 'custom-marker-icon',
         html: '<div class="marker-dot"></div>',
-        iconSize: [14, 14],
-        iconAnchor: [7, 7]
+        iconSize: [18, 18], // Increased from 14x14
+        iconAnchor: [9, 9]  // Adjusted anchor point
       });
       
       // Load newsletter data
@@ -114,7 +118,7 @@
           console.error('Error loading newsletter data:', error);
           
           // Show error message
-          const mapContainer = document.querySelector('.map-container');
+          const mapContainer = document.querySelector('.map-full-width');
           const errorDiv = document.createElement('div');
           errorDiv.className = 'map-error';
           errorDiv.textContent = 'Could not load newsletter locations';
