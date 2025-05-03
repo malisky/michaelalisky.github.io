@@ -1,31 +1,33 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <title>Newsletter – Michael Alisky</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="stylesheet" href="/css/style.css" />
   <script defer src="/js/newsletter.js"></script>
 </head>
 <body>
-  <header class="navbar">
-    <h1>Newsletter</h1>
-    <nav>
+  <header class="navbar clean-navbar">
+    <nav class="nav-links">
       <a href="/">Home</a>
       <a href="/research.html">Research</a>
-      <a href="/newsletter.html">Newsletter</a>
+      <a href="/newsletter.html" class="active">Newsletter</a>
       <button id="night-toggle">🌙</button>
     </nav>
   </header>
 
-  <main class="newsletter-scroll-area">
-    <div class="newsletter-scroll-wrapper" id="newsletter-container"></div>
-    <div class="scroll-zone left"></div>
-    <div class="scroll-zone right"></div>
+  <main class="newsletter-wrapper">
+    <section class="newsletter-carousel">
+      <div class="scroll-zone left"></div>
+      <div id="newsletter-container" class="newsletter-container"></div>
+      <div class="scroll-zone right"></div>
+    </section>
+    <section class="map-container" id="map-container">
+      <iframe src="/map.html" id="map-frame" loading="lazy"></iframe>
+    </section>
   </main>
-
-  <section class="map-section">
-    <iframe src="/map.html" class="map-embed" loading="lazy"></iframe>
-  </section>
 
   <footer>
     <p style="text-align:center;">© Michael Alisky</p>

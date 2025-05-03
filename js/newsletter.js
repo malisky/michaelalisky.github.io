@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
           <a href="/newsletter/${entry.link}" style="text-decoration: none; color: inherit;">
             <img src="${entry.image}" alt="${entry.title}" />
             <h2>${entry.title}</h2>
-            <p>${entry.description}</p>
+            <p>${entry.description || ''}</p>
           </a>
         `;
         container.appendChild(card);
@@ -46,12 +46,9 @@ document.addEventListener("DOMContentLoaded", function () {
     el.addEventListener("mouseleave", stopScrolling)
   );
 
-  // Map expand interaction
-  const mapSection = document.querySelector(".map-section");
-  const scrollArea = document.querySelector(".newsletter-scroll-area");
-
-  mapSection.addEventListener("click", () => {
-    mapSection.classList.toggle("expanded");
-    scrollArea.classList.toggle("shrunk");
+  // Expand map on click
+  const mapContainer = document.getElementById("map-container");
+  mapContainer.addEventListener("click", () => {
+    mapContainer.classList.toggle("expanded");
   });
 });
