@@ -43,7 +43,7 @@
     "link": "/newsletter/wachau.html",
     "location": {
       "lat": 48.3585,
-      "lng": 15.4310
+      "lng": 15.431
     },
     "location_name": "Wachau Valley, Austria"
   },
@@ -114,7 +114,7 @@
     "image": "/images/zhishan.jpeg",
     "link": "/newsletter/taiwan.html",
     "location": {
-      "lat": 25.0330,
+      "lat": 25.033,
       "lng": 121.5645
     },
     "location_name": "Taipei, Taiwan"
@@ -138,7 +138,7 @@
     "image": "/images/kz-cathedral.jpeg",
     "link": "/newsletter/kz-horse-meat.html",
     "location": {
-      "lat": 43.2610,
+      "lat": 43.261,
       "lng": 76.9457
     },
     "location_name": "Ascension Cathedral, Almaty, Kazakhstan"
@@ -190,41 +190,5 @@
       "lng": 76.9365
     },
     "location_name": "Steppe & World Publishing House, Almaty, Kazakhstan"
-  },
-  {
-    "id": "kz-lake",
-    "title": "August 24: Cold Lake Plus Party Bus",
-    "date": "2024-08-24",
-    "image": "/images/kz-lake.jpeg",
-    "link": "/newsletter/kz-lake.html",
-    "location": {
-      "lat": 42.9952,
-      "lng": 78.4129
-    },
-    "location_name": "Lake Kaindy, Kazakhstan"
-  },
-  {
-    "id": "kz-climate",
-    "title": "August 28: Climate Change Education",
-    "date": "2024-08-28",
-    "image": "/images/kz-conference.jpeg",
-    "link": "/newsletter/kz-climate.html",
-    "location": {
-      "lat": 43.2402,
-      "lng": 76.9228
-    },
-    "location_name": "Almaty, Kazakhstan"
-  },
-  {
-    "id": "kz-conclusion",
-    "title": "September 4: Conclusion",
-    "date": "2024-09-04",
-    "image": "/images/kz-ending.jpeg",
-    "link": "/newsletter/kz-conclusion.html",
-    "location": {
-      "lat": 43.3525,
-      "lng": 77.0409
-    },
-    "location_name": "Almaty International Airport, Kazakhstan"
   }
 ]
