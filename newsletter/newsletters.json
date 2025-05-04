@@ -1,35 +1,6 @@
 [
   {
-    "title": "December 4: Georgian Dream",
-    "date": "2024-12-04",
-    "image": "/images/cave-monastery.jpeg",
-    "link": "/newsletter/georgia.html",
-    "location": {
-      "lat": 41.6941,
-      "lng": 44.8337
-    }
-  },
-  {
-    "title": "March 27: Mongolia Adventures",
-    "date": "2025-03-27",
-    "image": "/images/camel.jpeg",
-    "link": "/newsletter/mongolia.html",
-    "location": {
-      "lat": 47.9212,
-      "lng": 106.9186
-    }
-  },
-  {
-    "title": "April 3: Taiwan Dispatch",
-    "date": "2025-04-03",
-    "image": "/images/zhishan.jpeg",
-    "link": "/newsletter/taiwan.html",
-    "location": {
-      "lat": 25.0330,
-      "lng": 121.5645
-    }
-  },
-  {
+    "id": "turkey",
     "title": "October 22: Turkey Tales",
     "date": "2024-10-22",
     "image": "/images/turkey.jpeg",
@@ -37,9 +8,23 @@
     "location": {
       "lat": 41.0151,
       "lng": 28.9795
-    }
+    },
+    "location_name": "Istanbul, Turkey"
   },
   {
+    "id": "wachau",
+    "title": "October 28: Wachau!!",
+    "date": "2024-10-28",
+    "image": "/images/wachau1.jpeg",
+    "link": "/newsletter/wachau.html",
+    "location": {
+      "lat": 48.3585,
+      "lng": 15.4310
+    },
+    "location_name": "Wachau Valley, Austria"
+  },
+  {
+    "id": "slovenia",
     "title": "November 5: Slovenia Stories",
     "date": "2024-11-05",
     "image": "/images/lake-bled.jpeg",
@@ -47,9 +32,11 @@
     "location": {
       "lat": 46.0569,
       "lng": 14.5058
-    }
+    },
+    "location_name": "Ljubljana, Slovenia"
   },
   {
+    "id": "november",
     "title": "November 25: November News",
     "date": "2024-11-25",
     "image": "/images/brno-overlook.jpeg",
@@ -57,9 +44,23 @@
     "location": {
       "lat": 49.1951,
       "lng": 16.6068
-    }
+    },
+    "location_name": "Brno, Czech Republic"
   },
   {
+    "id": "georgia",
+    "title": "December 4: Georgian Dream",
+    "date": "2024-12-04",
+    "image": "/images/cave-monastery.jpeg",
+    "link": "/newsletter/georgia.html",
+    "location": {
+      "lat": 41.6941,
+      "lng": 44.8337
+    },
+    "location_name": "Tbilisi, Georgia"
+  },
+  {
+    "id": "spain",
     "title": "December 24: Spanish Study",
     "date": "2024-12-24",
     "image": "/images/alhambra.jpeg",
@@ -67,6 +68,31 @@
     "location": {
       "lat": 37.3925,
       "lng": -5.9941
-    }
+    },
+    "location_name": "Seville, Spain"
+  },
+  {
+    "id": "mongolia",
+    "title": "March 27: Mongolia Adventures",
+    "date": "2025-03-27",
+    "image": "/images/camel.jpeg",
+    "link": "/newsletter/mongolia.html",
+    "location": {
+      "lat": 47.9212,
+      "lng": 106.9186
+    },
+    "location_name": "Ulaanbaatar, Mongolia"
+  },
+  {
+    "id": "taiwan",
+    "title": "April 3: Taiwan Dispatch",
+    "date": "2025-04-03",
+    "image": "/images/zhishan.jpeg",
+    "link": "/newsletter/taiwan.html",
+    "location": {
+      "lat": 25.0330,
+      "lng": 121.5645
+    },
+    "location_name": "Taipei, Taiwan"
   }
 ]
