@@ -188,3 +188,77 @@ function initMap() {
       mapContainer.appendChild(errorDiv);
     });
 }
+
+// Simplified newsletter navigation script
+document.addEventListener('DOMContentLoaded', function() {
+  // Function to load newsletter data
+  async function loadNewsletterData() {
+    try {
+      const response = await fetch('/data/newsletters.json');
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error loading newsletter data:', error);
+      return null;
+    }
+  }
+
+  // Set up newsletter navigation links based on chronological order
+  async function setupNewsletterNavigation() {
+    // Get current page URL
+    const currentPath = window.location.pathname;
+    
+    // Extract newsletter ID from the URL
+    let currentId = null;
+    const pathMatch = currentPath.match(/\/newsletter\/(.+)\.html/);
+    if (pathMatch && pathMatch[1]) {
+      currentId = pathMatch[1];
+    } else {
+      // If not on a newsletter page, don't setup navigation
+      return;
+    }
+    
+    // Load newsletter data
+    const newsletters = await loadNewsletterData();
+    if (!newsletters || !Array.isArray(newsletters)) return;
+    
+    // Sort newsletters chronologically by date
+    newsletters.sort((a, b) => new Date(a.date) - new Date(b.date));
+    
+    // Find current newsletter index
+    const currentIndex = newsletters.findIndex(item => item.id === currentId);
+    if (currentIndex === -1) return;
+    
+    // Setup navigation links
+    const navSection = document.querySelector('.newsletter-navigation');
+    if (navSection) {
+      const prevLink = navSection.querySelector('.nav-arrow.prev');
+      const nextLink = navSection.querySelector('.nav-arrow.next');
+      
+      // Handle previous link
+      if (prevLink) {
+        if (currentIndex > 0) {
+          const prevItem = newsletters[currentIndex - 1];
+          prevLink.href = prevItem.link;
+          prevLink.title = `Previous: ${prevItem.title}`;
+        } else {
+          prevLink.style.visibility = 'hidden';
+        }
+      }
+      
+      // Handle next link
+      if (nextLink) {
+        if (currentIndex < newsletters.length - 1) {
+          const nextItem = newsletters[currentIndex + 1];
+          nextLink.href = nextItem.link;
+          nextLink.title = `Next: ${nextItem.title}`;
+        } else {
+          nextLink.style.visibility = 'hidden';
+        }
+      }
+    }
+  }
+
+  // Call the setup function
+  setupNewsletterNavigation();
+});
