@@ -12,7 +12,7 @@ function initMap() {
     minZoom: 2,  // Allow zooming out to see the whole world
     attributionControl: false,
     doubleClickZoom: true,
-  }).setView([45, 60], 3);  // Centered between Europe and Asia with closer zoom level
+  }).setView([50, 60], 3);  // Centered between Europe and Asia with closer zoom level
   
   // Store map reference globally so we can access it for dark mode toggle
   window.leafletMap = map;
