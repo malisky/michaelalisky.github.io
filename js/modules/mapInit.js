@@ -57,3 +57,19 @@ function initMap() {
   
   return map;
 }
+
+fetch('/data/geoBoundaries-KAZ-ADM1.geojson')
+  .then(response => response.json())
+  .then(geojson => {
+    const kzLayer = L.geoJSON(geojson, {
+      style: {
+        color: '#ffcc00',
+        weight: 2,
+        opacity: 0.8,
+        fillOpacity: 0.1
+      }
+    }).addTo(map);
+
+    window.kzLayer = kzLayer;
+  });
+
