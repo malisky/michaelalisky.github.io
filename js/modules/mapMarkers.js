@@ -1,5 +1,5 @@
 /**
- * Map marker creation and management (simplified version)
+ * Map marker creation and management (self-initializing version)
  * Uses standard Leaflet markers for guaranteed visibility
  */
 
@@ -11,6 +11,8 @@ let markerBounds = null;
  * Create a marker for a newsletter location
  */
 function createMarker(map, spiderfier, location) {
+  console.log("Creating marker for:", location.title);
+  
   // Use standard Leaflet marker (guaranteed to be visible)
   const marker = L.marker(location.coords, {
     title: location.title,
@@ -35,9 +37,11 @@ function createMarker(map, spiderfier, location) {
 
   // Add marker to the map and spiderfier
   marker.addTo(map);
+  console.log("Marker added to map");
   
   if (spiderfier) {
     spiderfier.addMarker(marker);
+    console.log("Marker added to spiderfier");
   }
   
   return marker;
@@ -47,51 +51,51 @@ function createMarker(map, spiderfier, location) {
  * Load newsletter locations from the data file and create markers
  */
 function loadNewsletterMarkers(map, spiderfier) {
-  // For testing: create a hardcoded marker for Kazakhstan
-  const kazMarker = createMarker(map, spiderfier, {
-    coords: [43.2551, 76.9126], // Coordinates for Almaty
-    title: "Almaty, Kazakhstan",
-    country: "Kazakhstan",
-    url: "/newsletter/kazakhstan.html"
-  });
-  markers.push(kazMarker);
+  console.log("Loading markers");
   
-  // Create more test markers for Kazakhstan to demonstrate spiderfier
-  const locations = [
+  // Initialize bounds
+  markerBounds = L.latLngBounds();
+  
+  // Add hardcoded test markers
+  console.log("Adding test markers");
+  const testLocations = [
+    {
+      coords: [43.2551, 76.9126], // Coordinates for Almaty
+      title: "Almaty, Kazakhstan",
+      country: "Kazakhstan",
+      url: "/newsletter/kz-test.html"
+    },
     {
       coords: [43.3, 77.0], // Slightly offset
       title: "Lake Kaindy",
       country: "Kazakhstan",
-      url: "#"
+      url: "/newsletter/kz-lake.html"
     },
     {
-      coords: [43.25, 77.1], // Slightly offset
-      title: "Charyn Canyon",
-      country: "Kazakhstan",
-      url: "#"
-    },
-    {
-      coords: [43.2, 76.9], // Slightly offset
-      title: "Almaty Cathedral",
-      country: "Kazakhstan",
-      url: "#"
+      coords: [47.9186, 106.9177], // Mongolia/UB
+      title: "Ulaanbaatar, Mongolia",
+      country: "Mongolia",
+      url: "/newsletter/march-27-mongolia-adventures.html"
     }
   ];
   
   // Create test markers
-  locations.forEach(location => {
+  testLocations.forEach(location => {
     const marker = createMarker(map, spiderfier, location);
     markers.push(marker);
+    markerBounds.extend(location.coords);
   });
   
-  // Create bounds from all markers
-  markerBounds = L.latLngBounds();
-  markers.forEach(marker => {
-    markerBounds.extend(marker.getLatLng());
-  });
+  console.log("Test markers added, fitting map");
   
   // Fit the map to show all markers
-  window.fitAllMarkers();
+  if (markerBounds.isValid()) {
+    map.fitBounds(markerBounds, {
+      padding: [50, 50],
+      maxZoom: 7
+    });
+    console.log("Map fitted to bounds");
+  }
 }
 
 /**
@@ -110,11 +114,15 @@ window.fitAllMarkers = function() {
  * Initialize the newsletter map with markers
  */
 function initNewsletterMap() {
+  console.log("Initializing newsletter map");
+  
   // Initialize the map
   const map = initMap();
+  console.log("Map initialized");
   
   // Initialize the spiderfier
   const spiderfier = initSpiderfier(map);
+  console.log("Spiderfier initialized");
   
   // Load markers
   loadNewsletterMarkers(map, spiderfier);
@@ -125,3 +133,25 @@ function initNewsletterMap() {
     spiderfier
   };
 }
+
+// Self-initialization when the DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+  console.log("DOM loaded, initializing map");
+  
+  // Check if the map container exists
+  const mapContainer = document.getElementById('newsletter-map');
+  if (mapContainer) {
+    console.log("Map container found");
+    
+    // Initialize the map
+    const mapComponents = initNewsletterMap();
+    
+    // Store the map in the window object
+    window.leafletMap = mapComponents.map;
+    window.mapSpiderfier = mapComponents.spiderfier;
+    
+    console.log("Map initialization complete");
+  } else {
+    console.error("Map container not found!");
+  }
+});
