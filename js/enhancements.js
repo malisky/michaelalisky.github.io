@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Function to load newsletter data
   async function loadNewsletterData() {
     try {
-      const response = await fetch('/data/newsletters.json');
+      const response = await fetch('/newsletter/newsletters.json');
       const data = await response.json();
       return data;
     } catch (error) {
