@@ -17,11 +17,11 @@ function initMapMarkers(map) {
   });
   
   // Initialize spiderfier for overlapping markers
-  const oms = initSpiderfier(map);
+  const spiderfier = initSpiderfier(map);
   
   // Load newsletter data
   loadNewsletterData()
-    .then(data => createMarkers(data, map, markerIcon, oms))
+    .then(data => createMarkers(data, map, markerIcon, spiderfier))
     .catch(handleDataError);
   
   // Make fitAllMarkers function globally available
@@ -42,7 +42,7 @@ async function loadNewsletterData() {
 }
 
 // Create markers from newsletter data
-function createMarkers(data, map, markerIcon, oms) {
+function createMarkers(data, map, markerIcon, spiderfier) {
   // Get locations by country
   const locationsByCountry = groupMarkersByCountry(data);
   
@@ -64,6 +64,7 @@ function createMarkers(data, map, markerIcon, oms) {
       marker.newsletterId = entry.id;
       marker.newsletterTitle = entry.title;
       marker.newsletterLocation = entry.location_name || '';
+      marker._path = entry.link;
       
       // Check if marker belongs to a country with multiple markers
       if (entry.location_name) {
@@ -76,25 +77,33 @@ function createMarkers(data, map, markerIcon, oms) {
           const markerElement = marker.getElement();
           if (markerElement) {
             markerElement.classList.add('country-group-marker');
-            markerElement.classList.add(`${country.toLowerCase()}-marker`);
+            markerElement.classList.add(`${country.toLowerCase().replace(/\s+/g, '-')}-marker`);
           }
+        } else {
+          // Standard marker click behavior for non-grouped markers
+          marker.on('click', function() {
+            window.location.href = entry.link;
+          });
         }
+      } else {
+        // Default click behavior
+        marker.on('click', function() {
+          window.location.href = entry.link;
+        });
       }
       
-      // Add direct click navigation
-      marker.on('click', function() {
-        window.location.href = entry.link;
-      });
-      
       // Make cursor change to pointer on hover
-      marker.getElement().style.cursor = 'pointer';
+      const markerElement = marker.getElement();
+      if (markerElement) {
+        markerElement.style.cursor = 'pointer';
+      }
       
       // Add marker to map
       marker.addTo(map);
       
       // Add marker to spiderfier if it exists
-      if (oms) {
-        oms.addMarker(marker);
+      if (spiderfier) {
+        spiderfier.addMarker(marker);
       }
       
       // Add to all markers array
