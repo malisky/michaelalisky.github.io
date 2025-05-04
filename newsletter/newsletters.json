@@ -1,5 +1,17 @@
 [
   {
+    "id": "budapest",
+    "title": "October 14: Budapest Bangers",
+    "date": "2024-10-14",
+    "image": "/images/budapest.jpeg",
+    "link": "/newsletter/budapest.html",
+    "location": {
+      "lat": 47.4979,
+      "lng": 19.0402
+    },
+    "location_name": "Budapest, Hungary"
+  },
+  {
     "id": "turkey",
     "title": "October 22: Turkey Tales",
     "date": "2024-10-22",
