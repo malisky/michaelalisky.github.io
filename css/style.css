@@ -774,3 +774,62 @@ footer {
 .dark-mode .spiderfied .marker-dot::after {
   border-color: #20C0DA;
 }
+
+/* Spider marker title styles */
+.marker-title {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px var(--shadow-color);
+  pointer-events: none;
+  z-index: 1000;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+  transform: translateY(-5px);
+}
+
+/* Visible title style */
+.marker-title.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Enhance spider leg lines */
+.spider-leg-line {
+  stroke-dasharray: 4, 4;
+  stroke-opacity: 0.5;
+  stroke-width: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Existing newsletter-marker styling enhancements */
+.newsletter-marker {
+  transition: transform 0.2s ease;
+}
+
+.spiderfied .newsletter-marker {
+  transform: scale(1.2);
+  z-index: 1000 !important;
+}
+
+/* Animation for spiderfied markers */
+@keyframes pulse-marker {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.spiderfied .marker-pin {
+  animation: pulse-marker 2s infinite;
+}
