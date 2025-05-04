@@ -118,5 +118,113 @@
       "lng": 121.5645
     },
     "location_name": "Taipei, Taiwan"
+  },
+  {
+    "id": "kz-test",
+    "title": "August 4: I'm Still Alive",
+    "date": "2024-08-04",
+    "image": "/images/kz-apartment.jpeg",
+    "link": "/newsletter/kz-test.html",
+    "location": {
+      "lat": 43.2587,
+      "lng": 76.9398
+    },
+    "location_name": "Almaty, Kazakhstan"
+  },
+  {
+    "id": "kz-horse-meat",
+    "title": "August 6: Horse Meat and the Banya",
+    "date": "2024-08-06",
+    "image": "/images/kz-cathedral.jpeg",
+    "link": "/newsletter/kz-horse-meat.html",
+    "location": {
+      "lat": 43.2610,
+      "lng": 76.9457
+    },
+    "location_name": "Ascension Cathedral, Almaty, Kazakhstan"
+  },
+  {
+    "id": "kz-boxing",
+    "title": "August 10: Boxing and Bazaar",
+    "date": "2024-08-10",
+    "image": "/images/kz-kebab.jpeg",
+    "link": "/newsletter/kz-boxing.html",
+    "location": {
+      "lat": 43.2479,
+      "lng": 76.9123
+    },
+    "location_name": "Zhetysu-Semirech'ye Bazaar, Almaty, Kazakhstan"
+  },
+  {
+    "id": "kz-kumis",
+    "title": "August 17: Kumis!",
+    "date": "2024-08-17",
+    "image": "/images/kz-kumis.jpeg",
+    "link": "/newsletter/kz-kumis.html",
+    "location": {
+      "lat": 43.2798,
+      "lng": 76.9483
+    },
+    "location_name": "Green Bazaar, Almaty, Kazakhstan"
+  },
+  {
+    "id": "kz-pigeon",
+    "title": "August 18: Pigeon Market",
+    "date": "2024-08-18",
+    "image": "/images/kz-pigeons.jpeg",
+    "link": "/newsletter/kz-pigeon.html",
+    "location": {
+      "lat": 43.2562,
+      "lng": 76.9531
+    },
+    "location_name": "Kazan Cathedral, Almaty, Kazakhstan"
+  },
+  {
+    "id": "kz-steppe",
+    "title": "August 18: Steppe & World Publishing House",
+    "date": "2024-08-18",
+    "image": "/images/kz-publishing.jpeg",
+    "link": "/newsletter/kz-steppe.html",
+    "location": {
+      "lat": 43.2452,
+      "lng": 76.9365
+    },
+    "location_name": "Steppe & World Publishing House, Almaty, Kazakhstan"
+  },
+  {
+    "id": "kz-lake",
+    "title": "August 24: Cold Lake Plus Party Bus",
+    "date": "2024-08-24",
+    "image": "/images/kz-lake.jpeg",
+    "link": "/newsletter/kz-lake.html",
+    "location": {
+      "lat": 42.9952,
+      "lng": 78.4129
+    },
+    "location_name": "Lake Kaindy, Kazakhstan"
+  },
+  {
+    "id": "kz-climate",
+    "title": "August 28: Climate Change Education",
+    "date": "2024-08-28",
+    "image": "/images/kz-conference.jpeg",
+    "link": "/newsletter/kz-climate.html",
+    "location": {
+      "lat": 43.2402,
+      "lng": 76.9228
+    },
+    "location_name": "Almaty, Kazakhstan"
+  },
+  {
+    "id": "kz-conclusion",
+    "title": "September 4: Conclusion",
+    "date": "2024-09-04",
+    "image": "/images/kz-ending.jpeg",
+    "link": "/newsletter/kz-conclusion.html",
+    "location": {
+      "lat": 43.3525,
+      "lng": 77.0409
+    },
+    "location_name": "Almaty International Airport, Kazakhstan"
   }
 ]
