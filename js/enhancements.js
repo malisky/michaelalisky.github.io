@@ -122,28 +122,38 @@ document.addEventListener('DOMContentLoaded', function() {
 function initMap() {
   // Initialize the map centered on Europe/Asia region
   const map = L.map('newsletter-map', {
-    zoomControl: true,
-    scrollWheelZoom: false,
+    zoomControl: false, // We'll add a custom zoom control
+    scrollWheelZoom: true, // Enable scroll wheel zooming
     maxZoom: 18,
-    minZoom: 3,  // Increased minimum zoom to prevent zooming out too far
+    minZoom: 2,  // Allow zooming out to see the whole world
     attributionControl: false,
-    doubleClickZoom: false
+    doubleClickZoom: true,
+    // Use flyTo for smoother animations when changing views
+    flyTo: true
   }).setView([45, 60], 4);  // Centered between Europe and Asia with closer zoom level
   
   // Store map reference globally so we can access it for dark mode toggle
   window.leafletMap = map;
   
-  // Set bounds to focus on Europe and Asia
-  const southWest = L.latLng(10, -10);  // Southwest corner (Africa)
-  const northEast = L.latLng(70, 140);  // Northeast corner (Far East Asia)
-  const bounds = L.latLngBounds(southWest, northEast);
+  // Add custom zoom control with better positioning
+  L.control.zoom({
+    position: 'topright',
+    zoomInTitle: 'Zoom in - see more detail',
+    zoomOutTitle: 'Zoom out - see more area'
+  }).addTo(map);
   
-  // Apply the bounds to the map
-  map.setMaxBounds(bounds);
-  map.fitBounds(bounds);
-  
-  // Move zoom control to the right
-  map.zoomControl.setPosition('topright');
+  // Add a "fit all markers" button
+  const fitAllButton = L.control({position: 'topright'});
+  fitAllButton.onAdd = function(map) {
+    const div = L.DomUtil.create('div', 'leaflet-control leaflet-bar');
+    div.innerHTML = '<a class="fit-all-button" href="#" title="Fit all locations" role="button" aria-label="Fit all locations">📍</a>';
+    div.onclick = function() {
+      fitAllMarkers();
+      return false;
+    };
+    return div;
+  };
+  fitAllButton.addTo(map);
   
   // Add custom styled tile layer
   L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
@@ -164,6 +174,9 @@ function initMap() {
     iconAnchor: [9, 9]
   });
   
+  // Store for markers so we can fit all later
+  let allMarkers = [];
+  
   // Load newsletter data
   fetch('/newsletter/newsletters.json')
     .then(res => res.json())
@@ -182,15 +195,36 @@ function initMap() {
             offset: L.point(0, -10)
           });
           
+          // Create popup with more details and "read more" link
+          const popupContent = `
+            <div class="map-popup">
+              <h3>${entry.title}</h3>
+              <p>${entry.location_name || ''}</p>
+              <a href="${entry.link}" class="popup-link">Read more</a>
+            </div>
+          `;
+          marker.bindPopup(popupContent);
+          
           // Add direct click to navigate to the newsletter page
           marker.on('click', function() {
-            window.location.href = entry.link;
+            // Use flyTo for smoother transition
+            map.flyTo([entry.location.lat, entry.location.lng], 6, {
+              duration: 1.5,
+              easeLinearity: 0.25
+            });
+            this.openPopup();
           });
           
           // Make cursor change to pointer on hover
           marker.getElement().style.cursor = 'pointer';
+          
+          // Add to all markers array
+          allMarkers.push(marker);
         }
       });
+      
+      // Initial fit to show all markers
+      fitAllMarkers();
     })
     .catch(error => {
       console.error('Error loading newsletter data:', error);
@@ -202,6 +236,28 @@ function initMap() {
       errorDiv.textContent = 'Could not load newsletter locations';
       mapContainer.appendChild(errorDiv);
     });
+  
+  // Function to fit all markers on the map
+  function fitAllMarkers() {
+    if (allMarkers.length > 0) {
+      // Create a bounds object
+      const markerBounds = L.featureGroup(allMarkers).getBounds();
+      
+      // Add padding for better visibility
+      map.flyToBounds(markerBounds, {
+        padding: [50, 50],
+        duration: 1.5,
+        easeLinearity: 0.5
+      });
+    }
+  }
+  
+  // Handle window resize
+  window.addEventListener('resize', function() {
+    map.invalidateSize();
+  });
+  
+  return map;
 }
 
 // Simplified newsletter navigation script
@@ -225,55 +281,3 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Extract newsletter ID from the URL
     let currentId = null;
-    const pathMatch = currentPath.match(/\/newsletter\/(.+)\.html/);
-    if (pathMatch && pathMatch[1]) {
-      currentId = pathMatch[1];
-    } else {
-      // If not on a newsletter page, don't setup navigation
-      return;
-    }
-    
-    // Load newsletter data
-    const newsletters = await loadNewsletterData();
-    if (!newsletters || !Array.isArray(newsletters)) return;
-    
-    // Sort newsletters chronologically by date
-    newsletters.sort((a, b) => new Date(a.date) - new Date(b.date));
-    
-    // Find current newsletter index
-    const currentIndex = newsletters.findIndex(item => item.id === currentId);
-    if (currentIndex === -1) return;
-    
-    // Setup navigation links
-    const navSection = document.querySelector('.newsletter-navigation');
-    if (navSection) {
-      const prevLink = navSection.querySelector('.nav-arrow.prev');
-      const nextLink = navSection.querySelector('.nav-arrow.next');
-      
-      // Handle previous link
-      if (prevLink) {
-        if (currentIndex > 0) {
-          const prevItem = newsletters[currentIndex - 1];
-          prevLink.href = prevItem.link;
-          prevLink.title = `Previous: ${prevItem.title}`;
-        } else {
-          prevLink.style.visibility = 'hidden';
-        }
-      }
-      
-      // Handle next link
-      if (nextLink) {
-        if (currentIndex < newsletters.length - 1) {
-          const nextItem = newsletters[currentIndex + 1];
-          nextLink.href = nextItem.link;
-          nextLink.title = `Next: ${nextItem.title}`;
-        } else {
-          nextLink.style.visibility = 'hidden';
-        }
-      }
-    }
-  }
-
-  // Call the setup function
-  setupNewsletterNavigation();
-});
