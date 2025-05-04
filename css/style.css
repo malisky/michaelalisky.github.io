@@ -513,3 +513,67 @@ footer {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* Newsletter Navigation styles - add to your style.css */
+
+.newsletter-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.nav-arrow, .back-to-map {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  background-color: var(--card-bg);
+  color: var(--link-color);
+  font-weight: 500;
+  box-shadow: 0 1px 3px var(--shadow-color);
+  transition: all var(--transition-speed);
+  text-align: center;
+}
+
+.nav-arrow.prev {
+  padding-left: 1.5rem;
+}
+
+.nav-arrow.next {
+  padding-right: 1.5rem;
+}
+
+.back-to-map {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.back-to-map::before {
+  content: "⦿";
+  font-size: 1.1em;
+}
+
+.nav-arrow:hover, .back-to-map:hover {
+  background-color: var(--link-color);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .newsletter-navigation {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+  }
+  
+  .nav-arrow, .back-to-map {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+  
+  .back-to-map::before {
+    font-size: 1em;
+  }
+}
