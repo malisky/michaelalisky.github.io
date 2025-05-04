@@ -120,18 +120,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Map initialization function
 function initMap() {
-  // Initialize the map
+  // Initialize the map centered on Europe/Asia region
   const map = L.map('newsletter-map', {
     zoomControl: true,
     scrollWheelZoom: false,
     maxZoom: 18,
-    minZoom: 2,
+    minZoom: 3,  // Increased minimum zoom to prevent zooming out too far
     attributionControl: false,
     doubleClickZoom: false
-  }).setView([30, 20], 2.5);
+  }).setView([45, 60], 4);  // Centered between Europe and Asia with closer zoom level
   
   // Store map reference globally so we can access it for dark mode toggle
   window.leafletMap = map;
+  
+  // Set bounds to focus on Europe and Asia
+  const southWest = L.latLng(10, -10);  // Southwest corner (Africa)
+  const northEast = L.latLng(70, 140);  // Northeast corner (Far East Asia)
+  const bounds = L.latLngBounds(southWest, northEast);
+  
+  // Apply the bounds to the map
+  map.setMaxBounds(bounds);
+  map.fitBounds(bounds);
   
   // Move zoom control to the right
   map.zoomControl.setPosition('topright');
@@ -166,6 +175,12 @@ function initMap() {
           const marker = L.marker([entry.location.lat, entry.location.lng], { 
             icon: markerIcon
           }).addTo(map);
+          
+          // Add tooltip with newsletter title
+          marker.bindTooltip(entry.title, {
+            direction: 'top',
+            offset: L.point(0, -10)
+          });
           
           // Add direct click to navigate to the newsletter page
           marker.on('click', function() {
