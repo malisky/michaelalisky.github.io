@@ -1,6 +1,6 @@
 /**
- * Map marker creation and management
- * Handles creating markers and adding them to the map
+ * Map marker creation and management (simplified version)
+ * Uses standard Leaflet markers for guaranteed visibility
  */
 
 // Initialize markers and bounds
@@ -11,18 +11,8 @@ let markerBounds = null;
  * Create a marker for a newsletter location
  */
 function createMarker(map, spiderfier, location) {
-  // Create custom icon with appropriate size and anchor
-  const icon = L.divIcon({
-    className: 'newsletter-marker',
-    html: `<div class="marker-pin" style="background-color: ${location.color || '#3388ff'}"></div>`,
-    iconSize: [30, 30],
-    iconAnchor: [15, 30],
-    popupAnchor: [0, -30]
-  });
-
-  // Create the marker with custom options
+  // Use standard Leaflet marker (guaranteed to be visible)
   const marker = L.marker(location.coords, {
-    icon: icon,
     title: location.title,
     group: location.country || 'default',
     riseOnHover: true
@@ -41,13 +31,6 @@ function createMarker(map, spiderfier, location) {
     marker.on('click', function() {
       window.location.href = location.url;
     });
-    
-    // Add cursor style to indicate clickability
-    marker.on('mouseover', function() {
-      if (marker._icon) {
-        marker._icon.style.cursor = 'pointer';
-      }
-    });
   }
 
   // Add marker to the map and spiderfier
@@ -64,28 +47,51 @@ function createMarker(map, spiderfier, location) {
  * Load newsletter locations from the data file and create markers
  */
 function loadNewsletterMarkers(map, spiderfier) {
-  // Initialize an empty bounds object to later fit all markers
-  markerBounds = L.latLngBounds();
+  // For testing: create a hardcoded marker for Kazakhstan
+  const kazMarker = createMarker(map, spiderfier, {
+    coords: [43.2551, 76.9126], // Coordinates for Almaty
+    title: "Almaty, Kazakhstan",
+    country: "Kazakhstan",
+    url: "/newsletter/kazakhstan.html"
+  });
+  markers.push(kazMarker);
   
-  // Fetch the locations data
-  fetch('/data/newsletter-locations.json')
-    .then(response => response.json())
-    .then(locations => {
-      // Create a marker for each location
-      locations.forEach(location => {
-        const marker = createMarker(map, spiderfier, location);
-        markers.push(marker);
-        
-        // Extend the bounds to include this marker
-        markerBounds.extend(location.coords);
-      });
-      
-      // Fit the map to show all markers with some padding
-      window.fitAllMarkers();
-    })
-    .catch(error => {
-      console.error('Error loading newsletter locations:', error);
-    });
+  // Create more test markers for Kazakhstan to demonstrate spiderfier
+  const locations = [
+    {
+      coords: [43.3, 77.0], // Slightly offset
+      title: "Lake Kaindy",
+      country: "Kazakhstan",
+      url: "#"
+    },
+    {
+      coords: [43.25, 77.1], // Slightly offset
+      title: "Charyn Canyon",
+      country: "Kazakhstan",
+      url: "#"
+    },
+    {
+      coords: [43.2, 76.9], // Slightly offset
+      title: "Almaty Cathedral",
+      country: "Kazakhstan",
+      url: "#"
+    }
+  ];
+  
+  // Create test markers
+  locations.forEach(location => {
+    const marker = createMarker(map, spiderfier, location);
+    markers.push(marker);
+  });
+  
+  // Create bounds from all markers
+  markerBounds = L.latLngBounds();
+  markers.forEach(marker => {
+    markerBounds.extend(marker.getLatLng());
+  });
+  
+  // Fit the map to show all markers
+  window.fitAllMarkers();
 }
 
 /**
