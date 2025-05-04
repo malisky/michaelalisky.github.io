@@ -189,30 +189,26 @@ function initMap() {
             icon: markerIcon
           }).addTo(map);
           
-          // Add tooltip with newsletter title
-          marker.bindTooltip(entry.title, {
+          // Format date nicely if available
+          let formattedDate = '';
+          if (entry.date) {
+            const dateObj = new Date(entry.date);
+            formattedDate = dateObj.toLocaleDateString('en-US', { 
+              year: 'numeric', 
+              month: 'short', 
+              day: 'numeric' 
+            });
+          }
+          
+          // Add tooltip with newsletter title and date
+          marker.bindTooltip(`${entry.title}${formattedDate ? ' • ' + formattedDate : ''}`, {
             direction: 'top',
             offset: L.point(0, -10)
           });
           
-          // Create popup with more details and "read more" link
-          const popupContent = `
-            <div class="map-popup">
-              <h3>${entry.title}</h3>
-              <p>${entry.location_name || ''}</p>
-              <a href="${entry.link}" class="popup-link">Read more</a>
-            </div>
-          `;
-          marker.bindPopup(popupContent);
-          
-          // Add click handler to zoom to marker
+          // Add direct click to navigate to the newsletter page
           marker.on('click', function() {
-            // Use flyTo for smoother transition
-            map.flyTo([entry.location.lat, entry.location.lng], 6, {
-              duration: 1.5,
-              easeLinearity: 0.25
-            });
-            this.openPopup();
+            window.location.href = entry.link;
           });
           
           // Make cursor change to pointer on hover
