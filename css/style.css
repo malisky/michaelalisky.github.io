@@ -698,3 +698,79 @@ footer {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* Kazakhstan Marker Styling */
+.kazakhstan-marker .marker-dot {
+  background-color: #00AFCA; /* Light blue for Kazakhstan */
+  box-shadow: 0 0 0 2px rgba(0, 175, 202, 0.5);
+}
+
+/* Highlight markers that are part of a country group */
+.country-group-marker .marker-dot {
+  position: relative;
+}
+
+.country-group-marker .marker-dot::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  animation: pulse 2s infinite;
+}
+
+.spiderfied .marker-dot {
+  transform: scale(1.3);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+}
+
+.spiderfied .marker-dot::after {
+  animation: none;
+  border-color: #00AFCA;
+}
+
+/* Country boundary highlight */
+.country-highlight {
+  transition: opacity 0.3s ease, fill-opacity 0.3s ease;
+}
+
+/* Country focus control */
+.country-focus-control a {
+  font-size: 16px;
+  line-height: 26px;
+  text-align: center;
+}
+
+/* Pulse animation for grouped markers */
+@keyframes pulse {
+  0% {
+    border-color: rgba(0, 175, 202, 0);
+    transform: scale(1);
+  }
+  50% {
+    border-color: rgba(0, 175, 202, 0.5);
+    transform: scale(1.2);
+  }
+  100% {
+    border-color: rgba(0, 175, 202, 0);
+    transform: scale(1);
+  }
+}
+
+/* Dark mode adjustments */
+.dark-mode .kazakhstan-marker .marker-dot {
+  background-color: #20C0DA;
+  box-shadow: 0 0 0 2px rgba(32, 192, 218, 0.6);
+}
+
+.dark-mode .country-group-marker .marker-dot::after {
+  border-color: rgba(32, 192, 218, 0.3);
+}
+
+.dark-mode .spiderfied .marker-dot::after {
+  border-color: #20C0DA;
+}
