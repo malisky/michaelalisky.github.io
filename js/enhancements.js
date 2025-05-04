@@ -200,8 +200,8 @@ function initMap() {
             });
           }
           
-          // Add tooltip with newsletter title and date
-          marker.bindTooltip(`${entry.title}${formattedDate ? ' • ' + formattedDate : ''}`, {
+          // Add tooltip with just the newsletter title
+          marker.bindTooltip(entry.title, {
             direction: 'top',
             offset: L.point(0, -10)
           });
