@@ -1,83 +1,121 @@
-// Global array to store all markers
-let allMarkers = [];
+/**
+ * Map marker creation and management
+ * Handles creating markers and adding them to the map
+ */
 
-function initMapMarkers(map) {
-  const markerIcon = L.divIcon({
-    className: 'custom-marker-icon',
-    html: '<div class="marker-dot"></div>',
-    iconSize: [18, 18],
-    iconAnchor: [9, 9]
+// Initialize markers and bounds
+let markers = [];
+let markerBounds = null;
+
+/**
+ * Create a marker for a newsletter location
+ */
+function createMarker(map, spiderfier, location) {
+  // Create custom icon with appropriate size and anchor
+  const icon = L.divIcon({
+    className: 'newsletter-marker',
+    html: `<div class="marker-pin" style="background-color: ${location.color || '#3388ff'}"></div>`,
+    iconSize: [30, 30],
+    iconAnchor: [15, 30],
+    popupAnchor: [0, -30]
   });
 
-  const spiderfier = initSpiderfier(map);
+  // Create the marker with custom options
+  const marker = L.marker(location.coords, {
+    icon: icon,
+    title: location.title,
+    group: location.country || 'default',
+    riseOnHover: true
+  });
 
-  loadNewsletterData()
-    .then(data => createMarkers(data, map, markerIcon, spiderfier))
-    .catch(handleDataError);
-
-  window.fitAllMarkers = function () {
-    fitAllMarkers(map);
-  };
-}
-
-async function loadNewsletterData() {
-  try {
-    const response = await fetch('/newsletter/newsletters.json');
-    return await response.json();
-  } catch (error) {
-    console.error('Error loading newsletter data:', error);
-    throw error;
+  // Add popup if content is provided
+  if (location.popup) {
+    marker.bindPopup(location.popup, {
+      maxWidth: 300,
+      className: 'newsletter-popup'
+    });
   }
-}
 
-function createMarkers(data, map, markerIcon, spiderfier) {
-  let validCount = 0;
-
-  data.forEach(entry => {
-    const location = entry.location;
-    if (!entry.link || !location || typeof location.lat !== 'number' || typeof location.lng !== 'number') {
-      console.warn('Skipping invalid entry:', entry);
-      return;
-    }
-
-    const marker = L.marker([location.lat, location.lng], {
-      icon: markerIcon,
-      title: entry.title || '',
-      alt: entry.title || '',
-      link: entry.link,
+  // If URL is provided, add click handler
+  if (location.url) {
+    marker.on('click', function() {
+      window.location.href = location.url;
     });
-
-    marker.countryGroup = entry.location_name?.includes('Kazakhstan') ? 'Kazakhstan' : null;
-
-    marker.on('click', () => {
-      window.location.href = entry.link;
+    
+    // Add cursor style to indicate clickability
+    marker.on('mouseover', function() {
+      if (marker._icon) {
+        marker._icon.style.cursor = 'pointer';
+      }
     });
+  }
 
-    marker.addTo(map);
+  // Add marker to the map and spiderfier
+  marker.addTo(map);
+  
+  if (spiderfier) {
     spiderfier.addMarker(marker);
-    allMarkers.push(marker);
-    validCount++;
-  });
-
-  if (validCount === 0) {
-    handleDataError("No valid markers");
   }
+  
+  return marker;
 }
 
-function fitAllMarkers(map) {
-  if (allMarkers.length === 0) return;
-  const group = L.featureGroup(allMarkers);
-  map.fitBounds(group.getBounds().pad(0.2));
+/**
+ * Load newsletter locations from the data file and create markers
+ */
+function loadNewsletterMarkers(map, spiderfier) {
+  // Initialize an empty bounds object to later fit all markers
+  markerBounds = L.latLngBounds();
+  
+  // Fetch the locations data
+  fetch('/data/newsletter-locations.json')
+    .then(response => response.json())
+    .then(locations => {
+      // Create a marker for each location
+      locations.forEach(location => {
+        const marker = createMarker(map, spiderfier, location);
+        markers.push(marker);
+        
+        // Extend the bounds to include this marker
+        markerBounds.extend(location.coords);
+      });
+      
+      // Fit the map to show all markers with some padding
+      window.fitAllMarkers();
+    })
+    .catch(error => {
+      console.error('Error loading newsletter locations:', error);
+    });
 }
 
-function handleDataError(error) {
-  console.error('Map data error:', error);
-
-  const mapContainer = document.querySelector('.map-full-width');
-  if (mapContainer) {
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'map-error';
-    errorDiv.textContent = 'Could not load newsletter locations';
-    mapContainer.appendChild(errorDiv);
+/**
+ * Fit the map to show all markers
+ */
+window.fitAllMarkers = function() {
+  if (markerBounds && markerBounds.isValid() && window.leafletMap) {
+    window.leafletMap.fitBounds(markerBounds, {
+      padding: [50, 50],
+      maxZoom: 7
+    });
   }
+};
+
+/**
+ * Initialize the newsletter map with markers
+ */
+function initNewsletterMap() {
+  // Initialize the map
+  const map = initMap();
+  
+  // Initialize the spiderfier
+  const spiderfier = initSpiderfier(map);
+  
+  // Load markers
+  loadNewsletterMarkers(map, spiderfier);
+  
+  // Return the initialized components
+  return {
+    map,
+    spiderfier
+  };
 }
