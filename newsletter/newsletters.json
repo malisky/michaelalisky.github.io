@@ -1,5 +1,17 @@
 [
   {
+    "id": "baden",
+    "title": "October 4: Baden Backroads",
+    "date": "2024-10-04",
+    "image": "/images/baden1.jpeg",
+    "link": "/newsletter/baden.html",
+    "location": {
+      "lat": 48.0064,
+      "lng": 16.2308
+    },
+    "location_name": "Baden bei Wien, Austria"
+  },
+  {
     "id": "budapest",
     "title": "October 14: Budapest Bangers",
     "date": "2024-10-14",
