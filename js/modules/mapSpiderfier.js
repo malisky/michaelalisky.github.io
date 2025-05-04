@@ -26,40 +26,13 @@ function initSpiderfier(map) {
         
         // Add hover events to show titles and trigger spiderfying
         marker.on('mouseover', () => {
-          // Make all markers in the group larger
+          // Spiderfy the markers in this group if there are multiple
           if (groupedMarkers[group].length > 1) {
             this.spreadMarkers(group);
-            
-            // Show titles for all markers in the group
-            groupedMarkers[group].forEach(m => {
-              if (m._titleDiv) {
-                m._titleDiv.style.display = 'block';
-              } else {
-                // Create title if it doesn't exist
-                const title = m.options.title || 'Unnamed location';
-                const pos = map.latLngToLayerPoint(m.getLatLng());
-                
-                // Create a div for the title
-                const titleDiv = document.createElement('div');
-                titleDiv.className = 'marker-title';
-                titleDiv.textContent = title;
-                titleDiv.style.position = 'absolute';
-                titleDiv.style.left = (pos.x + 15) + 'px';
-                titleDiv.style.top = (pos.y - 15) + 'px';
-                titleDiv.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
-                titleDiv.style.padding = '3px 8px';
-                titleDiv.style.borderRadius = '3px';
-                titleDiv.style.fontSize = '12px';
-                titleDiv.style.zIndex = '1000';
-                titleDiv.style.pointerEvents = 'none';
-                
-                document.querySelector('.leaflet-marker-pane').parentNode.appendChild(titleDiv);
-                m._titleDiv = titleDiv;
-              }
-            });
           }
         });
         
+        // Handle mouseout - check if we should unspiderfy
         marker.on('mouseout', () => {
           // Set timeout to allow moving between markers in the same group
           setTimeout(() => {
@@ -111,11 +84,22 @@ function initSpiderfier(map) {
       const angleStep = (2 * Math.PI) / markers.length;
       
       markers.forEach((marker, i) => {
-        // Make markers larger on hover
+        // Add spiderfied class to the marker icon
         if (marker._icon) {
-          marker._icon.style.transform += ' scale(1.2)';
-          marker._icon.style.zIndex = 1000;
-          marker._icon.style.transition = 'transform 0.2s ease-out';
+          L.DomUtil.addClass(marker._icon, 'spiderfied');
+          
+          // Create title element if it doesn't exist
+          if (!marker._titleDiv) {
+            const title = marker.options.title || 'Unnamed location';
+            const titleDiv = L.DomUtil.create('div', 'marker-title');
+            titleDiv.textContent = title;
+            titleDiv.style.display = 'none';
+            document.querySelector('.leaflet-marker-pane').parentNode.appendChild(titleDiv);
+            marker._titleDiv = titleDiv;
+          }
+          
+          // Show the title
+          marker._titleDiv.style.display = 'block';
         }
         
         // Calculate new position in a circle
@@ -130,18 +114,27 @@ function initSpiderfier(map) {
           weight: 1,
           opacity: 0.6,
           dashArray: '3,3',
-          interactive: false
+          interactive: false,
+          className: 'spider-leg-line'
         }).addTo(map);
         
         // Store line reference and move marker
         marker._spiderLine = line;
         marker.setLatLng(newLatLng);
         
-        // Update title position
+        // Update title position if it exists
         if (marker._titleDiv) {
           const pos = map.latLngToLayerPoint(newLatLng);
+          marker._titleDiv.style.position = 'absolute';
           marker._titleDiv.style.left = (pos.x + 15) + 'px';
           marker._titleDiv.style.top = (pos.y - 15) + 'px';
+          marker._titleDiv.style.zIndex = '1000';
+          marker._titleDiv.style.backgroundColor = 'var(--card-bg)';
+          marker._titleDiv.style.padding = '3px 8px';
+          marker._titleDiv.style.borderRadius = '4px';
+          marker._titleDiv.style.fontSize = '12px';
+          marker._titleDiv.style.boxShadow = '0 1px 3px var(--shadow-color)';
+          marker._titleDiv.style.pointerEvents = 'none';
         }
       });
       
@@ -159,10 +152,9 @@ function initSpiderfier(map) {
         // Return marker to original position
         marker.setLatLng(marker._originalLatLng);
         
-        // Reset marker size
+        // Reset marker styling
         if (marker._icon) {
-          marker._icon.style.transform = marker._icon.style.transform.replace(' scale(1.2)', '');
-          marker._icon.style.zIndex = '';
+          L.DomUtil.removeClass(marker._icon, 'spiderfied');
         }
         
         // Remove connecting line
