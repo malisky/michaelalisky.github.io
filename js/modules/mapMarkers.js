@@ -1,11 +1,14 @@
 /**
- * Map marker creation from newsletters.json using simple circle markers
+ * Dynamic map markers using newsletters.json + Spiderfier + hover effects
  */
 let markers = [];
 let markerBounds = null;
 
 function initMapMarkers(map) {
   markerBounds = L.latLngBounds();
+
+  // Initialize the spiderfier
+  const spiderfier = initSpiderfier(map);
 
   fetch('/newsletter/newsletters.json')
     .then(response => response.json())
@@ -17,12 +20,21 @@ function initMapMarkers(map) {
 
         const marker = L.circleMarker(coords, {
           radius: 6,
-          color: "#2ecc71", // green stroke
-          fillColor: "#2ecc71",
-          fillOpacity: 0.9,
+          color: "#3aa16c",         // Soft green border
+          fillColor: "#3aa16c",     // Soft green fill
+          fillOpacity: 0.85,
           weight: 2
         });
 
+        // Tooltip with title + date
+        marker.bindTooltip(`${item.title} (${item.date})`, {
+          permanent: false,
+          direction: "top",
+          offset: [0, -8],
+          className: "marker-tooltip"
+        });
+
+        // Popup remains for accessibility
         const popupContent = `
           <div class="popup-content">
             <strong>${item.title}</strong><br/>
@@ -30,9 +42,29 @@ function initMapMarkers(map) {
           </div>
         `;
         marker.bindPopup(popupContent);
+
+        // Click navigates to the newsletter
         marker.on('click', () => window.location.href = item.link);
 
+        // Hover effect: grow and glow
+        marker.on("mouseover", function () {
+          this.setStyle({
+            radius: 8,
+            color: "#a8e6cf", // lighter ring
+            weight: 3
+          });
+        });
+        marker.on("mouseout", function () {
+          this.setStyle({
+            radius: 6,
+            color: "#3aa16c",
+            weight: 2
+          });
+        });
+
         marker.addTo(map);
+        spiderfier.addMarker(marker); // Spiderfier support
+
         markers.push(marker);
         markerBounds.extend(coords);
       });
@@ -47,7 +79,6 @@ function initMapMarkers(map) {
     .catch(err => console.error("Error loading newsletters.json:", err));
 }
 
-// Allow external access for "Fit All" button
 window.fitAllMarkers = function () {
   if (markerBounds && markerBounds.isValid() && window.leafletMap) {
     window.leafletMap.fitBounds(markerBounds, {
