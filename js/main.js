@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Per-newsletter navigation (if on a specific newsletter entry page)
   if (
     typeof initNewsletterNavigation === 'function' &&
-    window.location.pathname.match(/\\/newsletter\\/(.+)\\.html/)
+    window.location.pathname.match(/\/newsletter\/(.+)\.html/)
   ) {
     initNewsletterNavigation();
   }
