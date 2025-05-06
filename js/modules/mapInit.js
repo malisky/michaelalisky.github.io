@@ -2,9 +2,7 @@
  * Map initialization and configuration
  * Sets up the Leaflet map with basic options and controls
  */
-function initMap() {
-  const spiderfier = initSpiderfier(map);
-  
+function initMap() {  
   console.log("Starting map initialization");
   
   // Get the map container
@@ -30,6 +28,7 @@ function initMap() {
   
   // Store map reference globally so we can access it for dark mode toggle
   window.leafletMap = map;
+  const spiderfier = initSpiderfier(map);
   
   // Add custom zoom control with better positioning
   L.control.zoom({
