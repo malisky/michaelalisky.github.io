@@ -3,6 +3,8 @@
  * Sets up the Leaflet map with basic options and controls
  */
 function initMap() {
+  const spiderfier = initSpiderfier(map);
+  
   console.log("Starting map initialization");
   
   // Get the map container
