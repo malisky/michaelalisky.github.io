@@ -91,7 +91,7 @@ nav a:hover::after {
 }
 
 .card:hover {
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
 .card img {
@@ -142,4 +142,3 @@ footer .icon-group img {
   object-fit: contain;
   display: inline-block;
 }
-
