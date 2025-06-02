@@ -118,11 +118,6 @@ nav a:hover::after {
   color: var(--secondary-text);
 }
 
-footer img {
-  max-width: 32px;
-  height: auto;
-}
-
 footer {
   text-align: center;
   margin-top: 2rem;
@@ -130,6 +125,13 @@ footer {
 
 footer .icon-group {
   display: inline-flex;
-  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+footer .icon-group img {
+  max-width: 32px;
+  height: auto;
 }
 
