@@ -13,8 +13,15 @@ function initMapMarkers(map) {
   const spiderfier = initSpiderfier(map);
 
   fetch("/newsletter/newsletters.json")
-    .then(res => res.json())
+    .then(res => {
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      return res.json();
+    })
     .then(data => {
+      console.log('Newsletter data loaded:', data);
+      
       data.forEach(entry => {
         if (
           !entry.location ||
@@ -26,7 +33,8 @@ function initMapMarkers(map) {
         }
 
         const marker = L.marker([entry.location.lat, entry.location.lng], {
-          icon: markerIcon
+          icon: markerIcon,
+          link: entry.link // Store link for spiderfier
         }).addTo(map);
 
         // Extract country group from location name
@@ -35,7 +43,7 @@ function initMapMarkers(map) {
           marker.countryGroup = parts[parts.length - 1]?.trim();
         }
 
-        // ✅ Use backticks for proper template string
+        // Create popup content using proper template literals
         const popupContent = `
           <a href="${entry.link}" class="marker-popup-card" target="_blank">
             <img src="${entry.image}" alt="${entry.title}" />
@@ -54,21 +62,33 @@ function initMapMarkers(map) {
         });
 
         // Show popup on hover and close after delay
-        marker.on("mouseover", function () {
+        let hoverTimer;
+        marker.on("mouseover", function (e) {
+          // Add hover effect to marker
+          const markerElement = this.getElement();
+          if (markerElement) {
+            markerElement.classList.add('marker-hover');
+          }
+          
           this.openPopup();
-          this._hoverTimer = setTimeout(() => this.closePopup(), 2000);
+          clearTimeout(hoverTimer);
+          hoverTimer = setTimeout(() => {
+            this.closePopup();
+            if (markerElement) {
+              markerElement.classList.remove('marker-hover');
+            }
+          }, 3000);
         });
 
-        marker.on("mouseout", function () {
-          clearTimeout(this._hoverTimer);
+        marker.on("mouseout", function (e) {
+          // Remove hover effect
+          const markerElement = this.getElement();
+          if (markerElement) {
+            markerElement.classList.remove('marker-hover');
+          }
         });
 
-        // Make the whole marker clickable
-        marker.on("click", () => {
-          window.open(entry.link, "_blank");
-        });
-
-        // Add to spiderfier and marker list
+        // Add to spiderfier first, then add click handler
         spiderfier.addMarker(marker);
         allMarkers.push(marker);
       });
@@ -79,6 +99,7 @@ function initMapMarkers(map) {
       console.error("Failed to load newsletter markers:", err);
     });
 
+  // Global function to fit all markers
   window.fitAllMarkers = function (map) {
     if (allMarkers.length > 0) {
       const bounds = L.featureGroup(allMarkers).getBounds();
