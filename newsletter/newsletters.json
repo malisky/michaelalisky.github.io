@@ -6,7 +6,7 @@
     "image": "/images/baden1.jpeg",
     "link": "/newsletter/baden.html",
     "location": { "lat": 48.0064, "lng": 16.2308 },
-    "location_name": "Baden bei Wien, Austria"
+    "location_name": "Baden bei Wien, Austria",
     "countryGroup": "Austria"
   },
   {
@@ -16,7 +16,7 @@
     "image": "/images/budapest.jpeg",
     "link": "/newsletter/budapest.html",
     "location": { "lat": 47.4979, "lng": 19.0402 },
-    "location_name": "Budapest, Hungary"
+    "location_name": "Budapest, Hungary",
     "countryGroup": "Hungary"
   },
   {
@@ -26,7 +26,7 @@
     "image": "/images/turkey.jpeg",
     "link": "/newsletter/turkey.html",
     "location": { "lat": 41.0151, "lng": 28.9795 },
-    "location_name": "Istanbul, Turkey"
+    "location_name": "Istanbul, Turkey",
     "countryGroup": "Turkey"
   },
   {
@@ -36,7 +36,7 @@
     "image": "/images/wachau1.jpeg",
     "link": "/newsletter/wachau.html",
     "location": { "lat": 48.3585, "lng": 15.431 },
-    "location_name": "Wachau Valley, Austria"
+    "location_name": "Wachau Valley, Austria",
     "countryGroup": "Austria"
   },
   {
@@ -46,7 +46,7 @@
     "image": "/images/lake-bled.jpeg",
     "link": "/newsletter/slovenia.html",
     "location": { "lat": 46.0569, "lng": 14.5058 },
-    "location_name": "Ljubljana, Slovenia"
+    "location_name": "Ljubljana, Slovenia",
     "countryGroup": "Slovenia"
   },
   {
@@ -56,7 +56,7 @@
     "image": "/images/brno-overlook.jpeg",
     "link": "/newsletter/november.html",
     "location": { "lat": 49.1951, "lng": 16.6068 },
-    "location_name": "Brno, Czech Republic"
+    "location_name": "Brno, Czech Republic",
     "countryGroup": "Czech Republic"
   },
   {
@@ -66,7 +66,7 @@
     "image": "/images/cave-monastery.jpeg",
     "link": "/newsletter/georgia.html",
     "location": { "lat": 41.6941, "lng": 44.8337 },
-    "location_name": "Tbilisi, Georgia"
+    "location_name": "Tbilisi, Georgia",
     "countryGroup": "Georgia"
   },
   {
@@ -76,7 +76,7 @@
     "image": "/images/alhambra.jpeg",
     "link": "/newsletter/spain.html",
     "location": { "lat": 37.3925, "lng": -5.9941 },
-    "location_name": "Seville, Spain"
+    "location_name": "Seville, Spain",
     "countryGroup": "Spain"
   },
   {
@@ -86,7 +86,7 @@
     "image": "/images/camel.jpeg",
     "link": "/newsletter/mongolia.html",
     "location": { "lat": 47.9212, "lng": 106.9186 },
-    "location_name": "Ulaanbaatar, Mongolia"
+    "location_name": "Ulaanbaatar, Mongolia",
     "countryGroup": "Mongolia"
   },
   {
@@ -96,7 +96,7 @@
     "image": "/images/zhishan.jpeg",
     "link": "/newsletter/taiwan.html",
     "location": { "lat": 25.033, "lng": 121.5645 },
-    "location_name": "Taipei, Taiwan"
+    "location_name": "Taipei, Taiwan",
     "countryGroup": "Taiwan"
   },
   {
@@ -106,7 +106,7 @@
     "image": "/images/kz-apartment.jpeg",
     "link": "/newsletter/kz-test.html",
     "location": { "lat": 43.2587, "lng": 76.9398 },
-    "location_name": "Almaty, Kazakhstan"
+    "location_name": "Almaty, Kazakhstan",
     "countryGroup": "Kazakhstan"
   },
   {
@@ -116,7 +116,7 @@
     "image": "/images/kz-cathedral.jpeg",
     "link": "/newsletter/kz-horse-meat.html",
     "location": { "lat": 43.261, "lng": 76.9457 },
-    "location_name": "Ascension Cathedral, Almaty, Kazakhstan"
+    "location_name": "Ascension Cathedral, Almaty, Kazakhstan",
     "countryGroup": "Kazakhstan"
   },
   {
@@ -126,7 +126,7 @@
     "image": "/images/kz-kebab.jpeg",
     "link": "/newsletter/kz-boxing.html",
     "location": { "lat": 43.2479, "lng": 76.9123 },
-    "location_name": "Zhetysu-Semirech'ye Bazaar, Almaty, Kazakhstan"
+    "location_name": "Zhetysu-Semirech'ye Bazaar, Almaty, Kazakhstan",
     "countryGroup": "Kazakhstan"
   },
   {
@@ -136,7 +136,7 @@
     "image": "/images/kz-kumis.jpeg",
     "link": "/newsletter/kz-kumis.html",
     "location": { "lat": 43.2798, "lng": 76.9483 },
-    "location_name": "Green Bazaar, Almaty, Kazakhstan"
+    "location_name": "Green Bazaar, Almaty, Kazakhstan",
     "countryGroup": "Kazakhstan"
   },
   {
@@ -146,7 +146,7 @@
     "image": "/images/kz-pigeons.jpeg",
     "link": "/newsletter/kz-pigeon.html",
     "location": { "lat": 43.2562, "lng": 76.9531 },
-    "location_name": "Kazan Cathedral, Almaty, Kazakhstan"
+    "location_name": "Kazan Cathedral, Almaty, Kazakhstan",
     "countryGroup": "Kazakhstan"
   },
   {
@@ -156,7 +156,7 @@
     "image": "/images/kz-publishing.jpeg",
     "link": "/newsletter/kz-steppe.html",
     "location": { "lat": 43.2452, "lng": 76.9365 },
-    "location_name": "Steppe & World Publishing House, Almaty, Kazakhstan"
+    "location_name": "Steppe & World Publishing House, Almaty, Kazakhstan",
     "countryGroup": "Kazakhstan"
   },
   {
@@ -166,17 +166,17 @@
     "image": "/images/kz-lake.jpeg",
     "link": "/newsletter/kz-lake.html",
     "location": { "lat": 42.9894, "lng": 78.5583 },
-    "location_name": "Lake Kaindy, Kazakhstan"
+    "location_name": "Lake Kaindy, Kazakhstan",
     "countryGroup": "Kazakhstan"
   },
   {
     "id": "kz-climate",
-    "title": "August 28: Climate Change Education and the Grand Canyon’s Younger Brother",
+    "title": "August 28: Climate Change Education and the Grand Canyon's Younger Brother",
     "date": "2024-08-28",
     "image": "/images/kz-canyon.jpeg",
     "link": "/newsletter/kz-climate.html",
     "location": { "lat": 43.3666, "lng": 79.0532 },
-    "location_name": "Charyn Canyon, Kazakhstan"
+    "location_name": "Charyn Canyon, Kazakhstan",
     "countryGroup": "Kazakhstan"
   },
   {
@@ -186,7 +186,7 @@
     "image": "/images/kz-final.jpeg",
     "link": "/newsletter/kz-finale.html",
     "location": { "lat": 43.2389, "lng": 76.8897 },
-    "location_name": "Almaty, Kazakhstan"
+    "location_name": "Almaty, Kazakhstan",
     "countryGroup": "Kazakhstan"
   }
 ]
