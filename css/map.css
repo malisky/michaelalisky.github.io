@@ -88,22 +88,37 @@
 }
 
 .custom-marker-icon.spiderfied .marker-dot {
-  transform: scale(1.2);
-  background-color: #4caf50; /* Slightly brighter green when spiderfied */
-  box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.4),
-              0 0 10px rgba(0, 0, 0, 0.5);
-  animation: pulse-spiderfied 2s infinite;
+  transform: scale(1.1);
+  background-color: #43a047; /* Slightly brighter green when spiderfied */
+  box-shadow: 0 0 0 3px rgba(67, 160, 71, 0.3),
+              0 0 8px rgba(0, 0, 0, 0.4);
 }
 
-@keyframes pulse-spiderfied {
-  0%, 100% {
-    box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.4),
-                0 0 10px rgba(0, 0, 0, 0.5);
-  }
-  50% {
-    box-shadow: 0 0 0 8px rgba(76, 175, 80, 0.2),
-                0 0 15px rgba(0, 0, 0, 0.6);
-  }
+/* Spiderfied tooltip styles */
+.spiderfied-tooltip {
+  background: rgba(0, 0, 0, 0.8) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 4px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  padding: 4px 8px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  white-space: nowrap !important;
+}
+
+.spiderfied-tooltip::before {
+  border-top-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Dark mode tooltip adjustments */
+body.dark-mode .spiderfied-tooltip {
+  background: rgba(255, 255, 255, 0.9) !important;
+  color: #333 !important;
+}
+
+body.dark-mode .spiderfied-tooltip::before {
+  border-top-color: rgba(255, 255, 255, 0.9) !important;
 }
 
 /* Marker popup card */
