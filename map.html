@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Map</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <style>
+    html, body, #map {
+      height: 100%;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize the map
+      const map = L.map('map').setView([30, 10], 2.3);
+      
+      // Add tile layer
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map);
+      
+      // Storage for markers
+      const markers = {};
+      
+      // Load newsletter data
+      fetch('/newsletter/newsletters.json')
+        .then(res => res.json())
+        .then(data => {
+          // Create markers for each newsletter
+          data.forEach(entry => {
+            if (entry.location) {
+              // Extract the slug from the link
+              const slug = entry.link.replace(/^.*\//, "");
+              
+              // Create popup content
+              const popup = `
+                <div class="map-popup">
+                  <a href="${entry.link}" target="_top">
+                    <img src="${entry.image}" alt="${entry.title}">
+                    <div class="popup-title">${entry.title}</div>
+                  </a>
+                </div>`;
+              
+              // Add marker
+              const marker = L.marker([entry.location.lat, entry.location.lng]).addTo(map);
+              marker.bindPopup(popup);
+              markers[slug] = marker;
+            }
+          });
+          
+          // Signal that map is ready
+          window.parent.postMessage({ type: 'map-ready' }, '*');
+        })
+        .catch(error => {
+          console.error('Error loading newsletter data:', error);
+        });
+      
+      // Listen for messages from parent window
+      window.addEventListener("message", (event) => {
+        // Check if we have a valid message
+        if (!event.data || typeof event.data !== 'object') return;
+        
+        const { type, slug, coords } = event.data;
+        
+        // Handle location selection message
+        if ((type === 'select-location' || !type) && (slug || coords)) {
+          // If we have coords, use them; otherwise try to use the slug
+          if (coords) {
+            // Zoom to the location
+            map.setView(coords, 6, { animate: true, duration: 0.7 });
+            
+            // Open the popup if we have a marker for this slug
+            if (slug && markers[slug]) {
+              setTimeout(() => {
+                markers[slug].openPopup();
+              }, 800);
+            }
+          }
+          
+          // Acknowledge receipt
+          window.parent.postMessage({ 
+            type: 'location-selected',
+            slug: slug
+          }, '*');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,66 +1,55 @@
 [
   {
-    "id": "baden",
-    "title": "October 4: Baden Backroads",
-    "date": "2024-10-04",
-    "image": "/images/baden1.jpeg",
-    "link": "/newsletter/baden.html",
+    "title": "December 4: Georgian Dream",
+    "date": "2024-12-04",
+    "image": "/images/cave-monastery.jpeg",
+    "link": "/newsletter/georgia.html",
     "location": {
-      "lat": 48.0064,
-      "lng": 16.2308
-    },
-    "location_name": "Baden bei Wien, Austria"
+      "lat": 41.7151,
+      "lng": 44.8271
+    }
   },
   {
-    "id": "budapest",
-    "title": "October 14: Budapest Bangers",
-    "date": "2024-10-14",
-    "image": "/images/budapest.jpeg",
-    "link": "/newsletter/budapest.html",
+    "title": "March 27: Mongolia Adventures",
+    "date": "2025-03-27",
+    "image": "/images/camel.jpeg",
+    "link": "/newsletter/mongolia.html",
     "location": {
-      "lat": 47.4979,
-      "lng": 19.0402
-    },
-    "location_name": "Budapest, Hungary"
+      "lat": 47.8864,
+      "lng": 106.9057
+    }
   },
   {
-    "id": "turkey",
+    "title": "April 3: Taiwan Dispatch",
+    "date": "2025-04-03",
+    "image": "/images/zhishan.jpeg",
+    "link": "/newsletter/taiwan.html",
+    "location": {
+      "lat": 25.033,
+      "lng": 121.5654
+    }
+  },
+  {
     "title": "October 22: Turkey Tales",
     "date": "2024-10-22",
     "image": "/images/turkey.jpeg",
     "link": "/newsletter/turkey.html",
     "location": {
-      "lat": 41.0151,
-      "lng": 28.9795
-    },
-    "location_name": "Istanbul, Turkey"
+      "lat": 39.9208,
+      "lng": 32.8541
+    }
   },
   {
-    "id": "wachau",
-    "title": "October 28: Wachau!!",
-    "date": "2024-10-28",
-    "image": "/images/wachau1.jpeg",
-    "link": "/newsletter/wachau.html",
-    "location": {
-      "lat": 48.3585,
-      "lng": 15.4310
-    },
-    "location_name": "Wachau Valley, Austria"
-  },
-  {
-    "id": "slovenia",
     "title": "November 5: Slovenia Stories",
     "date": "2024-11-05",
     "image": "/images/lake-bled.jpeg",
     "link": "/newsletter/slovenia.html",
     "location": {
-      "lat": 46.0569,
-      "lng": 14.5058
-    },
-    "location_name": "Ljubljana, Slovenia"
+      "lat": 46.3667,
+      "lng": 14.1167
+    }
   },
   {
-    "id": "november",
     "title": "November 25: November News",
     "date": "2024-11-25",
     "image": "/images/brno-overlook.jpeg",
@@ -68,163 +57,16 @@
     "location": {
       "lat": 49.1951,
       "lng": 16.6068
-    },
-    "location_name": "Brno, Czech Republic"
+    }
   },
   {
-    "id": "georgia",
-    "title": "December 4: Georgian Dream",
-    "date": "2024-12-04",
-    "image": "/images/cave-monastery.jpeg",
-    "link": "/newsletter/georgia.html",
-    "location": {
-      "lat": 41.6941,
-      "lng": 44.8337
-    },
-    "location_name": "Tbilisi, Georgia"
-  },
-  {
-    "id": "spain",
     "title": "December 24: Spanish Study",
     "date": "2024-12-24",
     "image": "/images/alhambra.jpeg",
     "link": "/newsletter/spain.html",
     "location": {
-      "lat": 37.3925,
-      "lng": -5.9941
-    },
-    "location_name": "Seville, Spain"
-  },
-  {
-    "id": "mongolia",
-    "title": "March 27: Mongolia Adventures",
-    "date": "2025-03-27",
-    "image": "/images/camel.jpeg",
-    "link": "/newsletter/mongolia.html",
-    "location": {
-      "lat": 47.9212,
-      "lng": 106.9186
-    },
-    "location_name": "Ulaanbaatar, Mongolia"
-  },
-  {
-    "id": "taiwan",
-    "title": "April 3: Taiwan Dispatch",
-    "date": "2025-04-03",
-    "image": "/images/zhishan.jpeg",
-    "link": "/newsletter/taiwan.html",
-    "location": {
-      "lat": 25.0330,
-      "lng": 121.5645
-    },
-    "location_name": "Taipei, Taiwan"
-  },
-  {
-    "id": "kz-test",
-    "title": "August 4: I'm Still Alive",
-    "date": "2024-08-04",
-    "image": "/images/kz-apartment.jpeg",
-    "link": "/newsletter/kz-test.html",
-    "location": {
-      "lat": 43.2587,
-      "lng": 76.9398
-    },
-    "location_name": "Almaty, Kazakhstan"
-  },
-  {
-    "id": "kz-horse-meat",
-    "title": "August 6: Horse Meat and the Banya",
-    "date": "2024-08-06",
-    "image": "/images/kz-cathedral.jpeg",
-    "link": "/newsletter/kz-horse-meat.html",
-    "location": {
-      "lat": 43.2610,
-      "lng": 76.9457
-    },
-    "location_name": "Ascension Cathedral, Almaty, Kazakhstan"
-  },
-  {
-    "id": "kz-boxing",
-    "title": "August 10: Boxing and Bazaar",
-    "date": "2024-08-10",
-    "image": "/images/kz-kebab.jpeg",
-    "link": "/newsletter/kz-boxing.html",
-    "location": {
-      "lat": 43.2479,
-      "lng": 76.9123
-    },
-    "location_name": "Zhetysu-Semirech'ye Bazaar, Almaty, Kazakhstan"
-  },
-  {
-    "id": "kz-kumis",
-    "title": "August 17: Kumis!",
-    "date": "2024-08-17",
-    "image": "/images/kz-kumis.jpeg",
-    "link": "/newsletter/kz-kumis.html",
-    "location": {
-      "lat": 43.2798,
-      "lng": 76.9483
-    },
-    "location_name": "Green Bazaar, Almaty, Kazakhstan"
-  },
-  {
-    "id": "kz-pigeon",
-    "title": "August 18: Pigeon Market",
-    "date": "2024-08-18",
-    "image": "/images/kz-pigeons.jpeg",
-    "link": "/newsletter/kz-pigeon.html",
-    "location": {
-      "lat": 43.2562,
-      "lng": 76.9531
-    },
-    "location_name": "Kazan Cathedral, Almaty, Kazakhstan"
-  },
-  {
-    "id": "kz-steppe",
-    "title": "August 18: Steppe & World Publishing House",
-    "date": "2024-08-18",
-    "image": "/images/kz-publishing.jpeg",
-    "link": "/newsletter/kz-steppe.html",
-    "location": {
-      "lat": 43.2452,
-      "lng": 76.9365
-    },
-    "location_name": "Steppe & World Publishing House, Almaty, Kazakhstan"
-  },
-  {
-    "id": "kz-lake",
-    "title": "August 24: Cold Lake Plus Party Bus",
-    "date": "2024-08-24",
-    "image": "/images/kz-lake.jpeg",
-    "link": "/newsletter/kz-lake.html",
-    "location": {
-      "lat": 42.9952,
-      "lng": 78.4129
-    },
-    "location_name": "Lake Kaindy, Kazakhstan"
-  },
-  {
-    "id": "kz-climate",
-    "title": "August 28: Climate Change Education",
-    "date": "2024-08-28",
-    "image": "/images/kz-conference.jpeg",
-    "link": "/newsletter/kz-climate.html",
-    "location": {
-      "lat": 43.2402,
-      "lng": 76.9228
-    },
-    "location_name": "Almaty, Kazakhstan"
-  },
-  {
-    "id": "kz-conclusion",
-    "title": "September 4: Conclusion",
-    "date": "2024-09-04",
-    "image": "/images/kz-ending.jpeg",
-    "link": "/newsletter/kz-conclusion.html",
-    "location": {
-      "lat": 43.3525,
-      "lng": 77.0409
-    },
-    "location_name": "Almaty International Airport, Kazakhstan"
+      "lat": 40.4168,
+      "lng": -3.7038
+    }
   }
 ]
