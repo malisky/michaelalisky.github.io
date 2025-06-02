@@ -3,7 +3,7 @@
  * Conditionally initializes modules based on page type
  */
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
   // Dark mode toggle
   if (typeof initDarkMode === 'function' && document.getElementById('night-toggle')) {
     initDarkMode();
@@ -37,15 +37,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Map functionality
   const newsletterMap = document.getElementById('newsletter-map');
-  if (newsletterMap) {
+  if (newsletterMap && typeof initMap === 'function') {
     document.body.classList.add('map-layout');
-
-    if (typeof initMap === 'function') {
-      const map = initMap();
-
-      if (map && typeof initMapMarkers === 'function') {
-        initMapMarkers(map);
-      }
+    const map = initMap();
+    if (map && typeof initMapMarkers === 'function') {
+      initMapMarkers(map);
     }
   }
 
