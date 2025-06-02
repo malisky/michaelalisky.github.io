@@ -24,7 +24,7 @@ function initMapMarkers(map) {
         }).addTo(map);
 
         const popupContent = `
-          <a href="${entry.link}" class="marker-popup-card" target="_blank">
+          <a href="${entry.link}" class="marker-popup-card">
             <img src="${entry.image}" alt="${entry.title}" />
             <div class="text">
               <h3>${entry.title}</h3>
@@ -39,12 +39,21 @@ function initMapMarkers(map) {
           className: 'marker-popup'
         });
 
+        let closeTimeout;
+
         marker.on("mouseover", function () {
+          clearTimeout(closeTimeout);
           this.openPopup();
         });
 
         marker.on("mouseout", function () {
-          this.closePopup();
+          closeTimeout = setTimeout(() => {
+            this.closePopup();
+          }, 2000);
+        });
+
+        marker.on("click", function () {
+          window.location.href = entry.link;
         });
 
         allMarkers.push(marker);
