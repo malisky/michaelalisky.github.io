@@ -57,3 +57,10 @@ document.addEventListener('DOMContentLoaded', function () {
     initNewsletterNavigation();
   }
 });
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (document.getElementById('newsletter-map')) {
+    initMap();
+    initMapMarkers(window.leafletMap);
+  }
+});
