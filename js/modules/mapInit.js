@@ -24,21 +24,6 @@ function initMap() {
     zoomOutTitle: 'Zoom out - see more area'
   }).addTo(map);
   
-  // Add a "fit all markers" button
-  const fitAllButton = L.control({position: 'topright'});
-  fitAllButton.onAdd = function(map) {
-    const div = L.DomUtil.create('div', 'leaflet-control leaflet-bar');
-    div.innerHTML = '<a class="fit-all-button" href="#" title="Fit all locations" role="button" aria-label="Fit all locations">📍</a>';
-    div.onclick = function() {
-      if (typeof window.fitAllMarkers === 'function') {
-        window.fitAllMarkers();
-      }
-      return false;
-    };
-    return div;
-  };
-  fitAllButton.addTo(map);
-  
   // Add custom styled tile layer
   L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
