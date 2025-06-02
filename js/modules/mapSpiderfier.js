@@ -24,7 +24,8 @@ function initSpiderfier(map) {
           L.DomEvent.stopPropagation(e);
 
           if (this.spiderfied && this.currentCountry === country) {
-            window.location.href = marker.options.link || marker._path;
+            const link = marker.options?.link || marker._path || "#";
+            window.open(link, "_blank");
           } else {
             this.spiderfy(country);
           }
@@ -80,7 +81,10 @@ function initSpiderfier(map) {
           this._animateMarkerMove(marker, marker._originalLatLng.lat, marker._originalLatLng.lng);
           delete marker._originalLatLng;
         }
-        marker.getElement()?.classList.remove('spiderfied');
+
+        setTimeout(() => {
+          marker.getElement()?.classList.remove('spiderfied');
+        }, 300);
       });
 
       this.spiderfied = false;
