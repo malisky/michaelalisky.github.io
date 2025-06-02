@@ -1,0 +1,9 @@
+body.dark-mode {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+nav.sticky.dark-mode {
+  background-color: var(--bg-color);
+  border-color: var(--border-color);
+}

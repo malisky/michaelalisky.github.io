@@ -1,0 +1,120 @@
+h1, h2, h3, h4, h5, h6 {
+  color: var(--header-color);
+  margin-bottom: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 2.4rem;
+  margin-top: 2rem;
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-top: 1.5rem;
+}
+
+p {
+  margin-bottom: 1.2rem;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+  transition: color var(--transition-speed);
+}
+
+a:hover {
+  color: var(--link-hover);
+}
+
+p a {
+  display: inline;
+}
+
+em {
+  font-style: italic;
+}
+
+nav a {
+  color: var(--text-color);
+  margin: 0 10px;
+  font-weight: 500;
+  position: relative;
+}
+
+nav a.active,
+nav a:hover {
+  color: var(--nav-active);
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--nav-active);
+  transition: width var(--transition-speed);
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+.nav-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.card-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+}
+
+.card {
+  display: flex;
+  flex-direction: row;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.card img {
+  width: 40%;
+  height: auto;
+  object-fit: cover;
+}
+
+.card-text {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-text h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+}
+
+.card-text p {
+  margin: 0.2rem 0;
+  font-size: 0.9rem;
+  color: var(--secondary-text);
+}
+

@@ -3,50 +3,57 @@
  * Conditionally initializes modules based on page type
  */
 
-document.addEventListener('DOMContentLoaded', function() {
-  // Check which functions exist before calling them
-  // This way, we only need to include necessary scripts on each page
-
-  // Dark mode - used on all pages
+document.addEventListener('DOMContentLoaded', function () {
+  // Dark mode toggle
   if (typeof initDarkMode === 'function' && document.getElementById('night-toggle')) {
     initDarkMode();
   }
-  
-  // Scroll to top button - used on all pages
+
+  // Scroll to top button
   if (typeof initScrollToTop === 'function' && document.querySelector('.scroll-top')) {
     initScrollToTop();
   }
-  
-  // Active navigation links - used on all pages
+
+  // Highlight active nav links
   if (typeof initActiveNavLinks === 'function') {
     initActiveNavLinks();
   }
-  
-  // Fix newsletter links - only needed on newsletter pages
-  if (typeof fixNewsletterLinks === 'function' && 
-      (document.querySelector('.card p a') || window.location.pathname.includes('/newsletter/'))) {
+
+  // Fix in-text newsletter links
+  if (
+    typeof fixNewsletterLinks === 'function' &&
+    (document.querySelector('.card p a') || window.location.pathname.includes('/newsletter/'))
+  ) {
     fixNewsletterLinks();
   }
-  
-  // Map functionality - only used on map pages
+
+  // Newsletter list (card view on /newsletter.html)
+  if (
+    typeof initNewsletterCards === 'function' &&
+    window.location.pathname.includes('/newsletter.html')
+  ) {
+    initNewsletterCards();
+  }
+
+  // Map functionality
   const newsletterMap = document.getElementById('newsletter-map');
   if (newsletterMap) {
     document.body.classList.add('map-layout');
-    
-    // Only initialize map if the function exists
+
     if (typeof initMap === 'function') {
       const map = initMap();
-      
-      // Initialize markers if the function exists
+
       if (map && typeof initMapMarkers === 'function') {
         initMapMarkers(map);
       }
     }
   }
-  
-  // Newsletter navigation - only used on newsletter pages
-  if (typeof initNewsletterNavigation === 'function' && 
-      window.location.pathname.match(/\/newsletter\/(.+)\.html/)) {
+
+  // Per-newsletter navigation (if on a specific newsletter entry page)
+  if (
+    typeof initNewsletterNavigation === 'function' &&
+    window.location.pathname.match(/\/newsletter\/(.+)\.html/)
+  ) {
     initNewsletterNavigation();
   }
 });
