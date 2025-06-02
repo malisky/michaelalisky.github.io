@@ -2,21 +2,20 @@
  * Dark mode toggle functionality
  * Handles dark/light theme preferences and transitions with proper map tile switching
  */
-
 function initDarkMode() {
   const darkModeToggle = document.getElementById('night-toggle');
   
   // Check for saved theme preference
   const savedTheme = localStorage.getItem('darkMode');
   
-  // Apply saved theme or default to system preference
-  const isDarkMode = savedTheme === 'true' || 
-                    (savedTheme === null && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  // Apply saved theme or default to light mode
+  const isDarkMode = savedTheme === 'true';
   
   if (isDarkMode) {
     document.body.classList.add('dark-mode');
     darkModeToggle.textContent = '🌗'; // Third quarter moon for dark mode
   } else {
+    document.body.classList.remove('dark-mode'); // Explicitly remove dark mode
     darkModeToggle.textContent = '🌓'; // First quarter moon for light mode
   }
   
