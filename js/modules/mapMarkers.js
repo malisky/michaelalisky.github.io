@@ -48,7 +48,7 @@ function initMapMarkers(map) {
           autoPan: false
         });
 
-        // Show popup on hover
+        // Show popup on hover and close after delay
         marker.on("mouseover", function () {
           this.openPopup();
           this._hoverTimer = setTimeout(() => this.closePopup(), 2000);
@@ -63,6 +63,7 @@ function initMapMarkers(map) {
           window.open(entry.link, "_blank");
         });
 
+        // Add to spiderfier and tracking array
         spiderfier.addMarker(marker);
         allMarkers.push(marker);
       });
