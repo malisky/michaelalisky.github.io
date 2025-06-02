@@ -142,3 +142,16 @@ footer .icon-group img {
   object-fit: contain;
   display: inline-block;
 }
+
+.intro-container {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.intro-text {
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
