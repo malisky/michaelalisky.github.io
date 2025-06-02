@@ -71,21 +71,26 @@ function initMapMarkers(map) {
           }
           
           this.openPopup();
+          
+          // Clear any existing timer
           clearTimeout(hoverTimer);
+          
+          // Set timer to close popup after 2 seconds
           hoverTimer = setTimeout(() => {
             this.closePopup();
             if (markerElement) {
               markerElement.classList.remove('marker-hover');
             }
-          }, 3000);
+          }, 2000);
         });
 
         marker.on("mouseout", function (e) {
-          // Remove hover effect
+          // Remove hover effect immediately
           const markerElement = this.getElement();
           if (markerElement) {
             markerElement.classList.remove('marker-hover');
           }
+          // Note: Don't clear the timer here - let the popup fade naturally
         });
 
         // Add to spiderfier first, then add click handler
