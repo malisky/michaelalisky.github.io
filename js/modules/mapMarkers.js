@@ -16,7 +16,11 @@ function initMapMarkers(map) {
     .then(res => res.json())
     .then(data => {
       data.forEach(entry => {
-        if (!entry.location || typeof entry.location.lat !== 'number' || typeof entry.location.lng !== 'number') {
+        if (
+          !entry.location ||
+          typeof entry.location.lat !== "number" ||
+          typeof entry.location.lng !== "number"
+        ) {
           console.warn("Invalid marker data:", entry);
           return;
         }
@@ -31,6 +35,7 @@ function initMapMarkers(map) {
           marker.countryGroup = parts[parts.length - 1]?.trim();
         }
 
+        // ✅ Use backticks for proper template string
         const popupContent = `
           <a href="${entry.link}" class="marker-popup-card" target="_blank">
             <img src="${entry.image}" alt="${entry.title}" />
@@ -44,7 +49,7 @@ function initMapMarkers(map) {
 
         marker.bindPopup(popupContent, {
           closeButton: false,
-          className: 'marker-popup',
+          className: "marker-popup",
           autoPan: false
         });
 
@@ -63,7 +68,7 @@ function initMapMarkers(map) {
           window.open(entry.link, "_blank");
         });
 
-        // Add to spiderfier and tracking array
+        // Add to spiderfier and marker list
         spiderfier.addMarker(marker);
         allMarkers.push(marker);
       });
@@ -74,7 +79,7 @@ function initMapMarkers(map) {
       console.error("Failed to load newsletter markers:", err);
     });
 
-  window.fitAllMarkers = function(map) {
+  window.fitAllMarkers = function (map) {
     if (allMarkers.length > 0) {
       const bounds = L.featureGroup(allMarkers).getBounds();
       map.flyToBounds(bounds, {
