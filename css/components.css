@@ -122,3 +122,14 @@ footer img {
   max-width: 32px;
   height: auto;
 }
+
+footer {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+footer .icon-group {
+  display: inline-flex;
+  gap: 1rem;
+}
+
