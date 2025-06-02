@@ -39,6 +39,34 @@ function initMap() {
   window.addEventListener('resize', function() {
     map.invalidateSize();
   });
+
+  const spiderfier = initSpiderfier(map);
+
+  fetch('/newsletter/newsletter.json')
+    .then(response => response.json())
+    .then(data => {
+      data.forEach(entry => {
+        const lat = entry.location.lat;
+        const lng = entry.location.lng;
+        const countryGroup = entry.countryGroup;
+
+        const marker = L.marker([lat, lng], {
+          icon: L.divIcon({
+            className: 'custom-marker-icon',
+            html: '<div class="marker-dot"></div>',
+            iconSize: [18, 18]
+          }),
+          countryGroup: countryGroup,
+          link: entry.link,
+          title: entry.title
+        });
+
+        spiderfier.addMarker(marker).addTo(map);
+      });
+
+      setTimeout(() => map.invalidateSize(), 300);
+    });
+
   
   return map;
 }
