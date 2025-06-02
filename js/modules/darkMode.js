@@ -36,37 +36,23 @@ function initDarkMode() {
   
   // Handle toggle click
   darkModeToggle.addEventListener('click', function() {
-    // Add transitioning class for animation
     document.body.classList.add('theme-transitioning');
-    
-    // Change moon emoji with animation
     darkModeToggle.style.transition = 'transform 0.3s ease';
     darkModeToggle.style.transform = 'translateY(-5px)';
     
-    // Toggle dark mode class
     const willBeDarkMode = !document.body.classList.contains('dark-mode');
     document.body.classList.toggle('dark-mode');
-    
-    // Save preference to localStorage
     localStorage.setItem('darkMode', willBeDarkMode);
     
-    // Animate the emoji change
     setTimeout(() => {
-      if (willBeDarkMode) {
-        darkModeToggle.textContent = '🌗'; // Third quarter moon for dark mode
-      } else {
-        darkModeToggle.textContent = '🌓'; // First quarter moon for light mode
-      }
-      
+      darkModeToggle.textContent = willBeDarkMode ? '🌗' : '🌓';
       darkModeToggle.style.transform = 'translateY(0)';
     }, 150);
     
-    // Remove transitioning class after animation
     setTimeout(() => {
       document.body.classList.remove('theme-transitioning');
     }, 300);
     
-    // Update map tiles if map exists
     if (window.leafletMap) {
       const darkTile = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
       const lightTile = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
@@ -84,3 +70,5 @@ function initDarkMode() {
     }
   });
 }
+
+document.addEventListener('DOMContentLoaded', initDarkMode);
