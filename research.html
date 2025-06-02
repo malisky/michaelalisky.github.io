@@ -4,13 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Research - Michael Alisky</title>
+
   <link href="/css/style.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="icon" href="/images/favicon.svg" type="image/svg+xml" />
-  
+
   <script src="/js/modules/darkMode.js"></script>
   <script src="/js/modules/ui.js"></script>
-
+  <script src="/js/modules/footer.js"></script>
   <script src="/js/main.js"></script>
 </head>
 <body>
@@ -18,14 +19,14 @@
     <header>
       <h1>Research</h1>
     </header>
-    
+
     <nav class="sticky">
       <a href="/">Home</a>
       <a href="/research.html">Research</a>
       <a href="/newsletter.html">Newsletter</a>
       <button class="nav-toggle" id="night-toggle" title="Toggle dark mode">🌓</button>
     </nav>
-    
+
     <main>
       <section class="intro-container">
         <p class="intro-text">
@@ -33,57 +34,60 @@
           More to come soon.
         </p>
       </section>
-      
-      <div class="card">
-        <p>
-          <a href="https://www.journals.uchicago.edu/doi/abs/10.1086/733178" target="_blank">
-            <strong>Alisky, Michael</strong>, Rozelle, Scott, & Whyte, Martin. <i>Getting Ahead in Today's China: From Optimism to Pessimism</i>. <i>The China Journal</i> (2025).
-          </a>
-        </p>
-        <div style="background: var(--toggle-bg); padding: 0.75rem 1rem; margin-top: 1.5rem; border-radius: 8px;">
-          <h3 style="font-size: 1.2rem; margin-bottom: 0.6rem;">In the News</h3>
-          <ul style="padding-left: 1.2rem; margin: 0;">
-            <li><a href="https://bigdatachina.csis.org/is-it-me-or-the-economic-system-changing-evaluations-of-inequality-in-china/" target="_blank">CSIS Big Data China</a></li>
-            <li><a href="https://www.bbc.com/news/articles/c3e95lny0x9o" target="_blank">BBC News</a></li>
-            <li><a href="https://www.nytimes.com/2024/09/03/business/china-economy-consumption.html" target="_blank">The New York Times</a></li>
-            <li><a href="https://www.bloomberg.com/news/articles/2024-07-11/chinese-people-seen-blaming-unfair-system-for-making-them-poorer" target="_blank">Bloomberg</a></li>
-          </ul>
+
+      <section class="card-list">
+        <!-- Card 1 -->
+        <div class="card">
+          <div class="card-text">
+            <p>
+              <a href="https://www.journals.uchicago.edu/doi/abs/10.1086/733178" target="_blank">
+                <strong>Alisky, Michael</strong>, Rozelle, Scott, & Whyte, Martin. 
+                <em>Getting Ahead in Today's China: From Optimism to Pessimism</em>. 
+                <em>The China Journal</em> (2025).
+              </a>
+            </p>
+            <div class="news-links">
+              <h4>In the News</h4>
+              <ul>
+                <li><a href="https://bigdatachina.csis.org/is-it-me-or-the-economic-system-changing-evaluations-of-inequality-in-china/" target="_blank">CSIS Big Data China</a></li>
+                <li><a href="https://www.bbc.com/news/articles/c3e95lny0x9o" target="_blank">BBC News</a></li>
+                <li><a href="https://www.nytimes.com/2024/09/03/business/china-economy-consumption.html" target="_blank">The New York Times</a></li>
+                <li><a href="https://www.bloomberg.com/news/articles/2024-07-11/chinese-people-seen-blaming-unfair-system-for-making-them-poorer" target="_blank">Bloomberg</a></li>
+              </ul>
+            </div>
+          </div>
         </div>
-      </div>
-      
-      <div class="card">
-        <p>
-          <a href="https://stanford-jia.com/foreign-policy-decision-making-under-president-biden/" target="_blank">
-            <strong>Alisky, Michael</strong>. <i>Foreign Policy Decision-Making Under President Biden</i>. <i>The Stanford Journal of International Affairs</i> (2024).
-          </a>
-        </p>
-      </div>
-      
-      <div class="card">
-        <p>
-          <a href="https://stanforddaily.com/2020/05/13/part-i-the-u-s-must-end-its-antagonism-toward-china/" target="_blank">
-            <strong>Alisky, Michael</strong> & Gao, Daniel. <i>The U.S. Must End Its Antagonism Toward China</i>. <i>The Stanford Daily</i> (2020).
-          </a>
-        </p>
-      </div>
+
+        <!-- Card 2 -->
+        <div class="card">
+          <div class="card-text">
+            <p>
+              <a href="https://stanford-jia.com/foreign-policy-decision-making-under-president-biden/" target="_blank">
+                <strong>Alisky, Michael</strong>. 
+                <em>Foreign Policy Decision-Making Under President Biden</em>. 
+                <em>The Stanford Journal of International Affairs</em> (2024).
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card">
+          <div class="card-text">
+            <p>
+              <a href="https://stanforddaily.com/2020/05/13/part-i-the-u-s-must-end-its-antagonism-toward-china/" target="_blank">
+                <strong>Alisky, Michael</strong> & Gao, Daniel. 
+                <em>The U.S. Must End Its Antagonism Toward China</em>. 
+                <em>The Stanford Daily</em> (2020).
+              </a>
+            </p>
+          </div>
+        </div>
+      </section>
     </main>
-    
-    <footer>
-      <div class="icon-group">
-        <a href="https://github.com/malisky" target="_blank">
-          <img src="/images/github-icon.svg" alt="GitHub" />
-        </a>
-        <a href="https://www.linkedin.com/in/michaelalisky" target="_blank">
-          <img src="/images/linkedin-icon.svg" alt="LinkedIn" />
-        </a>
-        <a href="https://scholar.google.com/citations?user=b4EtdL4AAAAJ&hl=en" target="_blank">
-          <img src="/images/scholar-icon.svg" alt="Google Scholar" />
-        </a>
-      </div>
-    </footer>
+
+    <div class="theme-transition"></div>
+    <div class="scroll-top">↑</div>
   </div>
-  
-  <div class="theme-transition"></div>
-  <div class="scroll-top">↑</div>
 </body>
 </html>
