@@ -1,3 +1,8 @@
+/**
+ * Newsletter card renderer
+ * Populates /newsletter.html with cards based on JSON data
+ */
+
 function initNewsletterCards() {
   const container = document.getElementById("newsletter-list");
   if (!container) return;
