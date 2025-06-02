@@ -22,3 +22,30 @@ nav.sticky {
   z-index: 1000;
   gap: 2rem;
 }
+
+/* Ensure the night toggle button is properly styled */
+#night-toggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  margin: 0;
+  line-height: 1;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  user-select: none;
+  outline: none;
+  color: var(--text-color);
+}
+
+#night-toggle:hover {
+  opacity: 0.7;
+  transform: scale(1.1);
+}
+
+#night-toggle:active {
+  transform: scale(0.95);
+}
