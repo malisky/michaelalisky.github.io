@@ -1,4 +1,4 @@
-// Global array to store all markers
+// Global array to store all markers.
 let allMarkers = [];
 
 // Initialize markers on the map
@@ -34,8 +34,18 @@ function initMapMarkers(map) {
 
         const marker = L.marker([entry.location.lat, entry.location.lng], {
           icon: markerIcon,
-          link: entry.link // Store link for spiderfier
+          link: entry.link, // Store link for spiderfier
+          title: entry.title // Store title for tooltips
         }).addTo(map);
+
+        // Store marker data for easier access
+        marker._markerData = {
+          title: entry.title,
+          date: entry.date,
+          location: entry.location_name,
+          image: entry.image,
+          link: entry.link
+        };
 
         // Extract country group from location name
         if (entry.location_name) {
