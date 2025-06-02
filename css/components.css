@@ -119,15 +119,21 @@ nav a:hover::after {
 }
 
 footer {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
   text-align: center;
-  margin-top: 2rem;
+  z-index: 10;
 }
 
 footer .icon-group {
+  background: rgba(255, 255, 255, 0.9);
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
   gap: 1.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 footer .icon-group img {
