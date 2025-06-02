@@ -137,7 +137,9 @@ footer .icon-group {
 }
 
 footer .icon-group img {
-  max-width: 32px;
-  height: auto;
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  display: inline-block;
 }
 
