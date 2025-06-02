@@ -1,5 +1,5 @@
 /**
- * Marker spiderfier for overlapping markers
+ * Marker spiderfier for overlapping markers.
  * Handles overlapping markers by spreading them out when clicked
  */
 
