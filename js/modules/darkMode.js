@@ -1,6 +1,6 @@
 /**
  * Dark mode toggle functionality
- * Handles dark/light theme preferences and transitions
+ * Handles dark/light theme preferences and transitions with proper map tile switching
  */
 
 function initDarkMode() {
@@ -18,6 +18,11 @@ function initDarkMode() {
     darkModeToggle.textContent = '🌗'; // Third quarter moon for dark mode
   } else {
     darkModeToggle.textContent = '🌓'; // First quarter moon for light mode
+  }
+  
+  // Initialize map tiles for current theme
+  if (window.leafletMap && window.leafletMap._loaded) {
+    updateMapTiles(isDarkMode);
   }
   
   // Handle toggle click
@@ -55,9 +60,47 @@ function initDarkMode() {
     // Update map tiles if map exists
     if (window.leafletMap) {
       setTimeout(() => {
-        // Force a redraw of the map tiles
+        updateMapTiles(willBeDarkMode);
         window.leafletMap.invalidateSize();
-      }, 400);
+      }, 300);
     }
   });
+}
+
+// Global variables to store tile layers
+let lightTileLayer = null;
+let darkTileLayer = null;
+
+function updateMapTiles(isDarkMode) {
+  const map = window.leafletMap;
+  if (!map) return;
+  
+  // Initialize tile layers if they don't exist
+  if (!lightTileLayer) {
+    lightTileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      className: 'light-tiles'
+    });
+  }
+  
+  if (!darkTileLayer) {
+    darkTileLayer = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      className: 'dark-tiles'
+    });
+  }
+  
+  // Remove current tile layer
+  map.eachLayer(function(layer) {
+    if (layer instanceof L.TileLayer) {
+      map.removeLayer(layer);
+    }
+  });
+  
+  // Add appropriate tile layer
+  if (isDarkMode) {
+    darkTileLayer.addTo(map);
+  } else {
+    lightTileLayer.addTo(map);
+  }
 }
