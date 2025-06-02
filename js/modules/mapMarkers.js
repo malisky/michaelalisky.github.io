@@ -1,10 +1,7 @@
-/**
- * Marker creation and management
- * Handles loading newsletter data and creating map markers
- */
-
+// Global array to store all markers
 let allMarkers = [];
 
+// Initialize markers on the map
 function initMapMarkers(map) {
   const markerIcon = L.divIcon({
     className: 'custom-marker-icon',
@@ -13,136 +10,59 @@ function initMapMarkers(map) {
     iconAnchor: [9, 9]
   });
 
-  const spiderfier = initSpiderfier(map);
+  fetch("/newsletter/newsletters.json")
+    .then(res => res.json())
+    .then(data => {
+      data.forEach(entry => {
+        if (!entry.location || typeof entry.location.lat !== 'number' || typeof entry.location.lng !== 'number') {
+          console.warn("Invalid marker data:", entry);
+          return;
+        }
 
-  loadNewsletterData()
-    .then(data => createMarkers(data, map, markerIcon, spiderfier))
-    .catch(handleDataError);
+        const marker = L.marker([entry.location.lat, entry.location.lng], {
+          icon: markerIcon
+        }).addTo(map);
 
-  window.fitAllMarkers = function () {
-    fitAllMarkers(map);
+        const popupContent = `
+          <a href="${entry.link}" class="marker-popup-card" target="_blank">
+            <img src="${entry.image}" alt="${entry.title}" />
+            <div class="text">
+              <h3>${entry.title}</h3>
+              <p>${new Date(entry.date).toDateString()}</p>
+              <p>${entry.location_name}</p>
+            </div>
+          </a>
+        `;
+
+        marker.bindPopup(popupContent, {
+          closeButton: false,
+          className: 'marker-popup'
+        });
+
+        marker.on("mouseover", function () {
+          this.openPopup();
+        });
+
+        marker.on("mouseout", function () {
+          this.closePopup();
+        });
+
+        allMarkers.push(marker);
+      });
+
+      fitAllMarkers(map);
+    })
+    .catch(err => {
+      console.error("Failed to load newsletter markers:", err);
+    });
+
+  window.fitAllMarkers = function(map) {
+    if (allMarkers.length > 0) {
+      const bounds = L.featureGroup(allMarkers).getBounds();
+      map.flyToBounds(bounds, {
+        padding: [50, 50],
+        duration: 1.5
+      });
+    }
   };
-}
-
-async function loadNewsletterData() {
-  try {
-    const response = await fetch('/newsletter/newsletters.json');
-    return await response.json();
-  } catch (error) {
-    console.error('Error loading newsletter data:', error);
-    throw error;
-  }
-}
-
-function createMarkers(data, map, markerIcon, spiderfier) {
-  let validCount = 0;
-  const locationsByCountry = groupMarkersByCountry(data);
-
-  data.forEach(entry => {
-    if (!entry.location || typeof entry.location.lat !== 'number' || typeof entry.location.lng !== 'number') {
-      console.warn('Skipping invalid entry:', entry);
-      return;
-    }
-
-    const marker = L.marker([entry.location.lat, entry.location.lng], {
-      icon: markerIcon,
-    });
-
-    marker.bindTooltip(entry.title, {
-      direction: 'top',
-      offset: L.point(0, -10)
-    });
-
-    marker.newsletterId = entry.id;
-    marker.newsletterTitle = entry.title;
-    marker.newsletterLocation = entry.location_name || '';
-    marker._path = entry.link;
-
-    if (entry.location_name) {
-      const country = extractCountry(entry.location_name);
-      if (country && locationsByCountry[country] && locationsByCountry[country].length > 1) {
-        marker.countryGroup = country;
-      }
-
-      marker.on('click', () => {
-        window.location.href = entry.link;
-      });
-    } else {
-      marker.on('click', () => {
-        window.location.href = entry.link;
-      });
-    }
-
-    marker.on('mouseover', () => {
-      marker.getElement()?.classList.add('hover');
-    });
-
-    marker.on('mouseout', () => {
-      marker.getElement()?.classList.remove('hover');
-    });
-
-    const markerElement = marker.getElement();
-    if (markerElement) {
-      markerElement.style.cursor = 'pointer';
-    }
-
-    marker.addTo(map);
-
-    if (spiderfier) {
-      spiderfier.addMarker(marker);
-    }
-
-    allMarkers.push(marker);
-    validCount++;
-  });
-
-  if (validCount > 0) {
-    fitAllMarkers(map);
-  } else {
-    handleDataError("No valid markers created");
-  }
-
-  return allMarkers;
-}
-
-function extractCountry(locationString) {
-  if (!locationString) return null;
-  const parts = locationString.split(',');
-  return parts.length > 1 ? parts[parts.length - 1].trim() : locationString.trim();
-}
-
-function groupMarkersByCountry(data) {
-  const groups = {};
-  data.forEach(entry => {
-    if (entry.location && entry.location_name) {
-      const country = extractCountry(entry.location_name);
-      if (country) {
-        if (!groups[country]) groups[country] = [];
-        groups[country].push(entry);
-      }
-    }
-  });
-  return groups;
-}
-
-function fitAllMarkers(map) {
-  if (allMarkers.length > 0) {
-    const bounds = L.featureGroup(allMarkers).getBounds();
-    map.flyToBounds(bounds, {
-      padding: [50, 50],
-      duration: 1.5,
-      easeLinearity: 0.5
-    });
-  }
-}
-
-function handleDataError(error) {
-  console.error('Error loading newsletter data:', error);
-  const mapContainer = document.querySelector('.map-full-width');
-  if (mapContainer) {
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'map-error';
-    errorDiv.textContent = 'Could not load newsletter locations';
-    mapContainer.appendChild(errorDiv);
-  }
 }
