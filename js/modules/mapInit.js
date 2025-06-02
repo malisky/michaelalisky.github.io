@@ -2,7 +2,6 @@
  * Map initialization and configuration
  * Sets up the Leaflet map with basic options and controls
  */
-
 function initMap() {
   // Initialize the map centered on Europe/Asia region
   const map = L.map('newsletter-map', {
@@ -16,6 +15,7 @@ function initMap() {
   
   // Store map reference globally so we can access it for dark mode toggle
   window.leafletMap = map;
+  map._loaded = true; // Mark map as loaded
   
   // Add custom zoom control with better positioning
   L.control.zoom({
@@ -24,8 +24,13 @@ function initMap() {
     zoomOutTitle: 'Zoom out - see more area'
   }).addTo(map);
   
-  // Add custom styled tile layer
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  // Check current theme and add appropriate tile layer
+  const isDarkMode = document.body.classList.contains('dark-mode');
+  const tileUrl = isDarkMode 
+    ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+    : 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+  
+  L.tileLayer(tileUrl, {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
   }).addTo(map);
   
@@ -39,34 +44,11 @@ function initMap() {
   window.addEventListener('resize', function() {
     map.invalidateSize();
   });
-
-  const spiderfier = initSpiderfier(map);
-
-  fetch('/newsletter/newsletter.json')
-    .then(response => response.json())
-    .then(data => {
-      data.forEach(entry => {
-        const lat = entry.location.lat;
-        const lng = entry.location.lng;
-        const countryGroup = entry.countryGroup;
-
-        const marker = L.marker([lat, lng], {
-          icon: L.divIcon({
-            className: 'custom-marker-icon',
-            html: '<div class="marker-dot"></div>',
-            iconSize: [18, 18]
-          }),
-          countryGroup: countryGroup,
-          link: entry.link,
-          title: entry.title
-        });
-
-        spiderfier.addMarker(marker).addTo(map);
-      });
-
-      setTimeout(() => map.invalidateSize(), 300);
-    });
-
+  
+  // Initialize markers using the separate mapMarkers.js function
+  if (typeof initMapMarkers === 'function') {
+    initMapMarkers(map);
+  }
   
   return map;
 }
