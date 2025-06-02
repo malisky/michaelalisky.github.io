@@ -5,8 +5,7 @@
 
 function initSpiderfier(map) {
   const countryMarkers = {};
-  let currentCountry = null;
-
+  
   const spiderfier = {
     markers: [],
     spiderfied: false,
@@ -22,13 +21,31 @@ function initSpiderfier(map) {
 
         marker.on('click', (e) => {
           L.DomEvent.stopPropagation(e);
+          
+          const markersInCountry = countryMarkers[country] || [];
+          
+          // If there's only one marker in this country, open directly
+          if (markersInCountry.length === 1) {
+            const link = marker.options?.link || "#";
+            window.open(link, "_blank");
+            return;
+          }
 
+          // If multiple markers and already spiderfied for this country, open link
           if (this.spiderfied && this.currentCountry === country) {
-            const link = marker.options?.link || marker._path || "#";
+            const link = marker.options?.link || "#";
             window.open(link, "_blank");
           } else {
+            // Spiderfy the markers for this country
             this.spiderfy(country);
           }
+        });
+      } else {
+        // For markers without country group, just open link directly
+        marker.on('click', (e) => {
+          L.DomEvent.stopPropagation(e);
+          const link = marker.options?.link || "#";
+          window.open(link, "_blank");
         });
       }
 
@@ -40,7 +57,7 @@ function initSpiderfier(map) {
       if (this.spiderfied) this.unspiderfy();
 
       const markers = countryMarkers[country] || [];
-      if (!markers.length) return;
+      if (markers.length <= 1) return; // Don't spiderfy single markers
 
       this.currentCountry = country;
       this.spiderfied = true;
@@ -53,27 +70,38 @@ function initSpiderfier(map) {
       );
 
       const angleStep = (2 * Math.PI) / markers.length;
-      const baseLength = 0.03;
-      const zoomFactor = Math.pow(0.8, map.getZoom() - 10);
-      const spokeLength = baseLength * zoomFactor;
+      const baseLength = 0.05;
+      const zoomFactor = Math.pow(0.7, map.getZoom() - 8);
+      const spokeLength = Math.max(baseLength * zoomFactor, 0.01);
 
       markers.forEach((marker, i) => {
         const angle = i * angleStep;
-        const radius = spokeLength * (1 + i * 0.2);
+        const radius = spokeLength * (1 + i * 0.1);
         const newLat = center.lat + radius * Math.cos(angle);
         const newLng = center.lng + radius * Math.sin(angle);
 
         marker._originalLatLng = marker.getLatLng();
         this._animateMarkerMove(marker, newLat, newLng);
 
-        marker.getElement()?.classList.add('spiderfied');
+        const element = marker.getElement();
+        if (element) {
+          element.classList.add('spiderfied');
+        }
       });
 
-      map.once('click', () => this.unspiderfy());
+      // Close spiderfy when clicking elsewhere on map
+      const closeHandler = () => {
+        this.unspiderfy();
+        map.off('click', closeHandler);
+      };
+      
+      setTimeout(() => {
+        map.on('click', closeHandler);
+      }, 100);
     },
 
     unspiderfy() {
-      if (!this.spiderfied) return;
+      if (!this.spiderfied || !this.currentCountry) return;
 
       const markers = countryMarkers[this.currentCountry] || [];
       markers.forEach(marker => {
@@ -83,7 +111,10 @@ function initSpiderfier(map) {
         }
 
         setTimeout(() => {
-          marker.getElement()?.classList.remove('spiderfied');
+          const element = marker.getElement();
+          if (element) {
+            element.classList.remove('spiderfied');
+          }
         }, 300);
       });
 
@@ -94,20 +125,22 @@ function initSpiderfier(map) {
     _animateMarkerMove(marker, newLat, newLng) {
       const startPos = marker.getLatLng();
       const endPos = L.latLng(newLat, newLng);
-      const duration = 500;
+      const duration = 400;
       const start = performance.now();
 
-      function animate(timestamp) {
+      const animate = (timestamp) => {
         const progress = Math.min((timestamp - start) / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
+        const eased = 1 - Math.pow(1 - progress, 3); // Ease-out cubic
 
         marker.setLatLng([
           startPos.lat + (endPos.lat - startPos.lat) * eased,
           startPos.lng + (endPos.lng - startPos.lng) * eased
         ]);
 
-        if (progress < 1) requestAnimationFrame(animate);
-      }
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        }
+      };
 
       requestAnimationFrame(animate);
     }
