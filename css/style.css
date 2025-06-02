@@ -1,584 +1,776 @@
-:root {
-  /* Colors */
-  --color-text-primary: #111;
-  --color-text-secondary: #444;
-  --color-text-light: #f0f0f0;
-  --color-accent: #3d735d;
-  --color-accent-light: #88c8a0;
-  
-  /* Background colors */
-  --color-bg-primary: #fafafa;
-  --color-bg-secondary: #f5f5f5;
-  --color-bg-dark: #121212;
-  --color-bg-dark-secondary: #1c1c1c;
-  
-  /* Borders */
-  --color-border-light: #ddd;
-  --color-border-dark: #333;
-  --color-border-footer: #ccc;
-  
-  /* Shadows */
-  --shadow-card: 0 6px 14px rgba(0, 0, 0, 0.08);
-  
-  /* Spacing */
-  --space-xs: 0.5rem;
-  --space-sm: 0.75rem;
-  --space-md: 1rem;
-  --space-lg: 1.5rem;
-  --space-xl: 2rem;
-  --space-xxl: 2.5rem;
-  --space-xxxl: 2.8rem;
-  
-  /* Typography */
-  --font-size-base: 1.2rem;
-  --font-size-lg: 1.5rem;
-  --font-size-xl: 1.6rem;
-  --font-size-xxl: 2.4rem;
-  --font-size-xxxl: 3rem;
-  
-  /* Layout */
-  --container-width: 1080px;
-  --nav-width: 880px;
-  --intro-width: 860px;
-  --border-radius: 10px;
-  --border-radius-lg: 12px;
-}
-
 /* Base styles */
-body {
+:root {
+  --text-color: #333;
+  --bg-color: #fff;
+  --card-bg: #fff;
+  --border-color: #eaeaea;
+  --link-color: #4a6f4a; /* More elegant, muted sage green */
+  --link-hover: #2f4f2f; /* Darker forest green */
+  --header-color: #222;
+  --nav-active: #4a6f4a; /* Elegant sage green */
+  --toggle-bg: #f0f0f0;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --secondary-text: #666;
+  --marker-color: #4a6f4a; /* Elegant sage green */
+  --transition-speed: 0.2s; /* Faster transition */
+}
+
+.dark-mode {
+  --text-color: #e0e0e0;
+  --bg-color: #121212;
+  --card-bg: #1e1e1e;
+  --border-color: #333;
+  --link-color: #8bac89; /* Softer sage green for dark mode */
+  --link-hover: #a1c39f; /* Lighter sage for hover in dark mode */
+  --header-color: #f0f0f0;
+  --nav-active: #8bac89; /* Softer sage green for dark mode */
+  --toggle-bg: #333;
+  --shadow-color: rgba(0, 0, 0, 0.4);
+  --secondary-text: #aaa;
+  --marker-color: #8bac89; /* Softer sage green for dark mode */
+}
+
+* {
+  box-sizing: border-box;
   margin: 0;
-  font-family: 'Space Grotesk', sans-serif;
-  background: var(--color-bg-primary);
-  color: var(--color-text-primary);
-  font-size: var(--font-size-base);
-  line-height: 1.7;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  padding: 0;
+  transition: background-color var(--transition-speed), color var(--transition-speed);
 }
 
-body.blurred {
-  filter: blur(8px);
-  transition: filter 0.8s ease;
+html {
+  scroll-behavior: smooth;
 }
 
-/* Dark mode */
-body.dark-mode {
-  background-color: var(--color-bg-dark);
-  color: var(--color-text-light);
+body {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  font-size: 16px;
+  /* Make everything slightly smaller to fit better */
+  font-size: 95%;
 }
 
-/* Layout */
 .container {
-  max-width: var(--container-width);
+  max-width: 800px;
   margin: 0 auto;
-  padding: 0 var(--space-xl);
-}
-
-body.home {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  flex-direction: column;
-  text-align: center;
+  padding: 0 20px;
 }
 
 /* Typography */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--header-color);
+  margin-bottom: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 2.4rem;
+  margin-top: 2rem;
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-top: 1.5rem;
+}
+
+p {
+  margin-bottom: 1.2rem;
+}
+
 a {
+  color: var(--link-color);
   text-decoration: none;
-  color: var(--color-accent);
-  font-weight: 500;
-  padding: var(--space-xs) var(--space-sm);
-  font-size: var(--font-size-lg);
-  letter-spacing: 0.5px;
-  transition: color 0.2s ease, text-decoration 0.2s ease;
+  transition: color var(--transition-speed);
 }
 
 a:hover {
-  color: var(--color-accent-light);
-  text-decoration: underline;
+  color: var(--link-hover);
 }
 
-/* Header */
+em {
+  font-style: italic;
+}
+
+/* Fix for hyperlinks in paragraphs */
+p a {
+  display: inline;
+}
+
+/* Header and Navigation */
 header {
   text-align: center;
-  padding: var(--space-xxxl) 0 var(--space-lg);
-}
-
-header h1 {
-  font-size: var(--font-size-xxxl);
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  margin: 0;
-}
-
-/* Adjust container for header */
-.header-container {
-  margin-bottom: 0;
-}
-
-/* Navigation */
-nav {
-  background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border-light);
-  border-radius: var(--border-radius);
-  padding: var(--space-md) var(--space-xxl);
-  margin: var(--space-xl) auto 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 4rem;
-  max-width: var(--nav-width);
-}
-
-nav a {
-  color: var(--color-accent);
-}
-
-nav a.active {
-  border-bottom: 2px solid var(--color-accent);
-}
-
-body.dark-mode nav {
-  background: var(--color-bg-dark-secondary);
-  border-color: var(--color-border-dark);
-}
-
-body.dark-mode nav a {
-  color: var(--color-accent-light);
-}
-
-body.dark-mode nav a.active {
-  border-bottom: 2px solid var(--color-accent-light);
+  padding: 1.8rem 0 0.8rem; /* Slightly reduced padding */
 }
 
 nav.sticky {
   position: sticky;
   top: 0;
-  z-index: 100;
-  backdrop-filter: blur(8px);
-  background-color: rgba(245, 245, 245, 0.85);
+  padding: 0.7rem 0; /* Slightly reduced padding */
+  margin-bottom: 1.8rem; /* Slightly reduced margin */
+  background-color: var(--bg-color);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  gap: 2rem;
 }
 
-body.dark-mode nav.sticky {
-  background-color: rgba(28, 28, 28, 0.85);
+nav a {
+  color: var(--text-color);
+  margin: 0 10px;
+  font-weight: 500;
+  position: relative;
+}
+
+nav a.active,
+nav a:hover {
+  color: var(--nav-active);
+}
+
+/* Remove underline for active pages */
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--nav-active);
+  transition: width var(--transition-speed);
+}
+
+nav a:hover::after {
+  width: 100%;
 }
 
 .nav-toggle {
   background: none;
   border: none;
-  font-size: 1.6rem;
   cursor: pointer;
-  opacity: 0.8;
-  line-height: 1;
-  padding: 0;
-  transition: opacity 0.2s;
-  color: var(--color-accent);
-}
-
-body.dark-mode .nav-toggle {
-  color: var(--color-accent-light);
+  font-size: 1.2rem;
+  color: var(--text-color);
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
+  transition: all var(--transition-speed);
 }
 
 .nav-toggle:hover {
-  opacity: 1;
+  background-color: var(--toggle-bg);
+  transform: translateY(-2px);
 }
 
-/* Navbar - alternate navigation style */
-.navbar {
-  position: sticky;
-  top: 0;
-  background-color: white;
-  padding: var(--space-md);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  z-index: 10;
-  text-align: center;
+/* Cards and content */
+.card {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 8px var(--shadow-color);
 }
 
-body.dark-mode .navbar {
-  background-color: var(--color-bg-dark);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-}
-
-.clean-navbar {
-  background: transparent;
-  box-shadow: none;
-}
-
-.nav-links {
-  display: flex;
-  gap: var(--space-xl);
-  align-items: center;
-  justify-content: center;
-  font-size: var(--font-size-base);
-}
-
-.nav-links a {
-  color: var(--color-text-primary);
-  text-decoration: none;
-  font-weight: 500;
-}
-
-body.dark-mode .nav-links a {
-  color: var(--color-text-light);
-}
-
-.nav-links a.active {
-  border-bottom: 2px solid var(--color-accent);
-}
-
-body.dark-mode .nav-links a.active {
-  border-bottom: 2px solid var(--color-accent-light);
-}
-
-/* Introduction */
 .intro-container {
-  margin-top: var(--space-xl);
-  margin-bottom: 3.5rem;
   text-align: center;
+  margin-bottom: 3rem; /* Adjusted space before map */
 }
 
 .intro-text {
-  font-size: var(--font-size-xl);
-  color: var(--color-text-secondary);
-  max-width: var(--intro-width);
+  font-size: 1.15rem; /* Slightly smaller */
+  color: var(--secondary-text);
+  max-width: 600px;
   margin: 0 auto;
-}
-
-body.dark-mode .intro-text {
-  color: var(--color-text-light);
-}
-
-/* Main content */
-main {
-  max-width: var(--container-width);
-  margin: var(--space-xxl) auto;
-  padding: var(--space-lg);
-}
-
-/* Full width container */
-.full-width {
-  max-width: 100%;
-  padding: 0;
-}
-
-/* Cards */
-.card {
-  background: white;
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-card);
-  padding: var(--space-xxxl);
-  margin-bottom: var(--space-xxxl);
-}
-
-.card h2 {
-  font-size: var(--font-size-xxl);
-  font-weight: 600;
-  margin-bottom: var(--space-md);
-}
-
-body.dark-mode .card {
-  background: var(--color-bg-dark-secondary);
-  color: var(--color-text-light);
-}
-
-/* Article content for newsletter pages */
-.article-content {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: var(--space-xl);
-}
-
-.entry-container {
-  background: white;
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-card);
-  padding: var(--space-xl);
-  margin-top: var(--space-xl);
-}
-
-body.dark-mode .entry-container {
-  background: var(--color-bg-dark-secondary);
-}
-
-.entry-container p {
-  font-size: 1.1rem;
-  line-height: 1.7;
-  margin-bottom: var(--space-lg);
 }
 
 /* Images */
+.image-container {
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.image-container img {
+  width: 100%;
+  border-radius: 6px;
+  max-height: 500px;
+  object-fit: cover;
+}
+
+/* Default 2-column grid */
 .image-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: var(--space-md);
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
-.image-container {
-  overflow: hidden;
-  border-radius: 6px;
+/* 3-column grid - new! */
+.image-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
-img {
+.image-grid .image-container,
+.image-grid-3 .image-container {
+  margin-bottom: 0;
+}
+
+/* Image containers in 3-column grids might need height adjustment */
+.image-grid-3 .image-container img {
+  max-height: 400px;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Featured image handling for newsletters */
+.featured-image {
   width: 100%;
-  max-width: 100%;
-  height: auto;
-  border-radius: 6px;
-  margin: var(--space-md) 0;
-  transition: transform 0.3s ease;
-}
-
-img:hover {
-  transform: scale(1.03);
-}
-
-/* Footer */
-footer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.8rem;
-  padding: var(--space-xxl) 0;
-  border-top: 1px solid var(--color-border-footer);
-}
-
-body.dark-mode footer {
-  border-top: 1px solid var(--color-border-dark);
-}
-
-/* Footer icon standardization */
-.icon-group img, 
-footer img {
-  width: 24px;
-  height: 24px;
-  margin: 0 0.5rem;
-  transition: opacity 0.2s ease;
-}
-
-.icon-group a:hover img,
-footer a:hover img {
-  opacity: 0.8;
-}
-
-.icon-group {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: var(--space-md) 0;
-}
-
-/* Scroll elements */
-.scroll-top {
-  position: fixed;
-  bottom: var(--space-xl);
-  right: var(--space-xl);
-  font-size: var(--space-xl);
-  background: rgba(0, 0, 0, 0.2);
-  color: white;
-  padding: 0.6rem var(--space-md);
-  border-radius: var(--border-radius);
-  cursor: pointer;
-  display: none;
-  z-index: 999;
-  transition: background 0.2s ease;
-}
-
-.scroll-top:hover {
-  background: rgba(0, 0, 0, 0.4);
-}
-
-/* Full width map container */
-.map-full-width {
-  width: 100vw;
-  height: 700px;
-  position: relative;
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
   overflow: hidden;
-  margin: 0 0 3rem 0;
+  box-shadow: 0 2px 8px var(--shadow-color);
 }
 
-/* Gradient overlay */
+.featured-image img {
+  width: 100%;
+  display: block;
+  max-height: 500px;
+  object-fit: cover;
+}
+
+/* Newsletter specific */
+.newsletter-entry {
+  margin-top: 1rem;
+}
+
+.newsletter-entry h2 {
+  margin-bottom: 0.5rem;
+}
+
+/* Map styles */
+.map-full-width {
+  width: 100%;
+  height: 480px; /* Slightly reduced height */
+  position: relative;
+  margin-bottom: 0;
+}
+
+#newsletter-map {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Custom dark mode styles for the map */
+.dark-mode .leaflet-tile {
+  filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.9);
+}
+
+.dark-mode .leaflet-container {
+  background: #333;
+}
+
+.dark-mode .leaflet-control-zoom a {
+  color: #eee;
+  background-color: #222;
+  border-color: #444;
+}
+
+.dark-mode .leaflet-control-zoom a:hover {
+  background-color: #333;
+}
+
+.dark-mode .leaflet-control-attribution {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #aaa;
+}
+
+.dark-mode .leaflet-control-attribution a {
+  color: #8bac89;
+}
+
 .map-gradient {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 150px;
-  background: linear-gradient(to bottom, 
-    rgba(250, 250, 250, 0.9) 0%, 
-    rgba(250, 250, 250, 0.4) 70%, 
-    rgba(250, 250, 250, 0) 100%);
-  z-index: 1000;
+  height: 80px;
+  background: linear-gradient(to bottom, var(--bg-color) 0%, rgba(255,255,255,0) 100%);
   pointer-events: none;
+  z-index: 2;
 }
 
-body.dark-mode .map-gradient {
-  background: linear-gradient(to bottom, 
-    rgba(18, 18, 18, 0.9) 0%, 
-    rgba(18, 18, 18, 0.4) 70%, 
-    rgba(18, 18, 18, 0) 100%);
+.dark-mode .map-gradient {
+  background: linear-gradient(to bottom, var(--bg-color) 0%, rgba(18,18,18,0) 100%);
 }
 
-/* Map container */
-#newsletter-map {
-  width: 100%;
-  height: 100%;
-  background-color: #f4f4e8; /* Very light tan/cream background */
-}
-
-/* Larger marker styling */
-.custom-marker-icon {
-  background: transparent;
-  border: none;
-}
-
-.marker-dot {
-  width: 16px;
-  height: 16px;
+/* Enhanced marker styles */
+.custom-marker-icon .marker-dot {
+  width: 14px;
+  height: 14px;
+  background-color: var(--marker-color);
   border-radius: 50%;
-  background-color: var(--color-accent);
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.8), 0 0 6px rgba(0, 0, 0, 0.4);
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  box-shadow: 0 0 0 4px rgba(74, 111, 74, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.marker-dot:hover {
+.custom-marker-icon .marker-dot:hover {
   transform: scale(1.3);
-  background-color: var(--color-accent-light);
+  box-shadow: 0 0 0 5px rgba(74, 111, 74, 0.4);
 }
 
-/* Improved zoom controls */
+/* Custom popup styles */
+.leaflet-popup-content-wrapper {
+  border-radius: 8px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 3px 14px var(--shadow-color);
+}
+
+.leaflet-popup-content {
+  margin: 0;
+  padding: 0;
+}
+
+.map-popup {
+  padding: 10px 15px;
+}
+
+.map-popup h3 {
+  margin: 0 0 5px 0;
+  color: var(--header-color);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.map-popup p {
+  margin: 0 0 10px 0;
+  color: var(--secondary-text);
+  font-size: 0.9rem;
+}
+
+.popup-link {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: var(--link-color);
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  transition: background-color 0.2s ease;
+}
+
+.popup-link:hover {
+  background-color: var(--link-hover);
+  color: white;
+}
+
+/* Custom zoom controls */
 .leaflet-control-zoom {
-  border: none !important;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
-  margin-right: 15px !important;
-  margin-top: 15px !important;
+  margin-right: 10px !important;
+  box-shadow: 0 2px 5px var(--shadow-color) !important;
 }
 
-.leaflet-control-zoom-in,
-.leaflet-control-zoom-out {
-  border-radius: 4px !important;
-  background-color: rgba(255, 255, 255, 0.9) !important;
-  color: var(--color-accent) !important;
+.leaflet-control-zoom a {
   width: 36px !important;
   height: 36px !important;
   line-height: 36px !important;
   font-size: 18px !important;
-  font-weight: normal !important;
-  transition: background-color 0.2s ease, color 0.2s ease !important;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.leaflet-control-zoom-in:hover,
-.leaflet-control-zoom-out:hover {
-  background-color: white !important;
-  color: var(--color-accent-light) !important;
+.fit-all-button {
+  display: block;
+  width: 36px !important;
+  height: 36px !important;
+  line-height: 36px !important;
+  text-align: center;
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+  transition: background-color 0.2s ease;
 }
 
-body.dark-mode .leaflet-control-zoom-in,
-body.dark-mode .leaflet-control-zoom-out {
-  background-color: rgba(28, 28, 28, 0.9) !important;
-  color: var(--color-accent-light) !important;
+.fit-all-button:hover {
+  background-color: #f4f4f4;
 }
 
-body.dark-mode .leaflet-control-zoom-in:hover,
-body.dark-mode .leaflet-control-zoom-out:hover {
-  background-color: var(--color-bg-dark-secondary) !important;
-  color: var(--color-accent) !important;
+.dark-mode .fit-all-button {
+  color: #eee;
+  background-color: #222;
 }
 
-.leaflet-container {
-  font-family: 'Space Grotesk', sans-serif;
+.dark-mode .fit-all-button:hover {
+  background-color: #333;
 }
 
-/* Clean up attribution */
-.leaflet-control-attribution {
-  font-size: 10px !important;
-  padding: 2px 6px !important;
-  background-color: rgba(255, 255, 255, 0.7) !important;
-  color: #777 !important;
+/* Enhanced tooltip styles */
+.leaflet-tooltip {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 1px 3px var(--shadow-color);
+  border-radius: 4px;
+  padding: 5px 10px;
+  white-space: nowrap;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
-body.dark-mode .leaflet-control-attribution {
-  background-color: rgba(18, 18, 18, 0.7) !important;
-  color: #999 !important;
+.leaflet-tooltip:before {
+  border-top-color: var(--border-color);
 }
 
-.leaflet-control-attribution a {
-  color: var(--color-accent) !important;
-  font-size: 10px !important;
-  padding: 0 !important;
+/* Smooth animation for view changes */
+.leaflet-fade-anim .leaflet-tile,
+.leaflet-fade-anim .leaflet-popup {
+  transition: opacity 0.25s linear;
 }
 
-body.dark-mode .leaflet-control-attribution a {
-  color: var(--color-accent-light) !important;
-}
-
-/* Error message styling */
+/* Map error message */
 .map-error {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  background-color: rgba(255, 0, 0, 0.7);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 4px;
+  z-index: 1000;
+}
+
+/* Footer */
+footer {
+  padding: 2rem 0;
+  margin-top: 0;
   text-align: center;
-  padding: 2rem;
-  color: #d32f2f;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: var(--border-radius);
-  max-width: 80%;
+  border-top: 1px solid var(--border-color);
+  background-color: var(--bg-color);
+  position: relative;
+  z-index: 10;
 }
 
-body.dark-mode .map-error {
-  background: rgba(18, 18, 18, 0.9);
+/* For the footer in the newsletter page (over map) */
+.map-layout footer {
+  margin-top: -60px;
+  padding-top: 0;
+  background: transparent;
+  border-top: none;
 }
 
-/* Theme transition */
+.icon-group {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  /* Removed padding, background, and box-shadow for floating icons */
+}
+
+.map-layout .icon-group {
+  /* Adjust for floating freely over the map */
+  padding: 0;
+}
+
+.icon-group a {
+  display: inline-block;
+  /* Add individual icon styling */
+  transition: all 0.3s ease;
+}
+
+.icon-group a:hover {
+  transform: translateY(-3px);
+}
+
+.icon-group img {
+  width: 24px;
+  height: 24px;
+  transition: opacity var(--transition-speed);
+  /* Add subtle drop shadow for better visibility over the map */
+  filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.15));
+}
+
+.dark-mode .icon-group img {
+  /* Brighter icons for dark mode */
+  filter: brightness(1.1) drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.25));
+}
+
+.icon-group img:hover {
+  opacity: 0.8;
+}
+
+/* Scroll to top button */
+.scroll-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 40px;
+  height: 40px;
+  background-color: var(--nav-active);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-speed), visibility var(--transition-speed);
+  box-shadow: 0 2px 5px var(--shadow-color);
+  z-index: 1000;
+}
+
+.scroll-top.visible {
+  opacity: 0.8;
+  visibility: visible;
+}
+
+.scroll-top:hover {
+  opacity: 1;
+}
+
+/* Article content specific */
+.article-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.entry-container {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+/* Dark mode transition */
 .theme-transition {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--color-bg-dark);
+  background-color: var(--bg-color);
   z-index: 9999;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.7s ease;
+  visibility: hidden;
+  transition: opacity 0.3s;
 }
 
-body.animating-theme {
-  overflow: hidden;
+.theme-transitioning .theme-transition {
+  opacity: 1;
+  visibility: visible;
 }
 
-/* Responsive adjustments */
+/* Research page specific */
+.card p a {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* Newsletter Navigation styles */
+.newsletter-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.nav-arrow, .back-to-map {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  background-color: var(--card-bg);
+  color: var(--link-color);
+  font-weight: 500;
+  box-shadow: 0 1px 3px var(--shadow-color);
+  transition: all var(--transition-speed);
+  text-align: center;
+}
+
+.nav-arrow.prev {
+  padding-left: 1.5rem;
+}
+
+.nav-arrow.next {
+  padding-right: 1.5rem;
+}
+
+.back-to-map {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.back-to-map::before {
+  content: "⦿";
+  font-size: 1.1em;
+}
+
+.nav-arrow:hover, .back-to-map:hover {
+  background-color: var(--link-color);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* Media queries */
 @media (max-width: 768px) {
-  nav {
-    gap: 2rem;
-    padding: var(--space-md) var(--space-lg);
+  h1 {
+    font-size: 2rem;
   }
   
-  .card {
-    padding: var(--space-xl);
+  h2 {
+    font-size: 1.5rem;
+  }
+  
+  .image-grid, .image-grid-3 {
+    grid-template-columns: 1fr;
+  }
+  
+  nav.sticky {
+    gap: 1rem;
   }
   
   .map-full-width {
-    height: 500px;
+    height: 400px;
   }
   
-  .marker-dot {
-    width: 18px;
-    height: 18px;
+  .map-layout footer {
+    margin-top: -50px;
   }
   
-  .leaflet-control-zoom-in,
-  .leaflet-control-zoom-out {
-    width: 40px !important;
-    height: 40px !important;
-    line-height: 40px !important;
-    font-size: 20px !important;
+  .intro-container {
+    margin-bottom: 2.5rem;
   }
   
-  header h1 {
-    font-size: var(--font-size-xxl);
+  /* Responsive adjustments for newsletter navigation */
+  .newsletter-navigation {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
   }
   
-  .intro-text {
-    font-size: var(--font-size-lg);
+  .nav-arrow, .back-to-map {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
   }
+  
+  .back-to-map::before {
+    font-size: 1em;
+  }
+}
+
+@media (max-width: 480px) {
+  .container,
+  .article-content {
+    padding: 0 15px;
+  }
+  
+  nav.sticky {
+    padding: 0.5rem 0;
+    flex-wrap: wrap;
+  }
+  
+  .card {
+    padding: 1rem;
+  }
+  
+  .icon-group {
+    gap: 1rem;
+  }
+  
+  .map-full-width {
+    height: 350px;
+  }
+  
+  .intro-container {
+    margin-bottom: 2rem;
+  }
+}
+
+/* Medium screens - 2 columns for 3-column grids */
+@media (min-width: 481px) and (max-width: 768px) {
+  .image-grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Kazakhstan Marker Styling */
+.kazakhstan-marker .marker-dot {
+  background-color: #00AFCA; /* Light blue for Kazakhstan */
+  box-shadow: 0 0 0 2px rgba(0, 175, 202, 0.5);
+}
+
+/* Highlight markers that are part of a country group */
+.country-group-marker .marker-dot {
+  position: relative;
+}
+
+.country-group-marker .marker-dot::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  animation: pulse 2s infinite;
+}
+
+.spiderfied .marker-dot {
+  transform: scale(1.3);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+}
+
+.spiderfied .marker-dot::after {
+  animation: none;
+  border-color: #00AFCA;
+}
+
+/* Country boundary highlight */
+.country-highlight {
+  transition: opacity 0.3s ease, fill-opacity 0.3s ease;
+}
+
+/* Country focus control */
+.country-focus-control a {
+  font-size: 16px;
+  line-height: 26px;
+  text-align: center;
+}
+
+/* Pulse animation for grouped markers */
+@keyframes pulse {
+  0% {
+    border-color: rgba(0, 175, 202, 0);
+    transform: scale(1);
+  }
+  50% {
+    border-color: rgba(0, 175, 202, 0.5);
+    transform: scale(1.2);
+  }
+  100% {
+    border-color: rgba(0, 175, 202, 0);
+    transform: scale(1);
+  }
+}
+
+/* Dark mode adjustments */
+.dark-mode .kazakhstan-marker .marker-dot {
+  background-color: #20C0DA;
+  box-shadow: 0 0 0 2px rgba(32, 192, 218, 0.6);
+}
+
+.dark-mode .country-group-marker .marker-dot::after {
+  border-color: rgba(32, 192, 218, 0.3);
+}
+
+.dark-mode .spiderfied .marker-dot::after {
+  border-color: #20C0DA;
 }
