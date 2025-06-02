@@ -99,6 +99,36 @@
   color: #555;
 }
 
+body.dark-mode .leaflet-container {
+  filter: brightness(0.8) contrast(1.1) saturate(1.2);
+}
+
+body.dark-mode .leaflet-tooltip.marker-tooltip {
+  background: #222;
+  border: 1px solid #444;
+  color: #eee;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+}
+
+body.dark-mode .marker-popup-card {
+  background: #2a2a2a;
+  color: #eee;
+}
+
+body.dark-mode .marker-popup-card .text p {
+  color: #bbb;
+}
+
+body.dark-mode .marker-dot {
+  background-color: #90caf9;
+  border: 2px solid #222;
+}
+
+body.dark-mode .map-gradient {
+  background: linear-gradient(to bottom, #121212 0%, transparent 100%);
+}
+
+
 .marker-popup-card:hover {
   background: #f7f7f7;
   border-radius: 8px;
