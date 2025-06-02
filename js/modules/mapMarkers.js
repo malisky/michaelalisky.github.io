@@ -10,6 +10,8 @@ function initMapMarkers(map) {
     iconAnchor: [9, 9]
   });
 
+  const spiderfier = initSpiderfier(map);
+
   fetch("/newsletter/newsletters.json")
     .then(res => res.json())
     .then(data => {
@@ -23,8 +25,14 @@ function initMapMarkers(map) {
           icon: markerIcon
         }).addTo(map);
 
+        // Extract country group from location name
+        if (entry.location_name) {
+          const parts = entry.location_name.split(",");
+          marker.countryGroup = parts[parts.length - 1]?.trim();
+        }
+
         const popupContent = `
-          <a href="${entry.link}" class="marker-popup-card">
+          <a href="${entry.link}" class="marker-popup-card" target="_blank">
             <img src="${entry.image}" alt="${entry.title}" />
             <div class="text">
               <h3>${entry.title}</h3>
@@ -36,26 +44,26 @@ function initMapMarkers(map) {
 
         marker.bindPopup(popupContent, {
           closeButton: false,
-          className: 'marker-popup'
+          className: 'marker-popup',
+          autoPan: false
         });
 
-        let closeTimeout;
-
+        // Show popup on hover
         marker.on("mouseover", function () {
-          clearTimeout(closeTimeout);
           this.openPopup();
+          this._hoverTimer = setTimeout(() => this.closePopup(), 2000);
         });
 
         marker.on("mouseout", function () {
-          closeTimeout = setTimeout(() => {
-            this.closePopup();
-          }, 2000);
+          clearTimeout(this._hoverTimer);
         });
 
-        marker.on("click", function () {
-          window.location.href = entry.link;
+        // Make the whole marker clickable
+        marker.on("click", () => {
+          window.open(entry.link, "_blank");
         });
 
+        spiderfier.addMarker(marker);
         allMarkers.push(marker);
       });
 
