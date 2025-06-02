@@ -165,14 +165,14 @@ body.dark-mode .marker-popup-card .text p {
 }
 
 body.dark-mode .marker-dot {
-  background-color: #90caf9;
+  background-color: #2e7d32; /* Keep green in dark mode */
   border: 2px solid #333;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
 }
 
 body.dark-mode .custom-marker-icon.marker-hover .marker-dot,
 body.dark-mode .custom-marker-icon:hover .marker-dot {
-  box-shadow: 0 0 0 4px rgba(144, 202, 249, 0.3),
+  box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.3), /* Green ring in dark mode */
               0 0 8px rgba(0, 0, 0, 0.6);
 }
 
