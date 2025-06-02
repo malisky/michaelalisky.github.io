@@ -119,7 +119,7 @@ nav a:hover::after {
 }
 
 footer {
-  position: absolute;
+  position: fixed; /* Was absolute */
   bottom: 20px;
   left: 0;
   right: 0;
@@ -157,6 +157,10 @@ footer .icon-group img {
 
 footer .icon-group a:hover img {
   transform: scale(1.1);
+}
+
+.card.hovering {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
 .intro-container {
