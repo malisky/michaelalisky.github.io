@@ -1,0 +1,17 @@
+{
+  "name": "malisky-website",
+  "version": "1.0.0",
+  "description": "Michael Alisky's personal website",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {},
+  "keywords": ["personal-website", "static-site"],
+  "author": "Michael Alisky",
+  "license": "MIT"
+} 
