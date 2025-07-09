@@ -218,5 +218,15 @@
     "location": { "lat": 30.2431, "lng": 120.1501 },
     "location_name": "West Lake, Hangzhou, China",
     "countryGroup": "China"
+  },
+  {
+    "id": "dandelion",
+    "title": "Dandelion Dispatch",
+    "date": "2025-06-30",
+    "image": "/images/dandelion/dandelion-school.jpeg",
+    "link": "/newsletter/dandelion.html",
+    "location": { "lat": 39.6706, "lng": 116.3411 },
+    "location_name": "Dandelion School, Daxing, Beijing, China",
+    "countryGroup": "China"
   }
 ]
