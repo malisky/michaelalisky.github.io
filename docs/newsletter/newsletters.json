@@ -198,5 +198,25 @@
     "location": { "lat": 22.2831, "lng": 114.1366 },
     "location_name": "Pokfulam, Hong Kong",
     "countryGroup": "Hong Kong"
+  },
+  {
+    "id": "yiwu",
+    "title": "Yi Wu-hoo!",
+    "date": "2025-06-18",
+    "image": "/images/yiwu/yiwu1.jpeg",
+    "link": "/newsletter/yiwu.html",
+    "location": { "lat": 29.3151, "lng": 120.1029 },
+    "location_name": "Yiwu International Trade City, China",
+    "countryGroup": "China"
+  },
+  {
+    "id": "hangzhou",
+    "title": "June 22: Hanging out in Hangzhou",
+    "date": "2025-06-22",
+    "image": "/images/hangzhou/xihu.jpeg",
+    "link": "/newsletter/hangzhou.html",
+    "location": { "lat": 30.2431, "lng": 120.1501 },
+    "location_name": "West Lake, Hangzhou, China",
+    "countryGroup": "China"
   }
 ]
