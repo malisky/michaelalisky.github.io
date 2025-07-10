@@ -4,11 +4,12 @@
  */
 
 import { initMap } from './modules/mapInit.js';
-import { initMapMarkers, addKazakhstanMapClickHandler, addKazakhstanPolygonOnHover } from './modules/mapMarkers.js';
+import { initMapMarkers, addKazakhstanMapClickHandler, addKazakhstanPolygonOnHover, addChinaPolygonOnHover, addChinaMapClickHandler } from './modules/mapMarkers.js';
+import { initDarkMode } from './modules/darkMode.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Dark mode toggle
-  if (typeof initDarkMode === 'function' && document.getElementById('night-toggle')) {
+  if (document.getElementById('night-toggle')) {
     initDarkMode();
   }
 
@@ -47,6 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
       initMapMarkers(map);
       addKazakhstanPolygonOnHover(map);
       addKazakhstanMapClickHandler(map);
+      addChinaPolygonOnHover(map);
+      addChinaMapClickHandler(map);
     }
   }
 

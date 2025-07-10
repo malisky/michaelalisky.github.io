@@ -151,6 +151,70 @@ export function addKazakhstanPolygonOnHover(map) {
     });
 }
 
+export function addChinaPolygonOnHover(map) {
+  console.log('[ChinaPolygon] Initializing polygon hover effect...');
+  fetch('/cn.json')
+    .then(res => {
+      console.log('[ChinaPolygon] Fetched /cn.json:', res);
+      return res.json();
+    })
+    .then(geojson => {
+      console.log('[ChinaPolygon] Loaded geojson:', geojson);
+      let multiPoly = geojson.features[0].geometry.coordinates.map(swapLngLatToLatLng);
+      let chinaPolygonLayer = null;
+      map.on('mousemove', function(e) {
+        console.log('[ChinaPolygon] Mousemove at', e.latlng);
+        const inside = pointInMultiPolygon([e.latlng.lat, e.latlng.lng], multiPoly);
+        console.log('[ChinaPolygon] Inside polygon?', inside, '| Layer exists?', !!chinaPolygonLayer);
+        if (inside) {
+          if (!chinaPolygonLayer) {
+            console.log('[ChinaPolygon] Adding polygon layer');
+            chinaPolygonLayer = L.geoJSON(geojson, {
+              style: {
+                color: '#d32f2f',
+                weight: 3,
+                fillColor: '#d32f2f',
+                fillOpacity: 0.22
+              }
+            }).addTo(map);
+            chinaPolygonLayer.bringToFront();
+          }
+        } else {
+          if (chinaPolygonLayer) {
+            console.log('[ChinaPolygon] Removing polygon layer');
+            map.removeLayer(chinaPolygonLayer);
+            chinaPolygonLayer = null;
+          }
+        }
+      });
+    })
+    .catch(err => {
+      console.error('[ChinaPolygon] Error loading polygon:', err);
+    });
+}
+
+export function addChinaMapClickHandler(map) {
+  fetch('/cn.json')
+    .then(res => res.json())
+    .then(geojson => {
+      let multiPoly = geojson.features[0].geometry.coordinates.map(swapLngLatToLatLng);
+      map.on('click', function(e) {
+        // Check if click is on a marker (skip if so)
+        let foundMarker = false;
+        map.eachLayer(layer => {
+          if (layer instanceof L.Marker && layer.getLatLng().distanceTo(e.latlng) < 0.0005) {
+            foundMarker = true;
+          }
+        });
+        if (foundMarker) return;
+        // Check if click is inside China multipolygon
+        if (pointInMultiPolygon([e.latlng.lat, e.latlng.lng], multiPoly)) {
+          window.location.href = '/newsletter/china.html';
+        }
+      });
+    });
+}
+
 // Initialize markers on the map
 export function initMapMarkers(map) {
   const markerIcon = L.divIcon({

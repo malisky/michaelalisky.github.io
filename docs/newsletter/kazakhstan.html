@@ -85,6 +85,32 @@
       .kz-grid { grid-template-columns: 1fr; }
       .kz-mini-card img { height: 80px; }
     }
+    /* --- DARK MODE OVERRIDES FOR KAZAKHSTAN --- */
+    body.dark-mode {
+      background: #0a223a !important; /* deep blue */
+    }
+    body.dark-mode nav.sticky {
+      background: #143a5a !important; /* slightly lighter blue */
+      border-bottom: 1px solid #23547a;
+    }
+    body.dark-mode .kz-mini-card {
+      background: #183a54;
+      color: #e0f6fa;
+      border: 1px solid #23547a;
+    }
+    body.dark-mode .kz-mini-title {
+      color: #00e0ff;
+    }
+    body.dark-mode .kz-mini-date {
+      color: #b0cbe7;
+    }
+    body.dark-mode .kz-mini-location {
+      color: #ffd600;
+    }
+    body.dark-mode .kz-accent-line {
+      background: linear-gradient(90deg, #0077b6 0% 60%, #ffd600 60% 100%);
+      box-shadow: 0 1px 6px rgba(0,119,182,0.13);
+    }
   </style>
 </head>
 <body>
@@ -95,7 +121,7 @@
     <nav class="sticky">
       <a href="../index.html">Home</a>
       <a href="../research.html">Research</a>
-      <a href="../newsletter.html">Newsletter</a>
+      <a href="../newsletter.html">Back to Newsletter</a>
       <button id="night-toggle" class="nav-toggle" title="Toggle dark mode">🌓</button>
     </nav>
     <div class="kz-accent-line"></div>
@@ -187,5 +213,9 @@
       </div>
     </footer>
   </div>
+  <script type="module" src="/js/modules/darkMode.js"></script>
+  <script type="module" src="/js/modules/ui.js"></script>
+  <script type="module" src="/js/modules/footer.js"></script>
+  <script type="module" src="/js/main.js"></script>
 </body>
 </html> 

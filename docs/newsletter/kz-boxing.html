@@ -9,10 +9,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link href="../images/favicon.svg" rel="icon" type="image/svg+xml"/>
   
-  <script src="../js/main.js" defer></script>
-  <script src="../js/modules/darkMode.js"></script>
-  <script src="../js/modules/ui.js"></script>
-  <script src="../js/modules/navigation.js"></script>
+  <script type="module" src="../js/modules/darkMode.js"></script>
+  <script type="module" src="../js/modules/ui.js"></script>
+  <script type="module" src="../js/modules/navigation.js"></script>
+  <script type="module" src="../js/main.js"></script>
 </head>
 <body>
   <div class="container">
@@ -33,17 +33,42 @@
   
     <!-- Featured image outside the card container -->
     <div class="featured-image">
-      <img alt="Baden, Austria scene" loading="lazy" src="../images/baden/baden1.jpeg"/>
+      <img alt="Bazaar" loading="lazy" src="../images/kz-boxing/bazaar.jpeg"/>
     </div>
     
     <main>
       <div class="newsletter-card">
-        
-        <!-- Navigation section -->
-        <div class="newsletter-navigation">
-          <a href="/newsletter/july.html" class="nav-arrow prev" title="Previous Newsletter">←</a>
+        <p>For some reason, there are punching bag arcade machines randomly on the streets in Almaty. I probably saw four or five of them today. It’s a pretty funny business model, really targeting the “walking around looking for something to punch” crowd. Maybe it’s more of a first date kind of thing. I’m curious what you think. Realistically, it’s probably designed for drunk people. At 21¢ a whack, I can easily see this becoming my next vice.</p>
+        <div class="image-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem; margin: 1.2rem 0;">
+          <img src="../images/kz-boxing/boxing1.jpeg" alt="Boxing machine 1" loading="lazy" />
+          <img src="../images/kz-boxing/boxing2.jpeg" alt="Boxing machine 2" loading="lazy" />
+          <img src="../images/kz-boxing/boxing3.jpeg" alt="Boxing machine 3" loading="lazy" />
+        </div>
+        <p>
+          Boxing is a big deal here, accounting for 24 of Kazakhstan’s 75 all-time Summer Olympic medals
+          <a href="https://en.wikipedia.org/wiki/Kazakhstan_at_the_Olympics" target="_blank">(source)</a>, including 7 golds. The government spends
+          <a href="https://inbusiness.kz/ru/news/kazahstan-tratit-na-razvitie-sporta-55-5-mlrd-tenge-ezhegodno" target="_blank">(source)</a> $372 million a year on combat sports, and some 30,000 amateur boxers actively compete
+          <a href="https://gokazakhstan.net/posts/why-kazakhstan-boxers-are-knocking-everyone-out-at-the-olympics" target="_blank">(source)</a> throughout the country. In 2011, Kazakhstan invested heavily in the Olympic boxing federation in a deal that raised significant ethical concerns
+          <a href="https://landofbooks.org/2017/10/18/the-dirty-socks-of-olympic-boxing-part-1-kazakhstan-government-invested-10-mil-into-aiba/" target="_blank">(source)</a> due to its lack of transparency. Must be all the potassium.
+        </p>
+        <p>On an unrelated note, I had a big doner kebab yesterday (it looks normal sized in the photo, but that’s just because I have been going to the gym recently).</p>
+        <div class="image-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.7rem; margin: 1.2rem 0;">
+          <img src="../images/kz-boxing/doner1.jpeg" alt="Doner kebab" loading="lazy" />
+          <img src="../images/kz-boxing/doner2.jpeg" alt="Doner kebab 2" loading="lazy" />
+        </div>
+        <p>Here’s another angle for reference, featuring new friends, Tlegen and Akezhan. The drink is ayran, a mix of yogurt, salt, and water.</p>
+        <p>I also went to the <a href="https://goo.gl/maps/7Qk6v8Qk6v8Qk6v8A" target="_blank">Zhetysu-Semirech'ye</a> (Жетысу-Семиречье) bazaar on the outskirts of Almaty. People sold all sorts of trinkets and antiques, and there was a strange amount of non-functioning computer equipment. I bought a 1970s Soviet pin and considered buying a <a href="https://en.wikipedia.org/wiki/Kobyz" target="_blank">kobyz</a> (traditional Kazakh instrument), but in the end decided against it.</p>
+        <div class="image-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.7rem; margin: 1.2rem 0;">
+          <img src="../images/kz-boxing/bazaar1.jpeg" alt="Bazaar scene 1" loading="lazy" />
+          <img src="../images/kz-boxing/bazaar2.jpeg" alt="Bazaar scene 2" loading="lazy" />
+        </div>
+        <p>My taxi driver unfortunately rear-ended another car as we were leaving the bazaar, and an old apashka (апашка, the Kazakh version of babushka) stormed out of the driver’s seat. Thankfully, everyone was okay, and after a bit of arguing, the drivers exchanged cash and parted ways. I saw something very similar when visiting Marcelo in Lima, and I think it’s worth remembering that “the rule of law” can be very inefficient in comparison to informal dispute resolution mechanisms.</p>
+        <div class="image-container" style="margin: 1.2rem 0;">
+          <img src="../images/kz-boxing/apashka.jpeg" alt="Apashka at the bazaar" loading="lazy" />
+        </div>
+        <p>Overall, my internship is going well, and I’m meeting all sorts of interesting people. In the meantime, there’s been no shortage of unexpectedly cool things at every corner. I hope everyone has a great weekend!</p>
+        <div class="newsletter-navigation" style="display: flex; justify-content: center; margin-top: 2rem;">
           <a href="../newsletter.html" class="back-to-map" title="Back to Map">Map</a>
-          <a href="/newsletter/august20.html" class="nav-arrow next" title="Next Newsletter">→</a>
         </div>
       </div>
     </main>

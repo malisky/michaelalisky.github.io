@@ -7,10 +7,10 @@
   <link rel="stylesheet" href="../css/style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link href="../images/favicon.svg" rel="icon" type="image/svg+xml"/>
-  <script src="../js/main.js" defer></script>
-  <script src="../js/modules/darkMode.js"></script>
-  <script src="../js/modules/ui.js"></script>
-  <script src="../js/modules/navigation.js"></script>
+  <script type="module" src="../js/modules/darkMode.js"></script>
+  <script type="module" src="../js/modules/ui.js"></script>
+  <script type="module" src="../js/modules/navigation.js"></script>
+  <script type="module" src="../js/main.js"></script>
 </head>
 <body>
   <div class="container">
@@ -169,11 +169,9 @@
         <p>Huge thanks to Irmak and Fiona for all your recommendations. I'm sad to leave Istanbul, but I'm looking forward to spending some time in Vienna catching up with classes and friends.</p>
         
         <p>Until next time,<br/>Michael</p>
-          <div class="newsletter-navigation">
-            <a href="#" class="nav-arrow prev" title="Previous Newsletter">←</a>
-            <a href="../newsletter.html" class="back-to-map" title="Back to Map">Map</a>
-            <a href="#" class="nav-arrow next" title="Next Newsletter">→</a>
-          </div>
+        <div class="newsletter-navigation" style="display: flex; justify-content: center; margin-top: 2rem;">
+          <a href="../newsletter.html" class="back-to-map" title="Back to Map">Map</a>
+        </div>
       </div>
     </main>
   
