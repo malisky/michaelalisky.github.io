@@ -1,150 +1,125 @@
-/**
- * Marker spiderfier for overlapping markers.
- * Handles overlapping markers by spreading them out when clicked
- */
+// Enhanced Spiderfier utility for overlapping markers
+// Spreads markers in a circle, draws dotted lines to center, and supports tooltips
 
-function initSpiderfier(map) {
-  const countryMarkers = {};
-  
-  const spiderfier = {
-    markers: [],
-    spiderfied: false,
-    currentCountry: null,
+let spiderLines = [];
+let spiderTooltips = [];
+let spiderCenter = null;
 
-    addMarker(marker) {
-      this.markers.push(marker);
+export function spiderfyMarkers(map, markers) {
+  console.log("spiderfyMarkers called", markers.length, "markers");
+  if (!markers || markers.length <= 1) return;
+  spiderCenter = markers[0].getLatLng();
 
-      if (marker.countryGroup) {
-        const country = marker.countryGroup;
-        if (!countryMarkers[country]) countryMarkers[country] = [];
-        countryMarkers[country].push(marker);
-
-        marker.on('click', (e) => {
-          L.DomEvent.stopPropagation(e);
-          
-          const markersInCountry = countryMarkers[country] || [];
-          
-          // If there's only one marker in this country, open directly
-          if (markersInCountry.length === 1) {
-            const link = marker.options?.link || "#";
-            window.open(link, "_blank");
-            return;
-          }
-
-          // If multiple markers and already spiderfied for this country, open link
-          if (this.spiderfied && this.currentCountry === country) {
-            const link = marker.options?.link || "#";
-            window.open(link, "_blank");
-          } else {
-            // Spiderfy the markers for this country
-            this.spiderfy(country);
-          }
-        });
-      } else {
-        // For markers without country group, just open link directly
-        marker.on('click', (e) => {
-          L.DomEvent.stopPropagation(e);
-          const link = marker.options?.link || "#";
-          window.open(link, "_blank");
-        });
-      }
-
-      return marker;
-    },
-
-    spiderfy(country) {
-      if (this.spiderfied && this.currentCountry === country) return;
-      if (this.spiderfied) this.unspiderfy();
-
-      const markers = countryMarkers[country] || [];
-      if (markers.length <= 1) return; // Don't spiderfy single markers
-
-      this.currentCountry = country;
-      this.spiderfied = true;
-
-      const lats = markers.map(m => m.getLatLng().lat);
-      const lngs = markers.map(m => m.getLatLng().lng);
-      const center = L.latLng(
-        lats.reduce((a, b) => a + b, 0) / lats.length,
-        lngs.reduce((a, b) => a + b, 0) / lngs.length
-      );
-
-      const angleStep = (2 * Math.PI) / markers.length;
-      const baseLength = 0.05;
-      const zoomFactor = Math.pow(0.7, map.getZoom() - 8);
-      const spokeLength = Math.max(baseLength * zoomFactor, 0.01);
-
-      markers.forEach((marker, i) => {
-        const angle = i * angleStep;
-        const radius = spokeLength * (1 + i * 0.1);
-        const newLat = center.lat + radius * Math.cos(angle);
-        const newLng = center.lng + radius * Math.sin(angle);
-
-        marker._originalLatLng = marker.getLatLng();
-        this._animateMarkerMove(marker, newLat, newLng);
-
-        const element = marker.getElement();
-        if (element) {
-          element.classList.add('spiderfied');
-        }
-      });
-
-      // Close spiderfy when clicking elsewhere on map
-      const closeHandler = () => {
-        this.unspiderfy();
-        map.off('click', closeHandler);
-      };
-      
-      setTimeout(() => {
-        map.on('click', closeHandler);
-      }, 100);
-    },
-
-    unspiderfy() {
-      if (!this.spiderfied || !this.currentCountry) return;
-
-      const markers = countryMarkers[this.currentCountry] || [];
-      markers.forEach(marker => {
-        if (marker._originalLatLng) {
-          this._animateMarkerMove(marker, marker._originalLatLng.lat, marker._originalLatLng.lng);
-          delete marker._originalLatLng;
-        }
-
-        setTimeout(() => {
-          const element = marker.getElement();
-          if (element) {
-            element.classList.remove('spiderfied');
-          }
-        }, 300);
-      });
-
-      this.spiderfied = false;
-      this.currentCountry = null;
-    },
-
-    _animateMarkerMove(marker, newLat, newLng) {
-      const startPos = marker.getLatLng();
-      const endPos = L.latLng(newLat, newLng);
-      const duration = 400;
-      const start = performance.now();
-
-      const animate = (timestamp) => {
-        const progress = Math.min((timestamp - start) / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3); // Ease-out cubic
-
-        marker.setLatLng([
-          startPos.lat + (endPos.lat - startPos.lat) * eased,
-          startPos.lng + (endPos.lng - startPos.lng) * eased
-        ]);
-
-        if (progress < 1) {
-          requestAnimationFrame(animate);
-        }
-      };
-
-      requestAnimationFrame(animate);
-    }
+  // Calculate centroid of all marker positions
+  let sumLat = 0, sumLng = 0;
+  markers.forEach(m => {
+    sumLat += m.getLatLng().lat;
+    sumLng += m.getLatLng().lng;
+  });
+  const centroid = {
+    lat: sumLat / markers.length,
+    lng: sumLng / markers.length
   };
 
-  return spiderfier;
+  // Dynamic spread: for each marker, calculate direction from centroid and offset by a fixed pixel distance
+  const basePixelRadius = 60; // Spread radius in pixels
+  const centroidPt = map.latLngToContainerPoint(centroid);
+
+  markers.forEach((marker, i) => {
+    const origLatLng = marker.getLatLng();
+    const origPt = map.latLngToContainerPoint(origLatLng);
+    // Direction vector from centroid to marker
+    let dx = origPt.x - centroidPt.x;
+    let dy = origPt.y - centroidPt.y;
+    // Normalize direction
+    const len = Math.sqrt(dx * dx + dy * dy) || 1;
+    dx /= len;
+    dy /= len;
+    // Offset by basePixelRadius
+    const newPt = L.point(
+      centroidPt.x + dx * basePixelRadius,
+      centroidPt.y + dy * basePixelRadius
+    );
+    const newLatLng = map.containerPointToLatLng(newPt);
+    console.log(`Moving marker ${i} to`, newLatLng.lat, newLatLng.lng);
+    marker._originalLatLng = origLatLng;
+    marker.setLatLng([newLatLng.lat, newLatLng.lng]);
+    const el = marker.getElement();
+    if (el) el.classList.add('spiderfied');
+
+    // Draw dotted line from marker to centroid
+    console.log(`Drawing line from [${newLatLng.lat}, ${newLatLng.lng}] to [${centroid.lat}, ${centroid.lng}]`);
+    const line = L.polyline([
+      [newLatLng.lat, newLatLng.lng],
+      [centroid.lat, centroid.lng]
+    ], {
+      color: '#888',
+      weight: 2,
+      dashArray: '4, 6',
+      interactive: false
+    }).addTo(map);
+    spiderLines.push(line);
+
+    // Prepare tooltip (smaller, offset away from centroid)
+    const data = marker._markerData;
+    const tooltipContent = `
+      <div class="spider-tooltip">
+        <img src="${data.image}" alt="${data.title}" />
+        <div class="spider-tooltip-text">${data.title}</div>
+      </div>
+    `;
+    // Offset tooltip 24px away from marker, in direction away from centroid
+    const tooltipOffset = [dx * 24, dy * 24];
+    const tooltip = L.tooltip({
+      permanent: false,
+      direction: 'auto',
+      className: 'spider-tooltip-leaflet',
+      offset: tooltipOffset,
+      opacity: 1
+    })
+      .setContent(tooltipContent)
+      .setLatLng([newLatLng.lat, newLatLng.lng]);
+    spiderTooltips.push({ marker, tooltip });
+    // Do not add to map yet; show on hover
+  });
+}
+
+export function unspiderfyMarkers(map, markers) {
+  if (!markers) return;
+  markers.forEach(marker => {
+    if (marker._originalLatLng) {
+      marker.setLatLng(marker._originalLatLng);
+      delete marker._originalLatLng;
+    }
+    const el = marker.getElement();
+    if (el) el.classList.remove('spiderfied', 'spiderfied-hover');
+  });
+  // Remove lines
+  spiderLines.forEach(line => map.removeLayer(line));
+  spiderLines = [];
+  // Remove tooltips
+  spiderTooltips.forEach(({ tooltip }) => {
+    if (tooltip._map) tooltip.remove();
+  });
+  spiderTooltips = [];
+  spiderCenter = null;
+}
+
+export function showSpiderTooltip(map, marker) {
+  // Find the tooltip for this marker
+  const found = spiderTooltips.find(obj => obj.marker === marker);
+  if (found && !map.hasLayer(found.tooltip)) {
+    found.tooltip.addTo(map);
+  }
+  const el = marker.getElement();
+  if (el) el.classList.add('spiderfied-hover');
+}
+
+export function hideSpiderTooltip(map, marker) {
+  const found = spiderTooltips.find(obj => obj.marker === marker);
+  if (found && found.tooltip._map) {
+    found.tooltip.remove();
+  }
+  const el = marker.getElement();
+  if (el) el.classList.remove('spiderfied-hover');
 }

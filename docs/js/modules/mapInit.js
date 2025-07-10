@@ -2,7 +2,7 @@
  * Map initialization and configuration
  * Sets up the Leaflet map with basic options and controls
  */
-function initMap() {
+export function initMap() {
   // Initialize the map centered on Europe/Asia region
   const map = L.map('newsletter-map', {
     zoomControl: false, // We'll add a custom zoom control

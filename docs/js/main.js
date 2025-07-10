@@ -3,6 +3,9 @@
  * Conditionally initializes modules based on page type
  */
 
+import { initMap } from './modules/mapInit.js';
+import { initMapMarkers, addKazakhstanMapClickHandler, addKazakhstanPolygonOnHover } from './modules/mapMarkers.js';
+
 document.addEventListener('DOMContentLoaded', () => {
   // Dark mode toggle
   if (typeof initDarkMode === 'function' && document.getElementById('night-toggle')) {
@@ -37,11 +40,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Map functionality
   const newsletterMap = document.getElementById('newsletter-map');
-  if (newsletterMap && typeof initMap === 'function') {
+  if (newsletterMap) {
     document.body.classList.add('map-layout');
     const map = initMap();
-    if (map && typeof initMapMarkers === 'function') {
+    if (map) {
       initMapMarkers(map);
+      addKazakhstanPolygonOnHover(map);
+      addKazakhstanMapClickHandler(map);
     }
   }
 
