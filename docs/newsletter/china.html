@@ -125,7 +125,6 @@
     <nav class="sticky">
       <a href="../index.html">Home</a>
       <a href="../research.html">Research</a>
-      <a href="../newsletter.html">Back to Newsletter</a>
       <button id="night-toggle" class="nav-toggle" title="Toggle dark mode">🌓</button>
     </nav>
     <div class="china-accent-line"></div>
@@ -159,11 +158,6 @@
           const card = document.createElement('a');
           card.className = 'china-mini-card';
           card.href = e.link;
-          // Use the feature photo for Yiwu
-          let imgSrc = e.image;
-          if (e.id === 'yiwu') {
-            imgSrc = '/images/yiwu/yiwu.jpeg';
-          }
           card.innerHTML = `
             <img src="${imgSrc}" alt="${e.title}" />
             <div class="china-mini-card-content">

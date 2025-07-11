@@ -1,66 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Newsletter – Michael Alisky</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet"/>
-  <link href="images/favicon.svg" rel="icon" type="image/svg+xml"/>
-
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-  <!-- Module scripts -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Michael Alisky</title>
+  
+  <link href="css/style.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
+  
+  <!-- JavaScript modules -->
   <script type="module" src="js/modules/darkMode.js"></script>
   <script type="module" src="js/modules/ui.js"></script>
-  <script type="module" src="js/modules/mapInit.js"></script>
-  <script type="module" src="js/modules/mapSpiderfier.js"></script>
-  <script type="module" src="js/modules/mapMarkers.js"></script>
+  <script type="module" src="js/modules/footer.js"></script>
   <script type="module" src="js/main.js"></script>
 </head>
-
 <body>
   <div class="container">
     <header>
-      <h1>Newsletter</h1>
+      <h1>Michael Alisky</h1>
     </header>
-
+    
     <nav class="sticky">
       <a href="/">Home</a>
       <a href="/research.html">Research</a>
-      <a href="/newsletter.html" class="active">Newsletter</a>
-      <button id="night-toggle" class="nav-toggle" title="Toggle dark mode">🌓</button>
+      <a href="/newsletter.html">Newsletter</a>
+      <button class="nav-toggle" id="night-toggle" title="Toggle dark mode">🌓</button>
     </nav>
-
-    <section class="intro-container">
-      <p class="intro-text">
-        This is my travel newsletter, initially written for my close friends and family, now available to serve the interests of humanity more broadly. I hope you enjoy.
-      </p>
-    </section>
+    
+    <main>
+      <section class="intro-container">
+        <p class="intro-text">
+          Welcome to my personal site. Get yourself a cup of tea if you'd like. More to come soon.
+        </p>
+      </section>
+    </main>
   </div>
-
-  <!-- MAP ONLY — no card section -->
-  <div class="map-full-width">
-    <div class="map-gradient"></div>
-    <div id="newsletter-map"></div>
-  </div>
-
-  <footer>
-    <div class="icon-group">
-      <a href="https://github.com/malisky" target="_blank">
-        <img src="/images/github-icon.svg" alt="GitHub" />
-      </a>
-      <a href="https://www.linkedin.com/in/michaelalisky" target="_blank">
-        <img src="/images/linkedin-icon.svg" alt="LinkedIn" />
-      </a>
-      <a href="https://scholar.google.com/citations?user=b4EtdL4AAAAJ&hl=en" target="_blank">
-        <img src="/images/scholar-icon.svg" alt="Google Scholar" />
-      </a>
-    </div>
-  </footer>
-
+  
   <div class="theme-transition"></div>
 </body>
 </html>
