@@ -5,3 +5,4 @@ node_modules/*
 subscribers.json
 .env docs/images-original/
 docs/images-original/
+docs/images/
