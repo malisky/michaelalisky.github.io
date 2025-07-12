@@ -2,18 +2,49 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
-// Use a higher port to avoid VPN conflicts
 const PORT = process.env.PORT || 8080;
 
-// Middleware
-app.use(cors()); // Allow cross-origin requests
-app.use(express.json()); // Parse JSON request bodies
+// Security middleware
+app.use(express.json({ limit: '10kb' })); // Limit JSON payload size
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+
+// CORS configuration - restrict to specific origins in production
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN || 'http://localhost:8080',
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
+
+// Serve static files
 app.use(express.static(path.join(__dirname, 'docs')));
 
 // Newsletter database file path
-const SUBSCRIBERS_FILE = path.join(__dirname, 'newsletter-subscribers.json');
+const SUBSCRIBERS_FILE = path.join(__dirname, 'subscribers.json');
+
+// Rate limiting for newsletter signup
+const signupAttempts = new Map();
+const RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15 minutes
+const MAX_ATTEMPTS = 3;
+
+function checkRateLimit(ip) {
+  const now = Date.now();
+  const attempts = signupAttempts.get(ip) || [];
+  
+  // Remove old attempts
+  const recentAttempts = attempts.filter(time => now - time < RATE_LIMIT_WINDOW);
+  
+  if (recentAttempts.length >= MAX_ATTEMPTS) {
+    return false;
+  }
+  
+  recentAttempts.push(now);
+  signupAttempts.set(ip, recentAttempts);
+  return true;
+}
 
 // Helper function to read subscribers from file
 function readSubscribers() {
@@ -38,16 +69,43 @@ function writeSubscribers(data) {
   }
 }
 
+// Enhanced email validation
+function validateEmail(email) {
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return emailRegex.test(email) && email.length <= 254;
+}
+
+// Enhanced name validation
+function validateName(name) {
+  return name && typeof name === 'string' && name.trim().length > 0 && name.length <= 100;
+}
+
 // API endpoint to handle newsletter signup
 app.post('/api/newsletter-signup', (req, res) => {
-  const { email } = req.body;
+  const clientIP = req.ip || req.connection.remoteAddress;
   
-  // Basic email validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!email || !emailRegex.test(email)) {
+  // Rate limiting
+  if (!checkRateLimit(clientIP)) {
+    return res.status(429).json({ 
+      success: false, 
+      message: 'Too many signup attempts. Please try again later.' 
+    });
+  }
+  
+  const { email, name } = req.body;
+  
+  // Enhanced validation
+  if (!email || !validateEmail(email)) {
     return res.status(400).json({ 
       success: false, 
       message: 'Please provide a valid email address' 
+    });
+  }
+  
+  if (name && !validateName(name)) {
+    return res.status(400).json({ 
+      success: false, 
+      message: 'Please provide a valid name (max 100 characters)' 
     });
   }
   
@@ -55,19 +113,24 @@ app.post('/api/newsletter-signup', (req, res) => {
     const data = readSubscribers();
     
     // Check if email already exists
-    if (data.subscribers.includes(email)) {
+    const existingSubscriber = data.subscribers.find(sub => sub.email.toLowerCase() === email.toLowerCase());
+    if (existingSubscriber) {
       return res.status(409).json({ 
         success: false, 
         message: 'This email is already subscribed to the newsletter' 
       });
     }
     
-    // Add new email to subscribers
-    data.subscribers.push(email);
+    // Add new subscriber
+    const newSubscriber = {
+      email: email.toLowerCase().trim(),
+      name: name ? name.trim() : email.split('@')[0]
+    };
+    data.subscribers.push(newSubscriber);
     
     // Save to file
     if (writeSubscribers(data)) {
-      console.log(`New newsletter subscriber: ${email}`);
+      console.log(`New newsletter subscriber: ${newSubscriber.email} (${newSubscriber.name})`);
       res.json({ 
         success: true, 
         message: 'Successfully subscribed to the newsletter!' 
@@ -102,4 +165,5 @@ app.listen(PORT, () => {
   console.log(`📁 Serving files from: ${path.join(__dirname, 'docs')}`);
   console.log(`🌐 Open your browser and navigate to: http://localhost:${PORT}`);
   console.log(`📧 Newsletter signup API available at: http://localhost:${PORT}/api/newsletter-signup`);
+  console.log(`🔒 Rate limiting: ${MAX_ATTEMPTS} attempts per ${RATE_LIMIT_WINDOW/60000} minutes`);
 }); 

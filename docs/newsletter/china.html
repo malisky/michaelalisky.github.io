@@ -39,14 +39,9 @@
     }
     .china-mini-card img {
       width: 100%;
-      height: auto;
-      aspect-ratio: 16/9;
-      min-height: 110px;
-      max-height: 180px;
+      height: 110px;
       object-fit: cover;
       border-bottom: 1px solid #ffd6d6;
-      background: #eee;
-      display: block;
     }
     .china-mini-card-content {
       padding: 0.7rem 1rem 0.7rem 1rem;
@@ -128,7 +123,32 @@
       <button id="night-toggle" class="nav-toggle" title="Toggle dark mode">🌓</button>
     </nav>
     <div class="china-accent-line"></div>
-    <div class="china-grid" id="china-grid"></div>
+    <div class="china-grid">
+      <a class="china-mini-card" href="/newsletter/yiwu.html">
+        <img src="/images-optimized/yiwu/yiwu.jpeg" alt="Yi Wu-hoo!" />
+        <div class="china-mini-card-content">
+          <div class="china-mini-title">June 18: Yi Wu-hoo!</div>
+          <div class="china-mini-date">Wed Jun 18 2025</div>
+          <div class="china-mini-location">Yiwu, China</div>
+        </div>
+      </a>
+      <a class="china-mini-card" href="/newsletter/hangzhou.html">
+        <img src="/images-optimized/hangzhou/xihu.jpeg" alt="Hanging out in Hangzhou" />
+        <div class="china-mini-card-content">
+          <div class="china-mini-title">June 22: Hanging out in Hangzhou</div>
+          <div class="china-mini-date">Sun Jun 22 2025</div>
+          <div class="china-mini-location">Hangzhou, China</div>
+        </div>
+      </a>
+      <a class="china-mini-card" href="/newsletter/dandelion.html">
+        <img src="/images-optimized/dandelion/dandelion-school.jpeg" alt="Dandelion Dispatch" />
+        <div class="china-mini-card-content">
+          <div class="china-mini-title">June 26: Dandelion Dispatch</div>
+          <div class="china-mini-date">Thu Jun 26 2025</div>
+          <div class="china-mini-location">Beijing, China</div>
+        </div>
+      </a>
+    </div>
     <footer>
       <div class="icon-group">
         <a href="https://github.com/malisky" target="_blank">
@@ -147,28 +167,5 @@
   <script type="module" src="/js/modules/ui.js"></script>
   <script type="module" src="/js/modules/footer.js"></script>
   <script type="module" src="/js/main.js"></script>
-  <script type="module">
-    fetch('/newsletter/newsletters.json')
-      .then(r => r.json())
-      .then(entries => {
-        const chinaEntries = entries.filter(e => e.countryGroup === 'China');
-        const grid = document.getElementById('china-grid');
-        grid.innerHTML = '';
-        chinaEntries.forEach(e => {
-          const card = document.createElement('a');
-          card.className = 'china-mini-card';
-          card.href = e.link;
-          card.innerHTML = `
-            <img src="${imgSrc}" alt="${e.title}" />
-            <div class="china-mini-card-content">
-              <div class="china-mini-title">${e.title}</div>
-              <div class="china-mini-date">${new Date(e.date).toDateString()}</div>
-              <div class="china-mini-location">${e.location_name}</div>
-            </div>
-          `;
-          grid.appendChild(card);
-        });
-      });
-  </script>
 </body>
 </html> 

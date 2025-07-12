@@ -1,19 +1,28 @@
 {
-  "name": "malisky-website",
+  "name": "newsletter-to-email",
   "version": "1.0.0",
-  "description": "Michael Alisky's personal website",
-  "main": "server.js",
+  "description": "Convert HTML newsletters to email-compatible format",
+  "main": "newsletter-to-email.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
+    "convert": "node newsletter-to-email.js",
+    "convert-one": "node newsletter-to-email.js",
+    "test": "node newsletter-to-email.js baden.html",
+    "optimize": "node optimize-images.js optimize",
+    "restore-images": "node optimize-images.js restore"
   },
   "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.18.2"
+    "cheerio": "^1.0.0-rc.12",
+    "nodemailer": "^6.9.7",
+    "dotenv": "^16.3.1",
+    "sharp": "^0.32.6",
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
   },
   "keywords": [
-    "personal-website",
-    "static-site"
+    "newsletter",
+    "email",
+    "html",
+    "converter"
   ],
   "author": "Michael Alisky",
   "license": "MIT"

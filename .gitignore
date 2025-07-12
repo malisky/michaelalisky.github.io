@@ -1,5 +1,6 @@
 .DS_Store
 node_modules/*
 
-# Newsletter subscribers database (private data)
-newsletter-subscribers.json
+# Private data and configuration
+subscribers.json
+.env 

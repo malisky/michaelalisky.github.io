@@ -265,6 +265,7 @@ footer .icon-group a:hover img {
   gap: 1rem;
 }
 
+.newsletter-form input[type="text"],
 .newsletter-form input[type="email"] {
   padding: 0.75rem;
   border: 1px solid var(--border-color);
@@ -275,6 +276,7 @@ footer .icon-group a:hover img {
   transition: border-color 0.2s ease;
 }
 
+.newsletter-form input[type="text"]:focus,
 .newsletter-form input[type="email"]:focus {
   outline: none;
   border-color: var(--link-color);

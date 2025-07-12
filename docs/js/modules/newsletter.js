@@ -33,8 +33,9 @@ class NewsletterSignup {
     // Create modal content
     this.modal.innerHTML = `
       <h3>Subscribe to da emails 🤌</h3>
-      <p>Get notified when I publish new things. At this point, you may be wondering why I didn't just host this blog on Substack, to which I say, "I do not know."</p>
+      <p>You may be wondering why I didn't just host this blog on Substack, to which I would say, "I do not know." Note that I'm not sure how to make it so you can unsubscribe, so proceed at your own <b>peril.</b></p>
       <form class="newsletter-form">
+        <input type="text" placeholder="Your name (optional)" class="name-input">
         <input type="email" placeholder="Enter your email address" required>
         <button type="submit">Subscribe</button>
       </form>
@@ -52,6 +53,7 @@ class NewsletterSignup {
     
     // Get references to form elements
     this.form = this.modal.querySelector('.newsletter-form');
+    this.nameInput = this.form.querySelector('.name-input');
     this.emailInput = this.form.querySelector('input[type="email"]');
     this.submitButton = this.form.querySelector('button[type="submit"]');
     this.messageDiv = this.modal.querySelector('.newsletter-message');
@@ -117,6 +119,7 @@ class NewsletterSignup {
   }
 
   async handleSubmit() {
+    const name = this.nameInput.value.trim();
     const email = this.emailInput.value.trim();
     
     if (!email) {
@@ -140,7 +143,7 @@ class NewsletterSignup {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, name }),
       });
       
       const data = await response.json();
