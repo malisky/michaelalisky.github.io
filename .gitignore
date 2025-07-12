@@ -4,3 +4,4 @@ node_modules/*
 # Private data and configuration
 subscribers.json
 .env docs/images-original/
+docs/images-original/
