@@ -4,6 +4,8 @@
   "description": "Convert HTML newsletters to email-compatible format",
   "main": "newsletter-to-email.js",
   "scripts": {
+    "start": "node server.js",
+    "dev": "NODE_ENV=development node server.js",
     "convert": "node newsletter-to-email.js",
     "convert-one": "node newsletter-to-email.js",
     "test": "node newsletter-to-email.js baden.html",

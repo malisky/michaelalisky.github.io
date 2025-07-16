@@ -118,9 +118,9 @@ class ImageOptimizer {
         .webp({ quality: settings.quality })
         .toBuffer();
       
-      // Save optimized versions
-      fs.writeFileSync(optimizedPath, optimizedBuffer);
-      fs.writeFileSync(optimizedPath.replace('.jpeg', '.webp').replace('.jpg', '.webp').replace('.png', '.webp'), webpBuffer);
+      // Save only the WebP version in the optimized folder
+      const webpPath = optimizedPath.replace(/\.(jpeg|jpg|png)$/i, '.webp');
+      fs.writeFileSync(webpPath, webpBuffer);
       
       // Backup original if not already backed up
       if (!fs.existsSync(originalBackupPath)) {

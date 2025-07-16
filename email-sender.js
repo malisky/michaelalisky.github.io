@@ -209,6 +209,7 @@ async function main() {
   const command = args[0];
   const emailFile = args[1];
   const subject = args[2] || 'Michael\'s Travel Newsletter';
+  const testEmail = args[3]; // e.g., node email-sender.js send kashgar-email.html "Kashgar test" malisky@stanford.edu
   
   if (!command) {
     console.log(`
@@ -252,7 +253,18 @@ Setup:
         }
         
         const emailTransporter = sender.createGmailTransporter();
-        await sender.sendNewsletter(emailTransporter, emailFile, subject);
+        if (testEmail) {
+          // Send only to test email
+          await sender.sendToSubscriber(
+            emailTransporter,
+            { email: testEmail, name: testEmail.split('@')[0] },
+            sender.loadEmailContent(emailFile),
+            subject
+          );
+        } else {
+          // Send to all subscribers
+          await sender.sendNewsletter(emailTransporter, emailFile, subject);
+        }
         break;
         
       default:
