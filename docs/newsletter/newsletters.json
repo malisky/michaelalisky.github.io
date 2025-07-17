@@ -158,5 +158,15 @@
     "location": { "lat": 36.97374, "lng": 75.2973 },
     "location_name": "Khunjerab Pass, China",
     "countryGroup": "China"
+  },
+  {
+    "id": "kz-test",
+    "title": "August 4: I'm Still Alive",
+    "date": "2024-08-04",
+    "image": "/images-optimized/kz-test/almaty1.webp",
+    "link": "/newsletter/kz-test.html",
+    "location": { "lat": 43.2567, "lng": 76.9286 },
+    "location_name": "Almaty, Kazakhstan",
+    "countryGroup": "Kazakhstan"
   }
 ]

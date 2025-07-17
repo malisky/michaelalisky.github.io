@@ -131,8 +131,9 @@ class ImageOptimizer {
       
       const settings = this.getOptimizationSettings(relativePath);
       
-      // Create WebP version
+      // Create WebP version with proper rotation handling
       const webpBuffer = await sharp(imagePath)
+        .rotate() // Auto-rotate based on EXIF orientation
         .resize(settings.width, settings.height, { 
           fit: 'inside', 
           withoutEnlargement: true 
