@@ -100,56 +100,56 @@ function pointInMultiPolygon(point, multiPoly) {
   return false;
 }
 
-export function addKazakhstanMapClickHandler(map) {
-  fetch('/kz_0.json')
-    .then(res => res.json())
-    .then(geojson => {
-      let multiPoly = geojson.features[0].geometry.coordinates.map(swapLngLatToLatLng);
-      map.on('click', function(e) {
-        // Check if click is on a marker (skip if so)
-        let foundMarker = false;
-        map.eachLayer(layer => {
-          if (layer instanceof L.Marker && layer.getLatLng().distanceTo(e.latlng) < 0.0005) {
-            foundMarker = true;
-          }
-        });
-        if (foundMarker) return;
-        // Check if click is inside Kazakhstan multipolygon
-        if (pointInMultiPolygon([e.latlng.lat, e.latlng.lng], multiPoly)) {
-          window.location.href = '/newsletter/kazakhstan.html';
-        }
-      });
-    });
-}
+// export function addKazakhstanMapClickHandler(map) {
+//   fetch('/kz_0.json')
+//     .then(res => res.json())
+//     .then(geojson => {
+//       let multiPoly = geojson.features[0].geometry.coordinates.map(swapLngLatToLatLng);
+//       map.on('click', function(e) {
+//         // Check if click is on a marker (skip if so)
+//         let foundMarker = false;
+//         map.eachLayer(layer => {
+//           if (layer instanceof L.Marker && layer.getLatLng().distanceTo(e.latlng) < 0.0005) {
+//             foundMarker = true;
+//           }
+//         });
+//         if (foundMarker) return;
+//         // Check if click is inside Kazakhstan multipolygon
+//         if (pointInMultiPolygon([e.latlng.lat, e.latlng.lng], multiPoly)) {
+//           window.location.href = '/newsletter/kazakhstan.html';
+//         }
+//       });
+//     });
+// }
 
-export function addKazakhstanPolygonOnHover(map) {
-  fetch('/kz_0.json')
-    .then(res => res.json())
-    .then(geojson => {
-      kazakhstanBorderGeoJson = geojson;
-      let multiPoly = geojson.features[0].geometry.coordinates.map(swapLngLatToLatLng);
-      map.on('mousemove', function(e) {
-        if (pointInMultiPolygon([e.latlng.lat, e.latlng.lng], multiPoly)) {
-          if (!kazakhstanPolygonLayer) {
-            kazakhstanPolygonLayer = L.geoJSON(geojson, {
-              style: {
-                color: '#00afca',
-                weight: 3,
-                fillColor: '#00afca',
-                fillOpacity: 0.22
-              }
-            }).addTo(map);
-            kazakhstanPolygonLayer.bringToFront();
-          }
-        } else {
-          if (kazakhstanPolygonLayer) {
-            map.removeLayer(kazakhstanPolygonLayer);
-            kazakhstanPolygonLayer = null;
-          }
-        }
-      });
-    });
-}
+// export function addKazakhstanPolygonOnHover(map) {
+//   fetch('/kz_0.json')
+//     .then(res => res.json())
+//     .then(geojson => {
+//       kazakhstanBorderGeoJson = geojson;
+//       let multiPoly = geojson.features[0].geometry.coordinates.map(swapLngLatToLatLng);
+//       map.on('mousemove', function(e) {
+//         if (pointInMultiPolygon([e.latlng.lat, e.latlng.lng], multiPoly)) {
+//           if (!kazakhstanPolygonLayer) {
+//             kazakhstanPolygonLayer = L.geoJSON(geojson, {
+//               style: {
+//                 color: '#00afca',
+//                 weight: 3,
+//                 fillColor: '#00afca',
+//                 fillOpacity: 0.22
+//               }
+//             }).addTo(map);
+//             kazakhstanPolygonLayer.bringToFront();
+//           }
+//         } else {
+//           if (kazakhstanPolygonLayer) {
+//             map.removeLayer(kazakhstanPolygonLayer);
+//             kazakhstanPolygonLayer = null;
+//           }
+//         }
+//       });
+//     });
+// }
 
 export function addChinaPolygonOnHover(map) {
   console.log('[ChinaPolygon] Initializing polygon hover effect...');

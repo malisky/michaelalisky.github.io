@@ -4,7 +4,7 @@
  */
 
 import { initMap } from './modules/mapInit.js';
-import { initMapMarkers, addKazakhstanMapClickHandler, addKazakhstanPolygonOnHover, addChinaPolygonOnHover, addChinaMapClickHandler } from './modules/mapMarkers.js';
+import { initMapMarkers, addChinaPolygonOnHover, addChinaMapClickHandler } from './modules/mapMarkers.js';
 import { initDarkMode } from './modules/darkMode.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -46,8 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const map = initMap();
     if (map) {
       initMapMarkers(map);
-      addKazakhstanPolygonOnHover(map);
-      addKazakhstanMapClickHandler(map);
       addChinaPolygonOnHover(map);
       addChinaMapClickHandler(map);
     }
