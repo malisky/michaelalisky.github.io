@@ -38,7 +38,8 @@ findAvailablePort(8080).then(port => {
   app.use(cors(corsOptions));
 
   // Serve static files
-  app.use(express.static(path.join(__dirname, 'docs')));
+  const staticDir = path.join(__dirname, '..', 'docs');
+  app.use(express.static(staticDir));
 
   // Newsletter database file path
   const SUBSCRIBERS_FILE = path.join(__dirname, 'subscribers.json');
@@ -170,17 +171,17 @@ findAvailablePort(8080).then(port => {
 
   // Serve index.html for the root route
   app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'docs', 'index.html'));
+    res.sendFile(path.join(staticDir, 'index.html'));
   });
 
   // Handle all other routes by serving the corresponding HTML files
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'docs', 'index.html'));
+    res.sendFile(path.join(staticDir, 'index.html'));
   });
 
   app.listen(PORT, () => {
     console.log(`🚀 Server running at http://localhost:${PORT}`);
-    console.log(`📁 Serving files from: ${path.join(__dirname, 'docs')}`);
+    console.log(`📁 Serving files from: ${staticDir}`);
     console.log(`🌐 Open your browser and navigate to: http://localhost:${PORT}`);
     console.log(`📧 Newsletter signup API available at: http://localhost:${PORT}/api/newsletter-signup`);
     console.log(`🔒 Rate limiting: ${MAX_ATTEMPTS} attempts per ${RATE_LIMIT_WINDOW/60000} minutes`);

@@ -7,3 +7,21 @@ nav.sticky.dark-mode {
   background-color: var(--bg-color);
   border-color: var(--border-color);
 }
+
+body.dark-mode .newsletter-card {
+  background: #182a3a;
+  color: #e0f6fa;
+}
+
+body.dark-mode .image-container {
+  background: #14202b;
+  border-radius: 8px;
+}
+
+body.dark-mode a, body.dark-mode a:visited {
+  color: #ffd600;
+}
+
+body.dark-mode a:hover, body.dark-mode a:active {
+  color: #fffbe0;
+}

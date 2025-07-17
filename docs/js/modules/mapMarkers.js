@@ -235,6 +235,9 @@ export function initMapMarkers(map) {
     .then(data => {
       console.log('Newsletter data loaded:', data);
       
+      // Define favorite IDs
+      const favoriteIds = ["mongolia", "kashgar", "georgia", "turkey"];
+      
       // Create all markers first
       const markers = [];
       data.forEach(entry => {
@@ -247,12 +250,18 @@ export function initMapMarkers(map) {
           console.warn("Invalid marker data:", entry);
           return;
         }
-        
+        // Custom marker icon with favorite class if needed
+        const isFavorite = favoriteIds.includes(entry.id);
+        const markerIcon = L.divIcon({
+          className: 'custom-marker-icon',
+          html: `<div class="marker-dot${isFavorite ? ' favorite' : ''}"></div>`,
+          iconSize: [18, 18],
+          iconAnchor: [9, 9]
+        });
         const marker = L.marker([entry.location.lat, entry.location.lng], {
           icon: markerIcon,
           title: entry.title
         }).addTo(map);
-        
         // Store marker data for easier access
         marker._markerData = {
           title: entry.title,
@@ -261,7 +270,6 @@ export function initMapMarkers(map) {
           image: entry.image,
           link: entry.link
         };
-        
         marker.countryGroup = entry.countryGroup;
         markers.push(marker);
         allMarkers.push(marker);

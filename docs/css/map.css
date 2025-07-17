@@ -396,3 +396,15 @@ body.dark-mode .leaflet-popup-tip {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.marker-dot.favorite {
+  background: #FFD600;
+  border-color: #B8860B;
+  box-shadow: 0 0 6px rgba(184, 134, 11, 0.25);
+}
+
+body.dark-mode .marker-dot.favorite {
+  background: #FFD600;
+  border-color: #FFD600;
+  box-shadow: 0 0 8px #FFD60044;
+}
