@@ -100,102 +100,12 @@
     "countryGroup": "Taiwan"
   },
   {
-    "id": "kashgar",
-    "title": "July 12: Kashgar Chronicles",
-    "date": "2025-07-02",
-    "image": "/images-optimized/kashgar/kashgar-old-town.webp",
-    "link": "/newsletter/kashgar.html",
-    "location": { "lat": 36.97374, "lng": 75.2973 },
-    "location_name": "Khunjerab Pass, China",
-    "countryGroup": "China"
-  },
-  {
-    "id": "kz-test",
-    "title": "August 4: I'm Still Alive",
+    "id": "kazakhstan",
+    "title": "Kazakhstan Dispatches",
     "date": "2024-08-04",
-    "image": "/images-optimized/kz-apartment.webp",
-    "link": "/newsletter/kz-test.html",
-    "location": { "lat": 43.2587, "lng": 76.9398 },
-    "location_name": "Almaty, Kazakhstan",
-    "countryGroup": "Kazakhstan"
-  },
-  {
-    "id": "kz-horse-meat",
-    "title": "August 6: Horse Meat and the Banya",
-    "date": "2024-08-06",
-    "image": "/images-optimized/kz-cathedral.webp",
-    "link": "/newsletter/kz-horse-meat.html",
-    "location": { "lat": 43.261, "lng": 76.9457 },
-    "location_name": "Ascension Cathedral, Almaty, Kazakhstan",
-    "countryGroup": "Kazakhstan"
-  },
-  {
-    "id": "kz-boxing",
-    "title": "August 10: Boxing and Bazaar",
-    "date": "2024-08-10",
-    "image": "/images-optimized/kz-kebab.webp",
-    "link": "/newsletter/kz-boxing.html",
-    "location": { "lat": 43.2479, "lng": 76.9123 },
-    "location_name": "Zhetysu-Semirech'ye Bazaar, Almaty, Kazakhstan",
-    "countryGroup": "Kazakhstan"
-  },
-  {
-    "id": "kz-kumis",
-    "title": "August 17: Kumis!",
-    "date": "2024-08-17",
-    "image": "/images-optimized/kz-kumis.webp",
-    "link": "/newsletter/kz-kumis.html",
-    "location": { "lat": 43.2798, "lng": 76.9483 },
-    "location_name": "Green Bazaar, Almaty, Kazakhstan",
-    "countryGroup": "Kazakhstan"
-  },
-  {
-    "id": "kz-pigeon",
-    "title": "August 18: Pigeon Market",
-    "date": "2024-08-18",
-    "image": "/images-optimized/kz-pigeons.webp",
-    "link": "/newsletter/kz-pigeon.html",
-    "location": { "lat": 43.2562, "lng": 76.9531 },
-    "location_name": "Kazan Cathedral, Almaty, Kazakhstan",
-    "countryGroup": "Kazakhstan"
-  },
-  {
-    "id": "kz-steppe",
-    "title": "August 18: Steppe & World Publishing House",
-    "date": "2024-08-18",
-    "image": "/images-optimized/kz-publishing.webp",
-    "link": "/newsletter/kz-steppe.html",
-    "location": { "lat": 43.2452, "lng": 76.9365 },
-    "location_name": "Steppe & World Publishing House, Almaty, Kazakhstan",
-    "countryGroup": "Kazakhstan"
-  },
-  {
-    "id": "kz-lake",
-    "title": "August 24: Cold Lake Plus Party Bus",
-    "date": "2024-08-24",
-    "image": "/images-optimized/kz-lake.webp",
-    "link": "/newsletter/kz-lake.html",
-    "location": { "lat": 42.9894, "lng": 78.5583 },
-    "location_name": "Lake Kaindy, Kazakhstan",
-    "countryGroup": "Kazakhstan"
-  },
-  {
-    "id": "kz-climate",
-    "title": "August 28: Climate Change Education and the Grand Canyon's Younger Brother",
-    "date": "2024-08-28",
-    "image": "/images-optimized/kz-canyon.webp",
-    "link": "/newsletter/kz-climate.html",
-    "location": { "lat": 43.3666, "lng": 79.0532 },
-    "location_name": "Charyn Canyon, Kazakhstan",
-    "countryGroup": "Kazakhstan"
-  },
-  {
-    "id": "kz-finale",
-    "title": "September 4: Conclusion",
-    "date": "2024-09-04",
-    "image": "/images-optimized/kz-final.webp",
-    "link": "/newsletter/kz-finale.html",
-    "location": { "lat": 43.2389, "lng": 76.8897 },
+    "image": "/images-optimized/kz-lake/lake1.webp",
+    "link": "/newsletter/kazakhstan.html",
+    "location": { "lat": 43.2567, "lng": 76.9286 },
     "location_name": "Almaty, Kazakhstan",
     "countryGroup": "Kazakhstan"
   },
@@ -237,6 +147,16 @@
     "link": "/newsletter/dandelion.html",
     "location": { "lat": 39.9042, "lng": 116.4074 },
     "location_name": "Beijing, China",
+    "countryGroup": "China"
+  },
+  {
+    "id": "kashgar",
+    "title": "Kashgar to Karakoram",
+    "date": "2025-07-02",
+    "image": "/images-optimized/kashgar/pamir-plateau-h.webp",
+    "link": "/newsletter/kashgar.html",
+    "location": { "lat": 36.97374, "lng": 75.2973 },
+    "location_name": "Khunjerab Pass, China",
     "countryGroup": "China"
   }
 ]

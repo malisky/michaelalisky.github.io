@@ -238,6 +238,7 @@ export function initMapMarkers(map) {
       // Create all markers first
       const markers = [];
       data.forEach(entry => {
+        console.log('Processing entry:', entry.title, entry.location);
         if (
           !entry.location ||
           typeof entry.location.lat !== "number" ||

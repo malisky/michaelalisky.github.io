@@ -6,9 +6,8 @@ class ImageOptimizer {
   constructor() {
     this.imagesDir = './docs/images';
     this.optimizedDir = './docs/images-optimized';
-    this.originalDir = './docs/images-original';
     
-    // Optimization settings - high resolution and quality
+    // Optimization settings
     this.settings = {
       featured: { width: 2560, height: 1920, quality: 95 },
       content: { width: 1920, height: 1440, quality: 92 },
@@ -16,32 +15,79 @@ class ImageOptimizer {
     };
   }
 
-  // Main optimization function
-  async optimizeAllImages() {
-    console.log('🖼️  Starting image optimization...');
+  // Optimize a specific folder
+  async optimizeFolder(folderName) {
+    console.log(`🖼️  Starting optimization for folder: ${folderName}`);
     
     try {
+      const sourceFolder = path.join(this.imagesDir, folderName);
+      
+      // Check if source folder exists
+      if (!fs.existsSync(sourceFolder)) {
+        console.error(`❌ Source folder not found: ${sourceFolder}`);
+        return;
+      }
+      
       // Create optimized directory if it doesn't exist
       if (!fs.existsSync(this.optimizedDir)) {
         fs.mkdirSync(this.optimizedDir, { recursive: true });
       }
       
-      // Create original backup directory if it doesn't exist
-      if (!fs.existsSync(this.originalDir)) {
-        fs.mkdirSync(this.originalDir, { recursive: true });
+      // Create the target folder in optimized directory
+      const targetFolder = path.join(this.optimizedDir, folderName);
+      if (!fs.existsSync(targetFolder)) {
+        fs.mkdirSync(targetFolder, { recursive: true });
       }
       
-      // Process all images recursively
-      await this.processDirectory(this.imagesDir);
+      // Process only the specified folder
+      await this.processDirectory(sourceFolder);
       
-      console.log('✅ Image optimization complete!');
-      console.log(`📁 Optimized images saved to: ${this.optimizedDir}`);
-      console.log(`📁 Original backups saved to: ${this.originalDir}`);
+      console.log(`✅ Optimization complete for folder: ${folderName}`);
+      console.log(`📁 Optimized images saved to: ${targetFolder}`);
       
     } catch (error) {
       console.error('❌ Error during optimization:', error.message);
       throw error;
     }
+  }
+
+  // Optimize all folders by processing each one individually
+  async optimizeAllFolders() {
+    console.log('🖼️  Starting optimization for all folders...');
+    
+    try {
+      const folders = this.getFoldersInImages();
+      
+      if (folders.length === 0) {
+        console.log('📁 No folders found in images directory');
+        return;
+      }
+      
+      console.log(`📁 Found ${folders.length} folders: ${folders.join(', ')}`);
+      
+      for (const folder of folders) {
+        await this.optimizeFolder(folder);
+      }
+      
+      console.log('✅ All folders optimized!');
+      
+    } catch (error) {
+      console.error('❌ Error during optimization:', error.message);
+      throw error;
+    }
+  }
+
+  // Get all folder names in the images directory
+  getFoldersInImages() {
+    if (!fs.existsSync(this.imagesDir)) {
+      return [];
+    }
+    
+    const items = fs.readdirSync(this.imagesDir);
+    return items.filter(item => {
+      const fullPath = path.join(this.imagesDir, item);
+      return fs.statSync(fullPath).isDirectory();
+    });
   }
 
   // Process a directory recursively
@@ -54,15 +100,10 @@ class ImageOptimizer {
       const stats = fs.statSync(fullPath);
       
       if (stats.isDirectory()) {
-        // Create corresponding directories in optimized and original folders
+        // Create corresponding directory in optimized folder
         const optimizedSubDir = path.join(this.optimizedDir, relativePath);
-        const originalSubDir = path.join(this.originalDir, relativePath);
-        
         if (!fs.existsSync(optimizedSubDir)) {
           fs.mkdirSync(optimizedSubDir, { recursive: true });
-        }
-        if (!fs.existsSync(originalSubDir)) {
-          fs.mkdirSync(originalSubDir, { recursive: true });
         }
         
         // Recursively process subdirectory
@@ -83,33 +124,14 @@ class ImageOptimizer {
   // Optimize a single image
   async optimizeImage(imagePath, relativePath) {
     try {
-      const filename = path.basename(imagePath);
-      const ext = path.extname(filename).toLowerCase();
-      const nameWithoutExt = path.basename(filename, ext);
-      
-      // Skip if already processed
-      const optimizedPath = path.join(this.optimizedDir, relativePath);
-      const originalBackupPath = path.join(this.originalDir, relativePath);
-      
-      // Get original file stats
       const stats = fs.statSync(imagePath);
       const originalSize = stats.size;
       
       console.log(`📸 Processing: ${relativePath} (${(originalSize/1024).toFixed(0)}KB)`);
       
-      // Determine optimization settings based on image type/location
       const settings = this.getOptimizationSettings(relativePath);
       
-      // Create optimized version
-      const optimizedBuffer = await sharp(imagePath)
-        .resize(settings.width, settings.height, { 
-          fit: 'inside', 
-          withoutEnlargement: true 
-        })
-        .jpeg({ quality: settings.quality })
-        .toBuffer();
-      
-      // Create WebP version for modern browsers
+      // Create WebP version
       const webpBuffer = await sharp(imagePath)
         .resize(settings.width, settings.height, { 
           fit: 'inside', 
@@ -118,16 +140,12 @@ class ImageOptimizer {
         .webp({ quality: settings.quality })
         .toBuffer();
       
-      // Save only the WebP version in the optimized folder
-      const webpPath = optimizedPath.replace(/\.(jpeg|jpg|png)$/i, '.webp');
+      // Save WebP version in the optimized folder
+      const optimizedPath = path.join(this.optimizedDir, relativePath);
+      const webpPath = optimizedPath.replace(/\.(jpeg|jpg|png|gif|webp)$/i, '.webp');
       fs.writeFileSync(webpPath, webpBuffer);
       
-      // Backup original if not already backed up
-      if (!fs.existsSync(originalBackupPath)) {
-        fs.copyFileSync(imagePath, originalBackupPath);
-      }
-      
-      const newSize = optimizedBuffer.length;
+      const newSize = webpBuffer.length;
       const savings = ((originalSize - newSize) / originalSize * 100).toFixed(1);
       
       console.log(`✅ Optimized: ${relativePath} - ${(originalSize/1024).toFixed(0)}KB → ${(newSize/1024).toFixed(0)}KB (${savings}% smaller)`);
@@ -158,12 +176,11 @@ class ImageOptimizer {
     return this.settings.content;
   }
 
-  // Generate HTML with optimized images
+  // Update HTML files to use optimized images
   async updateHtmlFiles() {
     console.log('🔄 Updating HTML files to use optimized images...');
     
     try {
-      // Find all HTML files
       const htmlFiles = this.findHtmlFiles('./docs');
       
       for (const htmlFile of htmlFiles) {
@@ -227,44 +244,6 @@ class ImageOptimizer {
       console.warn(`⚠️  Could not update ${htmlPath}:`, error.message);
     }
   }
-
-  // Restore original images (if needed)
-  async restoreOriginals() {
-    console.log('🔄 Restoring original images...');
-    
-    try {
-      if (fs.existsSync(this.originalDir)) {
-        // Copy originals back to images directory
-        this.copyDirectory(this.originalDir, this.imagesDir);
-        console.log('✅ Original images restored!');
-      } else {
-        console.log('⚠️  No original backups found');
-      }
-    } catch (error) {
-      console.error('❌ Error restoring originals:', error.message);
-    }
-  }
-
-  // Copy directory recursively
-  copyDirectory(src, dest) {
-    if (!fs.existsSync(dest)) {
-      fs.mkdirSync(dest, { recursive: true });
-    }
-    
-    const items = fs.readdirSync(src);
-    
-    for (const item of items) {
-      const srcPath = path.join(src, item);
-      const destPath = path.join(dest, item);
-      const stats = fs.statSync(srcPath);
-      
-      if (stats.isDirectory()) {
-        this.copyDirectory(srcPath, destPath);
-      } else {
-        fs.copyFileSync(srcPath, destPath);
-      }
-    }
-  }
 }
 
 // Main execution
@@ -272,15 +251,20 @@ async function main() {
   const optimizer = new ImageOptimizer();
   
   const command = process.argv[2];
+  const folderName = process.argv[3]; // Get folder name for optimizeFolder command
   
   switch (command) {
     case 'optimize':
-      await optimizer.optimizeAllImages();
+      await optimizer.optimizeAllFolders();
       await optimizer.updateHtmlFiles();
       break;
       
-    case 'restore':
-      await optimizer.restoreOriginals();
+    case 'optimize-folder':
+      if (folderName) {
+        await optimizer.optimizeFolder(folderName);
+      } else {
+        console.error('Please provide a folder name for the optimize-folder command.');
+      }
       break;
       
     case 'update-html':
@@ -292,15 +276,18 @@ async function main() {
 🖼️  Image Optimizer
 
 Usage:
-  node optimize-images.js optimize    # Optimize all images and update HTML
-  node optimize-images.js restore     # Restore original images
-  node optimize-images.js update-html # Update HTML files only
+  node optimize-images.js optimize              # Optimize all folders and update HTML
+  node optimize-images.js optimize-folder <folder-name> # Optimize images in a specific folder
+  node optimize-images.js update-html           # Update HTML files only
 
 This will:
-1. Create optimized versions of all images
-2. Generate WebP versions for modern browsers
-3. Update HTML files to use optimized images
-4. Keep originals for email system
+1. Create optimized WebP versions of all images
+2. Update HTML files to use optimized images
+
+Examples:
+  node optimize-images.js optimize-folder kashgar
+  node optimize-images.js optimize-folder mongolia
+  node optimize-images.js optimize
       `);
   }
 }
