@@ -4,7 +4,7 @@ const path = require('path');
 class ImageToJpegConverter {
     constructor(folderName) {
         this.folderName = folderName;
-        this.inputDir = path.join(__dirname, 'docs', 'images', folderName);
+        this.inputDir = path.join(__dirname, '..', 'docs', 'images', folderName);
     }
 
     // Convert HEIC to JPEG using sips (macOS built-in)
