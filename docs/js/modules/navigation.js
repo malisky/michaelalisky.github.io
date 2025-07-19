@@ -26,7 +26,7 @@ function createStickyNavigation() {
   const isKazakhstanNewsletter = window.location.pathname.includes('/kz-');
   
   // Set paths based on page type
-  const homePath = isNewsletterPage ? '../index.html' : 'index.html';
+  const homePath = isNewsletterPage ? '/' : '/';
   const researchPath = isNewsletterPage ? '../research.html' : 'research.html';
 
   const nav = document.createElement('nav');
@@ -76,7 +76,7 @@ function addBackToMapButton() {
   }
 
   const backButton = document.createElement('a');
-  backButton.href = '../index.html';
+  backButton.href = '/';
   backButton.className = 'back-to-map';
   backButton.title = 'Back to Map';
   backButton.textContent = 'Back to Map';
