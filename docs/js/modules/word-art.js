@@ -59,10 +59,17 @@ function initWordArt() {
   });
 
   document.addEventListener('click', (e) => {
+    const currentFile = window.location.pathname.split('/').pop();
+    const excludedPages = ['index.html', 'research.html', 'kazakhstan.html', 'china.html'];
+    if (excludedPages.includes(currentFile)) return;
+
     const newsletterCard = document.querySelector('.newsletter-card');
-    const isClickOutsideCard = !newsletterCard || !newsletterCard.contains(e.target);
-    if (allowWordArtSpam || isClickOutsideCard) {
-      const currentFile = window.location.pathname.split('/').pop();
+    const navBar = document.querySelector('nav.sticky');
+    const isClickInsideCard = newsletterCard && newsletterCard.contains(e.target);
+    const isClickInsideNav = navBar && navBar.contains(e.target);
+    const isClickOutsideCardAndNav = !isClickInsideCard && !isClickInsideNav;
+
+    if (allowWordArtSpam || isClickOutsideCardAndNav) {
       if (currentFile) {
         let displayText = currentFile;
         if (currentFile.startsWith('kz-')) displayText = 'kazakhstan.html';
@@ -235,7 +242,7 @@ function initWordArt() {
   // --- Animal Drop ---
   function createAnimalDrop(screenWidth) {
     const animalImages = [
-      'chimp.png', 'zebra.png', 'chimp2.png', 'giraffe.png', 'chimp3.png'
+      'chimp.png', 'chimp2.png', 'giraffe.png', 'chimp3.png'
     ];
     const animalDiv = document.createElement('div');
     animalDiv.className = 'animal-rainstorm';
