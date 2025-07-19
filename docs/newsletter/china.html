@@ -1,133 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>China Newsletters – Michael Alisky</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="../css/style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet"/>
-  <link href="../images-optimized/favicon.svg" rel="icon" type="image/svg+xml"/>
-  <style>
-    body {
-      background: #fff5f5;
-    }
-    .china-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 1.2rem;
-      max-width: 900px;
-      margin: 2.5rem auto 2rem auto;
-      padding: 0 1rem;
-    }
-    .china-mini-card {
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.07);
-      border: 1px solid #ffd6d6;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      text-decoration: none;
-      color: #222;
-      transition: box-shadow 0.18s, transform 0.18s;
-      overflow: hidden;
-      min-height: 120px;
-    }
-    .china-mini-card:hover {
-      box-shadow: 0 6px 24px rgba(255,0,0,0.13);
-      transform: translateY(-2px) scale(1.03);
-    }
-    .china-mini-card img {
-      width: 100%;
-      height: 110px;
-      object-fit: cover;
-      border-bottom: 1px solid #ffd6d6;
-    }
-    .china-mini-card-content {
-      padding: 0.7rem 1rem 0.7rem 1rem;
-      width: 100%;
-    }
-    .china-mini-title {
-      font-size: 1.02rem;
-      font-weight: 600;
-      margin: 0 0 0.3rem 0;
-      color: #d32f2f;
-      line-height: 1.2;
-    }
-    .china-mini-date {
-      font-size: 0.92rem;
-      color: #888;
-      margin-bottom: 0.2rem;
-    }
-    .china-mini-location {
-      font-size: 0.93rem;
-      color: #b71c1c;
-      margin-bottom: 0;
-    }
-    nav.sticky {
-      background: #fff5f5 !important;
-      border-bottom: 1px solid #ffd6d6;
-      border-radius: 18px;
-      margin-bottom: 2rem;
-      box-shadow: none;
-    }
-    .china-accent-line {
-      width: 100%;
-      height: 7px;
-      margin: 0 0 1.2rem 0;
-      border-radius: 6px;
-      background: linear-gradient(90deg, #d32f2f 0% 60%, #ffd600 60% 100%);
-      box-shadow: 0 1px 6px rgba(211,47,47,0.08);
-    }
-    @media (max-width: 600px) {
-      .china-header h1 { font-size: 1.3rem; }
-      .china-grid { grid-template-columns: 1fr; }
-      .china-mini-card img { height: 80px; }
-    }
-    /* --- DARK MODE OVERRIDES FOR CHINA --- */
-    body.dark-mode {
-      background: #2d0909 !important; /* deep red */
-    }
-    body.dark-mode nav.sticky {
-      background: #4a1818 !important;
-      border-bottom: 1px solid #b71c1c;
-    }
-    body.dark-mode .china-mini-card {
-      background: #3a1818;
-      color: #fff5f5;
-      border: 1px solid #b71c1c;
-    }
-    body.dark-mode .china-mini-title {
-      color: #ff5252;
-    }
-    body.dark-mode .china-mini-date {
-      color: #ffd6d6;
-    }
-    body.dark-mode .china-mini-location {
-      color: #ffd600;
-    }
-    body.dark-mode .china-accent-line {
-      background: linear-gradient(90deg, #b71c1c 0% 60%, #ffd600 60% 100%);
-      box-shadow: 0 1px 6px rgba(183,28,28,0.13);
-    }
-  </style>
+  <title>China Newsletters - Michael Alisky</title>
+  <link rel="stylesheet" href="../css/china-landing.css">
+  <script type="module" src="../js/modules/newsletter-head.js"></script>
 </head>
 <body>
   <div class="container">
     <header>
       <h1>China Newsletters</h1>
     </header>
-    <nav class="sticky">
-      <a href="../index.html">Home</a>
-      <a href="../research.html">Research</a>
-      <button id="night-toggle" class="nav-toggle" title="Toggle dark mode">🌓</button>
-    </nav>
+    
     <div class="china-accent-line"></div>
     <div class="china-grid">
       <a class="china-mini-card" href="/newsletter/yiwu.html">
         <img src="/images-optimized/yiwu/yiwu.webp" alt="Yi Wu-hoo!" />
         <div class="china-mini-card-content">
-          <div class="china-mini-title">June 18: Yi Wu-hoo!</div>
+          <div class="china-mini-title">June 18, 2025: Yi Wu-hoo!</div>
           <div class="china-mini-date">Wed Jun 18 2025</div>
           <div class="china-mini-location">Yiwu, China</div>
         </div>
@@ -135,7 +24,7 @@
       <a class="china-mini-card" href="/newsletter/hangzhou.html">
         <img src="/images-optimized/hangzhou/xihu.webp" alt="Hanging out in Hangzhou" />
         <div class="china-mini-card-content">
-          <div class="china-mini-title">June 22: Hanging out in Hangzhou</div>
+          <div class="china-mini-title">June 22, 2025: Hanging out in Hangzhou</div>
           <div class="china-mini-date">Sun Jun 22 2025</div>
           <div class="china-mini-location">Hangzhou, China</div>
         </div>
@@ -143,7 +32,7 @@
       <a class="china-mini-card" href="/newsletter/dandelion.html">
         <img src="/images-optimized/dandelion/dandelion-school.webp" alt="Dandelion Dispatch" />
         <div class="china-mini-card-content">
-          <div class="china-mini-title">June 26: Dandelion Dispatch</div>
+          <div class="china-mini-title">June 26, 2025: Dandelion Dispatch</div>
           <div class="china-mini-date">Thu Jun 26 2025</div>
           <div class="china-mini-location">Beijing, China</div>
         </div>
@@ -151,29 +40,12 @@
       <a class="china-mini-card" href="/newsletter/kashgar.html">
         <img src="/images-optimized/kashgar/pamir-plateau-h.webp" alt="Kashgar Chronicles" />
         <div class="china-mini-card-content">
-          <div class="china-mini-title">July 2: Kashgar to Karakoram</div>
+          <div class="china-mini-title">July 2, 2025: Kashgar to Karakoram</div>
           <div class="china-mini-date">Wed Jul 2 2025</div>
           <div class="china-mini-location">Khunjerab Pass, China</div>
         </div>
       </a>
     </div>
-    <footer>
-      <div class="icon-group">
-        <a href="https://github.com/malisky" target="_blank">
-          <img src="../images-optimized/github-icon.svg" alt="GitHub" />
-        </a>
-        <a href="https://www.linkedin.com/in/michaelalisky" target="_blank">
-          <img src="../images-optimized/linkedin-icon.svg" alt="LinkedIn" />
-        </a>
-        <a href="https://scholar.google.com/citations?user=b4EtdL4AAAAJ&hl=en" target="_blank">
-          <img src="../images-optimized/scholar-icon.svg" alt="Google Scholar" />
-        </a>
-      </div>
-    </footer>
   </div>
-  <script type="module" src="/js/modules/darkMode.js"></script>
-  <script type="module" src="/js/modules/ui.js"></script>
-  <script type="module" src="/js/modules/footer.js"></script>
-  <script type="module" src="/js/main.js"></script>
 </body>
 </html> 

@@ -1,35 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
   <title>www.michaelalisky.com</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet"/>
-  <link href="images/favicon.svg" rel="icon" type="image/svg+xml"/>
-
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-  <!-- Module scripts -->
-  <script type="module" src="js/modules/darkMode.js"></script>
-  <script type="module" src="js/modules/ui.js"></script>
-  <script type="module" src="js/modules/mapInit.js"></script>
-  <script type="module" src="js/modules/mapSpiderfier.js"></script>
-  <script type="module" src="js/modules/mapMarkers.js"></script>
-  <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/modules/index-head.js"></script>
 </head>
-
 <body>
   <div class="container">
-    <nav class="sticky">
-      <a href="../index.html">Home</a>
-      <a href="../research.html">Research</a>
-      <button id="night-toggle" class="nav-toggle" title="Toggle dark mode">🌓</button>
-    </nav>
+    <header></header>
 
-    <section class="intro-container">
+    <section class="intro-container" style="margin-top: -1rem;">
       <p class="intro-text">
         This is my travel newsletter, initially written for close friends and family, now available online
          to serve the interests of humanity more broadly.
@@ -43,20 +22,5 @@
     <div id="newsletter-map"></div>
   </div>
 
-  <footer>
-    <div class="icon-group">
-      <a href="https://github.com/malisky" target="_blank">
-        <img src="/images-optimized/github-icon.svg" alt="GitHub" />
-      </a>
-      <a href="https://www.linkedin.com/in/michaelalisky" target="_blank">
-        <img src="/images-optimized/linkedin-icon.svg" alt="LinkedIn" />
-      </a>
-      <a href="https://scholar.google.com/citations?user=b4EtdL4AAAAJ&hl=en" target="_blank">
-        <img src="/images-optimized/scholar-icon.svg" alt="Google Scholar" />
-      </a>
-    </div>
-  </footer>
-
-  <div class="theme-transition"></div>
 </body>
 </html>

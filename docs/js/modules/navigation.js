@@ -1,66 +1,93 @@
 /**
- * Newsletter navigation
- * Handles the previous/next navigation between newsletter posts
+ * Navigation module
+ * Handles the sticky navigation bar for all pages
  */
 
-function initNewsletterNavigation() {
-  const currentPath = window.location.pathname;
-  const pathMatch = currentPath.match(/\/newsletter\/(.+)\.html/);
+// Track initialization to prevent duplicates
+let navigationInitialized = false;
 
-  if (!pathMatch || !pathMatch[1]) return;
-
-  const navSection = document.querySelector('.newsletter-navigation');
-  if (!navSection) return;
-
-  const prevLink = navSection.querySelector('.nav-arrow.prev');
-  const nextLink = navSection.querySelector('.nav-arrow.next');
-
-  if (!prevLink || !nextLink) return;
-
-  loadNewsletterData()
-    .then(data => setupNavigationLinks(data, pathMatch[1], prevLink, nextLink))
-    .catch(error => console.error('Error setting up navigation:', error));
-}
-
-async function loadNewsletterData() {
-  try {
-    const response = await fetch('/newsletter/newsletters.json');
-    return await response.json();
-  } catch (error) {
-    console.error('Error loading newsletter data:', error);
-    throw error;
-  }
-}
-
-function setupNavigationLinks(newsletters, currentId, prevLink, nextLink) {
-  if (!Array.isArray(newsletters)) {
-    console.error('Invalid newsletter data format');
+// Generate and insert the sticky navigation bar
+function createStickyNavigation() {
+  // Prevent duplicate execution
+  if (document.querySelector('nav.sticky')) {
+    console.log('Navigation.js: Sticky nav already exists, skipping');
     return;
   }
 
-  newsletters.sort((a, b) => new Date(a.date) - new Date(b.date));
-
-  const currentIndex = newsletters.findIndex(item => item.id === currentId);
-  if (currentIndex === -1) {
-    console.warn(`Current newsletter with ID '${currentId}' not found in data`);
+  const header = document.querySelector('header');
+  if (!header) {
+    console.log('Navigation.js: Header not found, will retry');
+    setTimeout(createStickyNavigation, 100);
     return;
   }
 
-  if (currentIndex > 0) {
-    const prevItem = newsletters[currentIndex - 1];
-    prevLink.href = prevItem.link;
-    prevLink.title = `Previous: ${prevItem.title}`;
-    prevLink.style.visibility = 'visible';
-  } else {
-    prevLink.style.visibility = 'hidden';
+  // Determine page type and set appropriate paths
+  const isNewsletterPage = window.location.pathname.includes('/newsletter/');
+  const isKazakhstanNewsletter = window.location.pathname.includes('/kz-');
+  
+  // Set paths based on page type
+  const homePath = isNewsletterPage ? '../index.html' : 'index.html';
+  const researchPath = isNewsletterPage ? '../research.html' : 'research.html';
+
+  const nav = document.createElement('nav');
+  nav.className = 'sticky';
+  
+  let navHTML = `
+    <a href="${homePath}">Home</a>
+    <a href="${researchPath}">Research</a>
+  `;
+  
+  // Add Kazakhstan back tab if it's a Kazakhstan newsletter
+  if (isKazakhstanNewsletter) {
+    navHTML += `
+      <a href="../newsletter/kazakhstan.html" class="kz-back-tab" style="position: relative; display: flex; align-items: center; justify-content: center; min-width: 60px; text-align: center; padding: 0.2rem 0.7rem;">
+        <img src="https://media.tenor.com/83thdVyblF8AAAAM/thumbs-up-borat.gif" alt="Borat Thumbs Up" class="borat-gif" style="width:72px;height:72px;max-width:72px;max-height:72px;object-fit:contain;vertical-align:middle;border-radius:3px;background:#fffbe0;border:1px solid #ffd600;display:block;padding:0;flex-shrink:0;transition: none;" />
+        <span class="kz-back-overlay">Back to Kazakhstan</span>
+      </a>
+    `;
+  }
+  
+  navHTML += `
+    <button id="night-toggle" class="nav-toggle" title="Toggle dark mode">🌓</button>
+  `;
+  
+  nav.innerHTML = navHTML;
+
+  // Insert inside header
+  header.appendChild(nav);
+}
+
+// Add back to map button for newsletter pages
+function addBackToMapButton() {
+  // Only add on newsletter pages
+  if (!window.location.pathname.includes('/newsletter/')) {
+    return;
   }
 
-  if (currentIndex < newsletters.length - 1) {
-    const nextItem = newsletters[currentIndex + 1];
-    nextLink.href = nextItem.link;
-    nextLink.title = `Next: ${nextItem.title}`;
-    nextLink.style.visibility = 'visible';
-  } else {
-    nextLink.style.visibility = 'hidden';
+  // Prevent duplicate execution
+  if (document.querySelector('.back-to-map')) {
+    return;
   }
+
+  const newsletterCard = document.querySelector('.newsletter-card');
+  if (!newsletterCard) {
+    setTimeout(addBackToMapButton, 100);
+    return;
+  }
+
+  const backButton = document.createElement('a');
+  backButton.href = '../index.html';
+  backButton.className = 'back-to-map';
+  backButton.title = 'Back to Map';
+  backButton.textContent = 'Back to Map';
+
+  // Insert at the end of the newsletter card
+  newsletterCard.appendChild(backButton);
+}
+
+// Run immediately, but only once
+if (!navigationInitialized) {
+  navigationInitialized = true;
+  createStickyNavigation();
+  addBackToMapButton();
 }

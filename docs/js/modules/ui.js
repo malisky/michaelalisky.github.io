@@ -3,8 +3,22 @@
  * Handles UI interactions and improvements
  */
 
+// Track initialization to prevent duplicates
+let uiInitialized = false;
+
 function initScrollToTop() {
   const scrollTopButton = document.querySelector('.scroll-top');
+  
+  if (!scrollTopButton) {
+    setTimeout(initScrollToTop, 100);
+    return;
+  }
+
+  // Prevent duplicate event listeners
+  if (scrollTopButton.dataset.initialized) {
+    return;
+  }
+  scrollTopButton.dataset.initialized = 'true';
 
   window.addEventListener('scroll', () => {
     if (window.pageYOffset > 300) {
@@ -14,7 +28,7 @@ function initScrollToTop() {
     }
   });
 
-  scrollTopButton?.addEventListener('click', () => {
+  scrollTopButton.addEventListener('click', () => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
@@ -55,6 +69,12 @@ function initCardHoverTimeout() {
   const cards = document.querySelectorAll('.card');
 
   cards.forEach(card => {
+    // Prevent duplicate event listeners
+    if (card.dataset.hoverInitialized) {
+      return;
+    }
+    card.dataset.hoverInitialized = 'true';
+
     let hoverTimeout;
 
     card.addEventListener('mouseenter', () => {
@@ -70,9 +90,11 @@ function initCardHoverTimeout() {
   });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  initScrollToTop?.();
-  initActiveNavLinks?.();
-  fixNewsletterLinks?.();
+// Run immediately, but only once
+if (!uiInitialized) {
+  uiInitialized = true;
+  initScrollToTop();
+  initActiveNavLinks();
+  fixNewsletterLinks();
   initCardHoverTimeout();
-});
+}

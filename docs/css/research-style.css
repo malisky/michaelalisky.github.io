@@ -1,0 +1,93 @@
+/* Research page specific styles - completely separate system */
+
+/* Research list positioning */
+.research-list {
+  margin-top: -1rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+/* Research items */
+.research-item {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
+  transition: color 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.research-item:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Research link */
+.research-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+/* Research content */
+.research-content {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.research-item:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+/* News section */
+.news-section {
+  background: var(--toggle-bg);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.news-section h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  color: var(--header-color);
+}
+
+.news-section ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  list-style-type: disc;
+  font-size: 0.9rem;
+}
+
+.news-section li {
+  margin-bottom: 0.3rem;
+}
+
+/* News links */
+.news-section a {
+  color: var(--link-color);
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.news-section a:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
+
+/* Dark mode overrides for news links */
+body.dark-mode .news-section a {
+  color: #0ea5e9;
+}
+
+body.dark-mode .news-section a:hover {
+  color: #38bdf8;
+}
