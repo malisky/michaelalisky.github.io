@@ -47,9 +47,35 @@ function playMonkeySoundLayered() {
   }, 300);
 }
 
+function isMobileDevice() {
+  return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
 function initWordArt() {
   let allowWordArtSpam = false;
   let clickCount = 0;
+  let nightToggleCount = 0;
+  let lastTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+  let monsoonTriggered = false;
+
+  if (isMobileDevice()) {
+    // On mobile, disable click handler and use night mode toggle sequence
+    // Listen for dark mode toggle
+    const observer = new MutationObserver(() => {
+      const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+      if (currentTheme !== lastTheme) {
+        nightToggleCount++;
+        lastTheme = currentTheme;
+        if (nightToggleCount >= 6 && !monsoonTriggered) {
+          monsoonTriggered = true;
+          // Use a generic label for mobile
+          runMonsoon('monsoon', window.innerWidth);
+        }
+      }
+    });
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    return;
+  }
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'w' || e.key === 'W') allowWordArtSpam = true;

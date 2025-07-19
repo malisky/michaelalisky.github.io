@@ -50,7 +50,6 @@ function createNewsletterHead() {
   
   function loadScript(index) {
     if (index >= scripts.length) {
-      // All scripts loaded, WordArt will initialize automatically
       return;
     }
     
