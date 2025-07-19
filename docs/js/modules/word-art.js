@@ -241,7 +241,7 @@ function initWordArt() {
     animalDiv.className = 'animal-rainstorm';
     const randomAnimal = animalImages[Math.floor(Math.random() * animalImages.length)];
     const img = document.createElement('img');
-    img.src = `../images/animals/${randomAnimal}`;
+    img.src = `../images-optimized/animals/${randomAnimal}`;
     img.alt = randomAnimal.replace('.png', '');
     const randomX = Math.random() * screenWidth;
     const startY = -100;
