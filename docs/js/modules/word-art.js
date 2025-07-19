@@ -183,7 +183,7 @@ function initWordArt() {
     if (!lightning) {
       lightning = document.createElement('img');
       lightning.id = 'lightning-flash';
-      lightning.src = '../images/lightning.png';
+      lightning.src = '../images-optimized/lightning.png';
       lightning.style.position = 'fixed';
       lightning.style.top = '0';
       lightning.style.left = '0';
