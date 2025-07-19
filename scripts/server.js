@@ -37,9 +37,15 @@ findAvailablePort(8080).then(port => {
   };
   app.use(cors(corsOptions));
 
-  // Serve static files
+  // Serve static files with proper MIME types
   const staticDir = path.join(__dirname, '..', 'docs');
-  app.use(express.static(staticDir));
+  app.use(express.static(staticDir, {
+    setHeaders: (res, path) => {
+      if (path.endsWith('.js')) {
+        res.setHeader('Content-Type', 'text/javascript');
+      }
+    }
+  }));
 
   // Newsletter database file path
   const SUBSCRIBERS_FILE = path.join(__dirname, 'subscribers.json');
@@ -173,6 +179,8 @@ findAvailablePort(8080).then(port => {
   app.get('/', (req, res) => {
     res.sendFile(path.join(staticDir, 'index.html'));
   });
+
+
 
   // Handle all other routes by serving the corresponding HTML files
   app.get('*', (req, res) => {

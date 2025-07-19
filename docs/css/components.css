@@ -30,6 +30,11 @@ nav a:hover::after {
   width: 100%;
 }
 
+nav a:hover {
+  transform: translateY(-1px);
+  transition: transform 0.2s ease;
+}
+
 /* Dark mode navigation override */
 body.dark-mode nav a {
   color: #0ea5e9 !important;
@@ -65,9 +70,9 @@ footer .icon-group {
 }
 footer .icon-group:hover {
   background: rgba(255, 255, 255, 0.92);
-  transform: scale(1.08);
+  transform: scale(0.9);
   opacity: 1;
-  box-shadow: 0 6px 24px rgba(0,0,0,0.13);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
 }
 footer .icon-group img {
   width: 28px;
@@ -125,12 +130,28 @@ footer .icon-group a:hover img {
   margin-bottom: 2rem;
   overflow: hidden;
   border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center center;
 }
 
 .featured-image img {
   width: 100%;
   height: auto;
   display: block;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center center;
+}
+
+.featured-image:hover {
+  transform: scale(1.02);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+}
+
+.featured-image:hover img {
+  transform: scale(1.05);
 }
 
 /* Image Grid and Containers */
@@ -151,6 +172,8 @@ footer .icon-group a:hover img {
 .image-container img {
   width: 100%;
   height: auto;
+  max-height: 650px;
+  object-fit: cover;
   display: block;
   transition: transform 0.3s ease;
 }
@@ -180,6 +203,8 @@ footer .icon-group a:hover img {
   background: var(--card-bg);
   border-color: var(--link-color);
   color: var(--link-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* Scroll to top button */

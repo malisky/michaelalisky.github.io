@@ -21,6 +21,7 @@ function createNewsletterHead() {
     // CSS files
     { tag: 'link', attrs: { rel: 'stylesheet', href: '../css/style.css' } },
     { tag: 'link', attrs: { href: 'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&display=swap', rel: 'stylesheet' } },
+    { tag: 'link', attrs: { rel: 'stylesheet', href: '../css/wordart-rainstorm.css' } },
     
     // Favicon
     { tag: 'link', attrs: { href: '../images-optimized/favicon.svg', rel: 'icon', type: 'image/svg+xml' } }
@@ -43,11 +44,13 @@ function createNewsletterHead() {
     '../js/modules/navigation.js',
     '../js/modules/darkMode.js',
     '../js/modules/ui.js',
-    '../js/modules/footer.js'
+    '../js/modules/footer.js',
+    '../js/modules/word-art.js'
   ];
   
   function loadScript(index) {
     if (index >= scripts.length) {
+      // All scripts loaded, WordArt will initialize automatically
       return;
     }
     

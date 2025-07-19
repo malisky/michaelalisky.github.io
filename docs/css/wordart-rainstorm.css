@@ -1,0 +1,114 @@
+/* WordArt and Animal Rainstorm Effects */
+
+.wordart-banner {
+  position: fixed;
+  transform: translate(-50%, -50%) scale(1);
+  font-weight: bold;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+  opacity: 0;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.wordart-banner.rainstorm {
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
+}
+
+.wordart-banner.floaty {
+  animation: wordartFloat 2s ease-in-out infinite;
+}
+
+@keyframes wordartFadeInClick {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3) rotate(-15deg);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.2) rotate(5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+  }
+}
+
+@keyframes wordartFloat {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes wordartRainstorm {
+  0% {
+    opacity: 1;
+    top: -100px;
+    transform: translate(-50%, -50%) scale(var(--start-scale)) rotate(0deg);
+  }
+  100% {
+    top: 110vh;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(var(--scale)) rotate(var(--final-rotation, 90deg));
+    /* ease-in is handled by animation-timing-function */
+  }
+}
+
+.animal-rainstorm {
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
+}
+
+@keyframes animalRainstorm {
+  0% {
+    opacity: 1;
+    top: -100px;
+    transform: translate(-50%, -50%) scale(var(--scale)) rotate(0deg);
+  }
+  100% {
+    top: 110vh;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(var(--scale)) rotate(var(--final-rotation, 135deg));
+  }
+}
+
+/* For the new JS effect: */
+.wordart-rain-banner {
+  position: fixed;
+  top: 0;
+  font-weight: bold;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+  z-index: 9999;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  will-change: transform, top;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.wordart-rain-banner.settled {
+  opacity: 0.9;
+}
+
+.falling-animal {
+  pointer-events: none;
+  user-select: none;
+  transition: transform 0.2s ease;
+  animation: spinFall 3s linear infinite;
+}
+
+@keyframes spinFall {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.post-monsoon-fade {
+  transition: background-color 1s ease;
+} 
