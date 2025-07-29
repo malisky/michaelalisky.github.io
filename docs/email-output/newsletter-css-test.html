@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Newsletter CSS Test</title>
+  <style>
+body {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #fff;
+  color: #333;
+  line-height: 1.6;
+  font-size: 95%;
+  text-rendering: optimizeLegibility;
+}
+h1, h2, h3, h4, h5, h6 {
+  color: #374151;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+h1 { font-size: 2.4rem; margin-top: 2rem; }
+h2 { font-size: 1.8rem; margin-top: 1.5rem; }
+p { margin-bottom: 1.2rem; }
+a {
+  color: #0369a1;
+  text-decoration: none;
+}
+a:hover { color: #075985; }
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+.featured-image {
+  width: 100%;
+  margin-bottom: 2rem;
+  overflow: hidden;
+  border-radius: 12px;
+  position: relative;
+}
+.featured-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.image-container {
+  overflow: hidden;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #eaeaea;
+  margin-bottom: 1.5rem;
+}
+.image-grid .image-container { margin-bottom: 0; }
+.image-container img {
+  width: 100%;
+  height: auto;
+  max-height: 650px;
+  object-fit: cover;
+  display: block;
+}
+.poetry-quote {
+  background: #f0f0f0;
+  border-left: 4px solid #0369a1;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  position: relative;
+}
+.poetry-quote .chinese {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  color: #333;
+}
+.poetry-quote .translation {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+.poetry-quote cite {
+  font-size: 0.85rem;
+  color: #666;
+  font-style: normal;
+  display: block;
+  margin-top: 0.5rem;
+}
+@media (max-width: 768px) {
+  .image-grid { grid-template-columns: 1fr; }
+  .featured-image { margin-bottom: 1.5rem; }
+}
+  </style>
+</head>
+<body>
+  <h1>Newsletter CSS Test</h1>
+  <p>This is a test of the consolidated newsletter CSS. Below you'll see examples of all the main elements.</p>
+
+  <div class="featured-image">
+    <img src="https://placekitten.com/800/300" alt="Featured Kitten">
+  </div>
+
+  <div class="image-grid">
+    <div class="image-container">
+      <img src="https://placekitten.com/400/300" alt="Kitten 1">
+    </div>
+    <div class="image-container">
+      <img src="https://placekitten.com/401/300" alt="Kitten 2">
+    </div>
+    <div class="image-container">
+      <img src="https://placekitten.com/402/300" alt="Kitten 3">
+    </div>
+  </div>
+
+  <h2>Standalone Local Image</h2>
+  <img src="../images-optimized/turpan/desert.webp" alt="Desert Local Test" style="margin-bottom:2rem;">
+
+  <h2>Image Grid with Local Images</h2>
+  <div class="image-grid">
+    <div class="image-container">
+      <img src="../images-optimized/turpan/4wheel.webp" alt="4wheel">
+    </div>
+    <div class="image-container">
+      <img src="../images-optimized/turpan/grapes.webp" alt="Grapes">
+    </div>
+    <div class="image-container">
+      <img src="../images-optimized/turpan/jiaohe.webp" alt="Jiaohe">
+    </div>
+  </div>
+
+  <blockquote class="poetry-quote">
+    <div class="chinese">静夜思</div>
+    <div class="translation">Thoughts in the Silent Night</div>
+    <cite>Li Bai</cite>
+  </blockquote>
+
+  <p>Visit <a href="https://example.com">our website</a> for more info.</p>
+</body>
+</html> 

@@ -167,6 +167,11 @@ footer .icon-group a:hover img {
   border-radius: 8px;
   background: var(--card-bg);
   border: 1px solid var(--border-color);
+  margin-bottom: 1.5rem;
+}
+
+.image-grid .image-container {
+  margin-bottom: 0;
 }
 
 .image-container img {

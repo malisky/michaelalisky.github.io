@@ -46,6 +46,22 @@ body {
   color: var(--text-color);
   line-height: 1.6;
   font-size: 95%;
+  font-feature-settings: "liga" 1, "kern" 1;
+  text-rendering: optimizeLegibility;
+}
+
+/* Typography improvements */
+p, h1, h2, h3, h4, h5, h6, blockquote, cite {
+  quotes: """ """ "'" "'";
+}
+
+/* Ensure proper quote rendering */
+q::before {
+  content: open-quote;
+}
+
+q::after {
+  content: close-quote;
 }
 
 /* Base typography */

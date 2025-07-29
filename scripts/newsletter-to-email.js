@@ -1,267 +1,226 @@
 const fs = require('fs');
 const path = require('path');
-const cheerio = require('cheerio');
 const sharp = require('sharp');
 
 class NewsletterToEmail {
   constructor() {
-    this.newsletterDir = './docs/newsletter';
-    this.imagesDir = './docs/images';
-    this.outputDir = './email-output';
+    this.inputDir = './docs/newsletter';
+    this.outputDir = './docs/email-output';
+    this.imagesDir = './docs/images-optimized';
   }
 
-  // Convert a newsletter HTML file to email format
-  async convertNewsletterToEmail(newsletterFile) {
-    console.log(`Converting ${newsletterFile} to email format...`);
-    
-    try {
-      // Read the newsletter HTML file
-      const htmlPath = path.join(this.newsletterDir, newsletterFile);
-      const htmlContent = fs.readFileSync(htmlPath, 'utf8');
-      
-      // Parse HTML with cheerio
-      const $ = cheerio.load(htmlContent);
-      
-      // Inline CSS styles (adds <style> to <head>)
-      await this.inlineStyles($);
-      // Convert images to base64 (modifies <img> tags in $)
-      await this.convertImagesToBase64($);
-      
-      // Extract title
-      const title = $('title').text() || $('h1').first().text() || 'Newsletter';
-      // Extract main content (after images/styles are inlined)
-      const mainContent = this.extractMainContent($);
-      
-      // Generate email HTML
-      const emailHtml = this.generateEmailHtml($, title, mainContent);
-      
-      // Create output directory if it doesn't exist
-      if (!fs.existsSync(this.outputDir)) {
-        fs.mkdirSync(this.outputDir, { recursive: true });
-      }
-      
-      // Save the email HTML
-      const outputFile = path.join(this.outputDir, `${path.parse(newsletterFile).name}-email.html`);
-      fs.writeFileSync(outputFile, emailHtml);
-      
-      console.log(`✅ Email created: ${outputFile}`);
-      return outputFile;
-      
-    } catch (error) {
-      console.error(`❌ Error converting ${newsletterFile}:`, error.message);
-      throw error;
-    }
+  // Finalized CSS block for email
+  getEmailCss() {
+    return `
+<style>
+body {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #fff;
+  color: #333;
+  line-height: 1.6;
+  font-size: 95%;
+  text-rendering: optimizeLegibility;
+}
+h1, h2, h3, h4, h5, h6 {
+  color: #374151;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+h1 { font-size: 2.4rem; margin-top: 2rem; }
+h2 { font-size: 1.8rem; margin-top: 1.5rem; }
+p { margin-bottom: 1.2rem; }
+a {
+  color: #0369a1;
+  text-decoration: none;
+}
+a:hover { color: #075985; }
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+.featured-image {
+  width: 100%;
+  margin-bottom: 2rem;
+  overflow: hidden;
+  border-radius: 12px;
+  position: relative;
+}
+.featured-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.image-container {
+  overflow: hidden;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #eaeaea;
+  margin-bottom: 1.5rem;
+}
+.image-grid .image-container { margin-bottom: 0; }
+.image-container img {
+  width: 100%;
+  height: auto;
+  max-height: 650px;
+  object-fit: cover;
+  display: block;
+}
+.poetry-quote {
+  background: #f0f0f0;
+  border-left: 4px solid #0369a1;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  position: relative;
+}
+.poetry-quote .chinese {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  color: #333;
+}
+.poetry-quote .translation {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+.poetry-quote cite {
+  font-size: 0.85rem;
+  color: #666;
+  font-style: normal;
+  display: block;
+  margin-top: 0.5rem;
+}
+@media (max-width: 768px) {
+  .image-grid { grid-template-columns: 1fr; }
+  .featured-image { margin-bottom: 1.5rem; }
+}
+</style>
+`;
   }
 
-  // Extract the main content from the newsletter
-  extractMainContent($) {
-    // Remove navigation, footer, and other non-content elements
-    $('nav, footer, .sticky, .theme-transition, .scroll-top, script').remove();
-    
-    // Get the featured image if it exists
-    const featuredImage = $('.featured-image').html();
-    
-    // Find the main content area
-    let content = $('.newsletter-card, .card, main').html();
-    
-    if (!content) {
-      // Fallback: get body content without header
-      $('header').remove();
-      content = $('body').html();
-    }
-    
-    // Combine featured image with main content
-    let fullContent = '';
-    if (featuredImage) {
-      fullContent += `<div class="featured-image">${featuredImage}</div>`;
-    }
-    fullContent += content || 'No content found';
-    
-    return fullContent;
-  }
-
-  // Convert all images to base64 for email embedding
-  async convertImagesToBase64($) {
-    const imagePromises = [];
-    
-    $('img').each((index, element) => {
-      const $img = $(element);
-      const src = $img.attr('src');
-      
-      if (src && !src.startsWith('data:') && !src.startsWith('http')) {
-        imagePromises.push(this.convertImageToBase64($img, src));
-      }
+  // Replace <img src="..."> with <img src="cid:..."> and collect manifest
+  convertImagesToCid(html, imageManifest) {
+    let imgIndex = 1;
+    return html.replace(/<img\s+[^>]*src=["']([^"']+)["'][^>]*>/gi, (match, src) => {
+      // Only process local images (not http/https)
+      if (/^https?:\/\//.test(src)) return match;
+      const cid = `img${imgIndex}@newsletter`;
+      imageManifest.push({ src, cid });
+      imgIndex++;
+      return match.replace(src, `cid:${cid}`);
     });
-    
-    await Promise.all(imagePromises);
   }
 
-  // Convert a single image to base64
-  async convertImageToBase64($img, src) {
-    try {
-      // Handle relative paths
-      let imagePath = src;
-      if (src.startsWith('../')) {
-        imagePath = path.join(this.imagesDir, src.replace('../images/', ''));
-      } else if (src.startsWith('/')) {
-        imagePath = path.join(this.imagesDir, src.replace('/images/', ''));
-      } else {
-        imagePath = path.join(this.imagesDir, src);
-      }
-      
-      // Check if file exists
-      if (!fs.existsSync(imagePath)) {
-        console.warn(`⚠️  Image not found: ${imagePath}`);
-        return;
-      }
-      
-      // Get original image stats
-      const stats = fs.statSync(imagePath);
-      const originalSize = stats.size;
-      
-      // Process image with sharp
-      let processedBuffer;
-      try {
-        // Resize image to max 800px width/height while maintaining aspect ratio
-        // and compress to JPEG with 80% quality for better email compatibility
-        processedBuffer = await sharp(imagePath)
-          .resize(800, 800, { 
-            fit: 'inside', 
-            withoutEnlargement: true 
-          })
-          .jpeg({ quality: 80 })
-          .toBuffer();
-        
-        const newSize = processedBuffer.length;
-        console.log(`📸 Processed image: ${path.basename(imagePath)} - ${(originalSize/1024).toFixed(0)}KB → ${(newSize/1024).toFixed(0)}KB`);
-        
-        // Check if processed image is still too large (shouldn't happen with our settings)
-        if (newSize > 1024 * 1024) {
-          console.warn(`⚠️  Image still too large after processing: ${imagePath}`);
-          return;
-        }
-        
-      } catch (sharpError) {
-        console.warn(`⚠️  Could not process image with sharp: ${imagePath}`, sharpError.message);
-        // Fallback: try to use original image if it's small enough
-        if (originalSize <= 1024 * 1024) {
-          processedBuffer = fs.readFileSync(imagePath);
-        } else {
-          console.warn(`⚠️  Skipping large image: ${imagePath}`);
-          return;
-        }
-      }
-      
-      // Convert to base64
-      const base64 = processedBuffer.toString('base64');
-      const mimeType = 'image/jpeg'; // We always convert to JPEG for consistency
-      
-      // Update image src to base64
-      $img.attr('src', `data:${mimeType};base64,${base64}`);
-      
-    } catch (error) {
-      console.warn(`⚠️  Could not convert image ${src}:`, error.message);
+  // Insert CSS into <head>
+  insertCssIntoHead(html, cssBlock) {
+    return html.replace(/<head>/i, `<head>\n${cssBlock}`);
+  }
+
+  async convertSingleNewsletter(filename) {
+    if (!filename || !filename.endsWith('.html')) {
+      console.error('❌ Please provide a valid HTML filename (e.g., "newsletter.html")');
+      return;
     }
+    const inputPath = path.join(this.inputDir, filename);
+    if (!fs.existsSync(inputPath)) {
+      console.error(`❌ Newsletter file not found: ${inputPath}`);
+      return;
+    }
+    if (!fs.existsSync(this.outputDir)) {
+      fs.mkdirSync(this.outputDir, { recursive: true });
+    }
+    const html = fs.readFileSync(inputPath, 'utf8');
+    const imageManifest = [];
+    let convertedHtml = this.convertImagesToCid(html, imageManifest);
+    convertedHtml = this.insertCssIntoHead(convertedHtml, this.getEmailCss());
+    const outputFileName = filename.replace('.html', '-email.html');
+    const outputPath = path.join(this.outputDir, outputFileName);
+    fs.writeFileSync(outputPath, convertedHtml);
+    // Write manifest for email sender
+    const manifestPath = outputPath.replace('.html', '-images.json');
+    fs.writeFileSync(manifestPath, JSON.stringify(imageManifest, null, 2));
+    console.log(`✅ Converted and saved: ${outputFileName}`);
+    console.log(`📝 Image manifest saved: ${path.basename(manifestPath)}`);
   }
 
-  // Get MIME type from file extension
-  getMimeType(ext) {
-    const mimeTypes = {
-      '.jpg': 'image/jpeg',
-      '.jpeg': 'image/jpeg',
-      '.png': 'image/png',
-      '.gif': 'image/gif',
-      '.svg': 'image/svg+xml',
-      '.webp': 'image/webp'
-    };
-    return mimeTypes[ext] || 'image/jpeg';
-  }
-
-  // Inline CSS styles for email compatibility
-  async inlineStyles($) {
-    // Remove external stylesheets and scripts
-    $('link[rel="stylesheet"], script').remove();
-    // Remove any existing <style> tags
-    $('style').remove();
-    // Add basic email-compatible styles as a <style> tag in <head>
-    const emailStyles = `body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; } h1, h2, h3 { color: #2c3e50; } .image-container { margin: 20px 0; text-align: center; } .image-container img { max-width: 100%; height: auto; border-radius: 8px; } .image-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0; } .image-grid .image-container { flex: 1; min-width: 200px; } a { color: #3498db; text-decoration: none; } a:hover { text-decoration: underline; } .newsletter-card, .card { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); } .featured-image { margin-bottom: 20px; } .featured-image img { width: 100%; height: auto; border-radius: 8px; } .newsletter-navigation { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; } .back-to-map { display: inline-block; padding: 10px 20px; background: #3498db; color: white; text-decoration: none; border-radius: 5px; }`;
-    $('head').append(`<style>${emailStyles}</style>`);
-  }
-
-  // Generate the final email HTML
-  generateEmailHtml($, title, content) {
-    // Get the <style> tag as HTML (not just the CSS text)
-    const styleTag = $('head style').toString() || '';
+  async convertImagesToBase64(html) {
+    const imgRegex = /<img\s+[^>]*src=["']([^"']+)["'][^>]*>/gi;
+    let result = html;
+    let match;
     
-    // Fix the Map button link in the content
-    const fixedContent = content.replace(
-      /href="\.\.\/index\.html"/g, 
-      'href="https://www.michaelalisky.com"'
-    );
-    
-    // Create a clean email structure
-    const emailHtml = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${title}</title>
-  ${styleTag}
-</head>
-<body>
-  <div class="email-container">
-    <header>
-      <h1>${title}</h1>
-    </header>
-    
-    <main>
-      ${fixedContent}
-    </main>
-  </div>
-</body>
-</html>`;
-    return emailHtml;
-  }
-
-  // Convert all newsletters in the directory
-  async convertAllNewsletters() {
-    try {
-      const files = fs.readdirSync(this.newsletterDir);
-      const htmlFiles = files.filter(file => file.endsWith('.html') && file !== 'template.html');
-      
-      console.log(`Found ${htmlFiles.length} newsletters to convert...`);
-      
-      for (const file of htmlFiles) {
-        await this.convertNewsletterToEmail(file);
+    while ((match = imgRegex.exec(html)) !== null) {
+      const fullMatch = match[0];
+      const src = match[1];
+      const base64Image = await this.convertImageToBase64(src);
+      if (base64Image) {
+        result = result.replace(fullMatch, fullMatch.replace(src, base64Image));
       }
-      
-      console.log('✅ All newsletters converted successfully!');
-      
+    }
+    
+    return result;
+  }
+
+  async convertImageToBase64(src) {
+    let imagePath;
+
+    if (src.startsWith('../images-optimized/')) {
+      imagePath = path.resolve(src.replace('../images-optimized', this.imagesDir));
+    } else if (src.startsWith('/images-optimized/')) {
+      imagePath = path.resolve(src.replace('/images-optimized', this.imagesDir));
+    } else {
+      imagePath = path.resolve(this.imagesDir, src);
+    }
+
+    console.warn(`🔍 Attempting to resolve image tag with src="${src}", resolved to "${imagePath}"`);
+
+    if (!fs.existsSync(imagePath)) {
+      console.warn(`⚠️ Skipping image tag with src="${src}", resolved to "${imagePath}" (file not found)`);
+      return;
+    }
+
+    try {
+      const imageBuffer = fs.readFileSync(imagePath);
+
+      // Convert to JPEG using sharp for better email compatibility
+      const jpegBuffer = await sharp(imageBuffer)
+        .jpeg({ quality: 85 })
+        .toBuffer();
+
+      const base64Image = jpegBuffer.toString('base64');
+      const mimeType = 'image/jpeg';
+
+      return `data:${mimeType};base64,${base64Image}`;
     } catch (error) {
-      console.error('❌ Error converting newsletters:', error.message);
-      throw error;
+      console.error(`❌ Error converting image at ${imagePath}:`, error.message);
+      return;
     }
   }
 }
 
-// Main execution
-async function main() {
+// Run the script if executed directly
+if (require.main === module) {
   const converter = new NewsletterToEmail();
   
-  // Check if a specific file was provided as command line argument
-  const specificFile = process.argv[2];
+  // Get filename from command line arguments
+  const filename = process.argv[2];
   
-  if (specificFile) {
-    await converter.convertNewsletterToEmail(specificFile);
+  if (filename) {
+    converter.convertSingleNewsletter(filename).catch(console.error);
   } else {
-    await converter.convertAllNewsletters();
+    console.log('Usage: node newsletter-to-email.js <filename.html>');
+    console.log('Example: node newsletter-to-email.js kazakhstan.html');
   }
 }
 
-// Run the program
-if (require.main === module) {
-  main().catch(console.error);
-}
-
-module.exports = NewsletterToEmail; 
+module.exports = NewsletterToEmail;

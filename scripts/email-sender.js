@@ -5,7 +5,7 @@ const nodemailer = require('nodemailer');
 
 class EmailSender {
   constructor() {
-    this.emailOutputDir = './email-output';
+    this.emailOutputDir = './docs/email-output';
     this.subscribersFile = './subscribers.json';
   }
 
@@ -13,46 +13,35 @@ class EmailSender {
   createGmailTransporter() {
     console.log('Setting up Gmail SMTP...');
     
-    // You'll need to create an "App Password" in your Gmail account
-    // Go to Google Account > Security > 2-Step Verification > App passwords
+    const gmailUser = process.env.GMAIL_USER;
+    const gmailPassword = process.env.GMAIL_APP_PASSWORD;
+    
+    if (!gmailUser || !gmailPassword) {
+      console.error('❌ Missing Gmail credentials!');
+      console.error('Please set up your environment variables:');
+      console.error('1. Create a .env file in your project root');
+      console.error('2. Add the following lines:');
+      console.error('   GMAIL_USER=your-email@gmail.com');
+      console.error('   GMAIL_APP_PASSWORD=your-app-password');
+      console.error('');
+      console.error('To get an App Password:');
+      console.error('1. Go to Google Account > Security > 2-Step Verification');
+      console.error('2. Generate an App Password for this application');
+      throw new Error('Missing Gmail credentials');
+    }
+    
+    console.log(`📧 Using Gmail account: ${gmailUser}`);
+    
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: process.env.GMAIL_USER || 'your-email@gmail.com',
-        pass: process.env.GMAIL_APP_PASSWORD || 'your-app-password'
-      }
-    });
-
-    return transporter;
-  }
-
-  // Create a transporter using Outlook/Hotmail
-  createOutlookTransporter() {
-    console.log('Setting up Outlook SMTP...');
-    
-    const transporter = nodemailer.createTransport({
-      service: 'outlook',
-      auth: {
-        user: process.env.OUTLOOK_USER || 'your-email@outlook.com',
-        pass: process.env.OUTLOOK_PASSWORD || 'your-password'
-      }
-    });
-
-    return transporter;
-  }
-
-  // Create a transporter using SendGrid (paid service)
-  createSendGridTransporter() {
-    console.log('Setting up SendGrid SMTP...');
-    
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.sendgrid.net',
-      port: 587,
-      secure: false,
-      auth: {
-        user: 'apikey', // This is always 'apikey' for SendGrid
-        pass: process.env.SENDGRID_API_KEY || 'your-sendgrid-api-key'
-      }
+        user: gmailUser,
+        pass: gmailPassword
+      },
+      // Add timeout to prevent hanging
+      connectionTimeout: 10000, // 10 seconds
+      greetingTimeout: 10000,   // 10 seconds
+      socketTimeout: 10000      // 10 seconds
     });
 
     return transporter;
@@ -98,51 +87,82 @@ class EmailSender {
     }
   }
 
-  // Send newsletter to all subscribers
+  // Load image manifest for inline attachments
+  loadImageManifest(emailFile) {
+    const manifestFile = path.join(this.emailOutputDir, emailFile.replace('.html', '-images.json'));
+    if (!fs.existsSync(manifestFile)) return [];
+    try {
+      return JSON.parse(fs.readFileSync(manifestFile, 'utf8'));
+    } catch (e) {
+      console.error('Error reading image manifest:', e.message);
+      return [];
+    }
+  }
+
+  // Prepare attachments for nodemailer
+  prepareAttachments(imageManifest) {
+    return imageManifest.map(img => {
+      // img.src is relative to docs/images-optimized or already relative
+      let imagePath = img.src;
+      if (imagePath.startsWith('../images-optimized/')) {
+        imagePath = path.resolve('docs/images-optimized', imagePath.replace('../images-optimized/', ''));
+      } else if (imagePath.startsWith('/images-optimized/')) {
+        imagePath = path.resolve('docs/images-optimized', imagePath.replace('/images-optimized/', ''));
+      } else {
+        imagePath = path.resolve('docs/images-optimized', imagePath);
+      }
+      return {
+        filename: path.basename(imagePath),
+        path: imagePath,
+        cid: img.cid
+      };
+    });
+  }
+
+  // Send newsletter to all subscribers using BCC, with inline image attachments
   async sendNewsletter(transporter, emailFile, subject, fromName = 'Michael Alisky') {
     console.log(`📧 Sending newsletter: ${emailFile}`);
-    
     try {
       const subscribers = this.loadSubscribers();
       const emailContent = this.loadEmailContent(emailFile);
-      
-      if (subscribers.subscribers.length === 0) {
-        console.log('⚠️  No subscribers found. Please add subscribers to subscribers.json');
-        return;
-      }
-
-      console.log(`📬 Sending to ${subscribers.subscribers.length} subscribers...`);
-
-      // Send to each subscriber
-      for (const subscriber of subscribers.subscribers) {
-        await this.sendToSubscriber(transporter, subscriber, emailContent, subject, fromName);
-        
-        // Small delay to avoid overwhelming the SMTP server
-        await new Promise(resolve => setTimeout(resolve, 1000));
-      }
-
-      console.log('✅ Newsletter sent successfully!');
-
+      const imageManifest = this.loadImageManifest(emailFile);
+      const attachments = this.prepareAttachments(imageManifest);
+      console.log(`📬 Sending to ${subscribers.subscribers.length} subscribers via BCC...`);
+      const bccEmails = subscribers.subscribers.map(sub => sub.email);
+      const mailOptions = {
+        from: `"${fromName}" <${transporter.options.auth.user}>`,
+        to: 'mdalisky7@gmail.com',
+        bcc: bccEmails,
+        subject: subject,
+        html: emailContent,
+        text: this.htmlToText(emailContent),
+        attachments
+      };
+      const info = await transporter.sendMail(mailOptions);
+      console.log(`✅ Newsletter sent successfully! Message ID: ${info.messageId}`);
+      console.log(`📬 Sent to ${bccEmails.length} subscribers via BCC`);
     } catch (error) {
       console.error('❌ Error sending newsletter:', error.message);
       throw error;
     }
   }
 
-  // Send email to a single subscriber
-  async sendToSubscriber(transporter, subscriber, emailContent, subject, fromName) {
+  // Send email to a single subscriber (with inline image attachments)
+  async sendToSubscriber(transporter, subscriber, emailFile, subject, fromName) {
     try {
+      const emailContent = this.loadEmailContent(emailFile);
+      const imageManifest = this.loadImageManifest(emailFile);
+      const attachments = this.prepareAttachments(imageManifest);
       const mailOptions = {
         from: `"${fromName}" <${transporter.options.auth.user}>`,
         to: subscriber.email,
         subject: subject,
         html: emailContent,
-        text: this.htmlToText(emailContent) // Fallback for text-only email clients
+        text: this.htmlToText(emailContent),
+        attachments
       };
-
       const info = await transporter.sendMail(mailOptions);
       console.log(`✅ Sent to ${subscriber.email}: ${info.messageId}`);
-
     } catch (error) {
       console.error(`❌ Failed to send to ${subscriber.email}:`, error.message);
     }
@@ -258,7 +278,7 @@ Setup:
           await sender.sendToSubscriber(
             emailTransporter,
             { email: testEmail, name: testEmail.split('@')[0] },
-            sender.loadEmailContent(emailFile),
+            emailFile,
             subject
           );
         } else {

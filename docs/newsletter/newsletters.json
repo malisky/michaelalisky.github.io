@@ -158,5 +158,15 @@
     "location": { "lat": 36.97374, "lng": 75.2973 },
     "location_name": "Khunjerab Pass, China",
     "countryGroup": "China"
+  },
+  {
+    "id": "turpan",
+    "title": "July 6: Turbulence in Turpan",
+    "date": "2025-07-06",
+    "image": "/images-optimized/turpan/desert.webp",
+    "link": "/newsletter/turpan.html",
+    "location": { "lat": 42.9476, "lng": 89.1783 },
+    "location_name": "Jiaohe Ruins, Turpan, China",
+    "countryGroup": "China"
   }
 ]
