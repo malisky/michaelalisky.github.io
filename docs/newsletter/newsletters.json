@@ -168,5 +168,25 @@
     "location": { "lat": 42.9476, "lng": 89.1783 },
     "location_name": "Jiaohe Ruins, Turpan, China",
     "countryGroup": "China"
+  },
+  {
+    "id": "ili",
+    "title": "July 9: Slightly “Ili”-egal Activities",
+    "date": "2025-07-09",
+    "image": "/images-optimized/ili/ili-lavenders.webp",
+    "link": "/newsletter/ili.html",
+    "location": { "lat": 44.056, "lng": 80.879 },
+    "location_name": "Lavender Fields Ruins, Huocheng, China",
+    "countryGroup": "China"
+  },
+  {
+    "id": "shaolin",
+    "title": "July 22: Shaolin (Poor Kids)",
+    "date": "2025-07-22",
+    "image": "/images-optimized/shaolin/shaolin.webp",
+    "link": "/newsletter/shaolin.html",
+    "location": { "lat": 34.500, "lng": 112.909 },
+    "location_name": "Shaolin Temple, Henan, China",
+    "countryGroup": "China"
   }
 ]

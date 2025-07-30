@@ -1,3 +1,4 @@
+// Refactored newsletter-to-email.js
 const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
@@ -9,218 +10,179 @@ class NewsletterToEmail {
     this.imagesDir = './docs/images-optimized';
   }
 
-  // Finalized CSS block for email
   getEmailCss() {
     return `
 <style>
 body {
-  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   background-color: #fff;
   color: #333;
+  font-size: 100%;
   line-height: 1.6;
-  font-size: 95%;
-  text-rendering: optimizeLegibility;
+}
+@media screen and (min-width: 600px) {
+  body {
+    font-size: 115%;
+  }
 }
 h1, h2, h3, h4, h5, h6 {
   color: #374151;
-  margin-bottom: 1rem;
   font-weight: 600;
   line-height: 1.2;
+  margin-bottom: 1rem;
 }
 h1 { font-size: 2.4rem; margin-top: 2rem; }
 h2 { font-size: 1.8rem; margin-top: 1.5rem; }
 p { margin-bottom: 1.2rem; }
-a {
-  color: #0369a1;
-  text-decoration: none;
-}
+a { color: #0369a1; text-decoration: none; }
 a:hover { color: #075985; }
 img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-.featured-image {
-  width: 100%;
-  margin-bottom: 2rem;
-  overflow: hidden;
-  border-radius: 12px;
-  position: relative;
-}
-.featured-image img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-.image-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1rem;
-  margin: 1.5rem 0;
-}
-.image-container {
-  overflow: hidden;
   border-radius: 8px;
-  background: #fff;
-  border: 1px solid #eaeaea;
-  margin-bottom: 1.5rem;
 }
-.image-grid .image-container { margin-bottom: 0; }
-.image-container img {
-  width: 100%;
-  height: auto;
-  max-height: 650px;
-  object-fit: cover;
-  display: block;
-}
-.poetry-quote {
-  background: #f0f0f0;
-  border-left: 4px solid #0369a1;
-  padding: 1.5rem;
-  margin: 2rem 0;
-  border-radius: 0 8px 8px 0;
-  font-style: italic;
-  position: relative;
-}
-.poetry-quote .chinese {
-  font-size: 1.1rem;
-  line-height: 1.8;
-  margin-bottom: 1rem;
-  color: #333;
-}
-.poetry-quote .translation {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: #666;
-  margin-bottom: 0.5rem;
-}
-.poetry-quote cite {
-  font-size: 0.85rem;
-  color: #666;
-  font-style: normal;
-  display: block;
-  margin-top: 0.5rem;
-}
-@media (max-width: 768px) {
-  .image-grid { grid-template-columns: 1fr; }
-  .featured-image { margin-bottom: 1.5rem; }
-}
-</style>
-`;
+</style>`;
   }
 
-  // Replace <img src="..."> with <img src="cid:..."> and collect manifest
-  convertImagesToCid(html, imageManifest) {
-    let imgIndex = 1;
+  convertImagesToCid(html, imageManifest, startIndex = 1) {
+    let imgIndex = startIndex;
     return html.replace(/<img\s+[^>]*src=["']([^"']+)["'][^>]*>/gi, (match, src) => {
-      // Only process local images (not http/https)
       if (/^https?:\/\//.test(src)) return match;
       const cid = `img${imgIndex}@newsletter`;
       imageManifest.push({ src, cid });
       imgIndex++;
-      return match.replace(src, `cid:${cid}`);
+      return match.replace(src, `cid:${cid}`).replace('<img', '<img style="width:100%;height:auto;display:block;border-radius:8px;"');
     });
   }
 
-  // Insert CSS into <head>
+  appendWebsiteLink(html) {
+    const pattern = /(Until next time,[^<]*)<\/p>/i;
+    if (pattern.test(html)) {
+      return html.replace(pattern, `$1<br><a href="https://michaelalisky.com" style="color: #0369a1;">https://michaelalisky.com</a></p>`);
+    } else {
+      return html + `<p><a href="https://michaelalisky.com" style="color: #0369a1;">https://michaelalisky.com</a></p>`;
+    }
+  }
+
+  replaceImageGridsWithTables(html) {
+    return html.replace(/<div class="image-grid">([\s\S]*?)<\/div>/gi, (match, inner) => {
+      const imageTags = inner.match(/<img[^>]+>/g);
+      if (!imageTags || imageTags.length === 0) return match;
+
+      let tableRows = '<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>';
+      for (let i = 0; i < imageTags.length; i++) {
+        tableRows += `<td width="50%" style="padding: 0 5px 10px 0;">${imageTags[i]}</td>`;
+        if (i % 2 === 1 && i !== imageTags.length - 1) tableRows += '</tr><tr>';
+      }
+      tableRows += '</tr></table>';
+      return tableRows;
+    });
+  }
+
+  extractFeaturedImageBlock(html) {
+    const match = html.match(/<div class="featured-image">[\s\S]*?<\/div>/i);
+    return match ? match[0] : '';
+  }
+
+  removeFeaturedImageBlock(html) {
+    return html.replace(/<div class="featured-image">[\s\S]*?<\/div>/i, '');
+  }
+
+  extractTitleBlock(html) {
+    const match = html.match(/<h1[\s\S]*?<\/h1>/i);
+    return match ? match[0] : '';
+  }
+
+  removeTitleBlock(html) {
+    return html.replace(/<h1[\s\S]*?<\/h1>/i, '');
+  }
+
+  wrapInCenteredTable(content) {
+    return `
+<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center">
+  <tr>
+    <td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto;">
+        <tr>
+          <td>
+            ${content}
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+`;
+  }
+
+  wrapFeaturedBlock(content) {
+    return `
+<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center" style="margin-bottom: 2rem;">
+  <tr>
+    <td align="center">
+      <table width="640" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto;">
+        <tr>
+          <td>
+            ${content}
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+`;
+  }
+
   insertCssIntoHead(html, cssBlock) {
     return html.replace(/<head>/i, `<head>\n${cssBlock}`);
   }
 
   async convertSingleNewsletter(filename) {
     if (!filename || !filename.endsWith('.html')) {
-      console.error('❌ Please provide a valid HTML filename (e.g., "newsletter.html")');
+      console.error('❌ Please provide a valid HTML filename');
       return;
     }
+
     const inputPath = path.join(this.inputDir, filename);
     if (!fs.existsSync(inputPath)) {
-      console.error(`❌ Newsletter file not found: ${inputPath}`);
+      console.error(`❌ File not found: ${inputPath}`);
       return;
     }
-    if (!fs.existsSync(this.outputDir)) {
-      fs.mkdirSync(this.outputDir, { recursive: true });
-    }
-    const html = fs.readFileSync(inputPath, 'utf8');
+
+    const rawHtml = fs.readFileSync(inputPath, 'utf8');
     const imageManifest = [];
-    let convertedHtml = this.convertImagesToCid(html, imageManifest);
+
+    const titleBlock = this.extractTitleBlock(rawHtml);
+    const featuredImageBlock = this.extractFeaturedImageBlock(rawHtml);
+    let body = this.removeTitleBlock(this.removeFeaturedImageBlock(rawHtml));
+
+    let titleHtml = this.convertImagesToCid(titleBlock, imageManifest);
+    let featuredHtml = this.convertImagesToCid(featuredImageBlock, imageManifest, imageManifest.length + 1);
+
+    let convertedHtml = this.convertImagesToCid(body, imageManifest, imageManifest.length + 1);
+    convertedHtml = this.appendWebsiteLink(convertedHtml);
+    convertedHtml = this.replaceImageGridsWithTables(convertedHtml);
+    convertedHtml = this.wrapInCenteredTable(convertedHtml);
+
+    const wrappedHeader = this.wrapFeaturedBlock(titleHtml + featuredHtml);
+    convertedHtml = wrappedHeader + convertedHtml;
     convertedHtml = this.insertCssIntoHead(convertedHtml, this.getEmailCss());
+
     const outputFileName = filename.replace('.html', '-email.html');
     const outputPath = path.join(this.outputDir, outputFileName);
+    if (!fs.existsSync(this.outputDir)) fs.mkdirSync(this.outputDir, { recursive: true });
     fs.writeFileSync(outputPath, convertedHtml);
-    // Write manifest for email sender
+
     const manifestPath = outputPath.replace('.html', '-images.json');
     fs.writeFileSync(manifestPath, JSON.stringify(imageManifest, null, 2));
-    console.log(`✅ Converted and saved: ${outputFileName}`);
-    console.log(`📝 Image manifest saved: ${path.basename(manifestPath)}`);
-  }
-
-  async convertImagesToBase64(html) {
-    const imgRegex = /<img\s+[^>]*src=["']([^"']+)["'][^>]*>/gi;
-    let result = html;
-    let match;
-    
-    while ((match = imgRegex.exec(html)) !== null) {
-      const fullMatch = match[0];
-      const src = match[1];
-      const base64Image = await this.convertImageToBase64(src);
-      if (base64Image) {
-        result = result.replace(fullMatch, fullMatch.replace(src, base64Image));
-      }
-    }
-    
-    return result;
-  }
-
-  async convertImageToBase64(src) {
-    let imagePath;
-
-    if (src.startsWith('../images-optimized/')) {
-      imagePath = path.resolve(src.replace('../images-optimized', this.imagesDir));
-    } else if (src.startsWith('/images-optimized/')) {
-      imagePath = path.resolve(src.replace('/images-optimized', this.imagesDir));
-    } else {
-      imagePath = path.resolve(this.imagesDir, src);
-    }
-
-    console.warn(`🔍 Attempting to resolve image tag with src="${src}", resolved to "${imagePath}"`);
-
-    if (!fs.existsSync(imagePath)) {
-      console.warn(`⚠️ Skipping image tag with src="${src}", resolved to "${imagePath}" (file not found)`);
-      return;
-    }
-
-    try {
-      const imageBuffer = fs.readFileSync(imagePath);
-
-      // Convert to JPEG using sharp for better email compatibility
-      const jpegBuffer = await sharp(imageBuffer)
-        .jpeg({ quality: 85 })
-        .toBuffer();
-
-      const base64Image = jpegBuffer.toString('base64');
-      const mimeType = 'image/jpeg';
-
-      return `data:${mimeType};base64,${base64Image}`;
-    } catch (error) {
-      console.error(`❌ Error converting image at ${imagePath}:`, error.message);
-      return;
-    }
+    console.log(`✅ Saved: ${outputFileName}`);
+    console.log(`📝 Manifest: ${path.basename(manifestPath)}`);
   }
 }
 
-// Run the script if executed directly
 if (require.main === module) {
   const converter = new NewsletterToEmail();
-  
-  // Get filename from command line arguments
   const filename = process.argv[2];
-  
-  if (filename) {
-    converter.convertSingleNewsletter(filename).catch(console.error);
-  } else {
-    console.log('Usage: node newsletter-to-email.js <filename.html>');
-    console.log('Example: node newsletter-to-email.js kazakhstan.html');
-  }
+  if (filename) converter.convertSingleNewsletter(filename).catch(console.error);
+  else console.log('Usage: node newsletter-to-email.js <filename.html>');
 }
 
 module.exports = NewsletterToEmail;

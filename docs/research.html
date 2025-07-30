@@ -59,15 +59,15 @@
   </div>
   
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      document.querySelectorAll(".research-item").forEach(item => {
-        item.addEventListener("click", event => {
-          if (!event.target.closest("a")) {
-            const url = item.getAttribute("data-url");
-            if (url) window.open(url, "_blank");
+    document.addEventListener(<q>DOMContentLoaded</q>, () => {
+      document.querySelectorAll(<q>.research-item</q>).forEach(item => {
+        item.addEventListener(<q>click</q>, event => {
+          if (!event.target.closest("a<q>)) {
+            const url = item.getAttribute(</q>data-url<q>);
+            if (url) window.open(url, </q>_blank<q>);
           }
         });
-        item.style.cursor = "pointer";
+        item.style.cursor = </q>pointer";
       });
     });
   </script>

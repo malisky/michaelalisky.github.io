@@ -1,0 +1,38 @@
+[
+  {
+    "src": "../images-optimized/baden/baden1.webp",
+    "cid": "img1@newsletter"
+  },
+  {
+    "src": "../images-optimized/baden/baden2.webp",
+    "cid": "img2@newsletter"
+  },
+  {
+    "src": "../images-optimized/baden/baden3.webp",
+    "cid": "img3@newsletter"
+  },
+  {
+    "src": "../images-optimized/baden/baden-dinner.webp",
+    "cid": "img4@newsletter"
+  },
+  {
+    "src": "../images-optimized/baden/rathaus.webp",
+    "cid": "img5@newsletter"
+  },
+  {
+    "src": "../images-optimized/baden/rathaus-outside.webp",
+    "cid": "img6@newsletter"
+  },
+  {
+    "src": "../images-optimized/baden/belvedere.webp",
+    "cid": "img7@newsletter"
+  },
+  {
+    "src": "../images-optimized/baden/vultures.webp",
+    "cid": "img8@newsletter"
+  },
+  {
+    "src": "../images-optimized/baden/ivan.webp",
+    "cid": "img9@newsletter"
+  }
+]

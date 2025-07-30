@@ -1,0 +1,78 @@
+[
+  {
+    "src": "../images-optimized/shaolin/shaolin.webp",
+    "cid": "img1@newsletter"
+  },
+  {
+    "src": "../images-optimized/shaolin/shaolin1-g.webp",
+    "cid": "img2@newsletter"
+  },
+  {
+    "src": "../images-optimized/shaolin/shaolin2-g.webp",
+    "cid": "img3@newsletter"
+  },
+  {
+    "src": "../images-optimized/shaolin/kids-training-g.webp",
+    "cid": "img4@newsletter"
+  },
+  {
+    "src": "../images-optimized/shaolin/kids-training2-g.webp",
+    "cid": "img5@newsletter"
+  },
+  {
+    "src": "../images-optimized/shaolin/stretchy-kid-g.webp",
+    "cid": "img6@newsletter"
+  },
+  {
+    "src": "../images-optimized/shaolin/stretchy-kid-g2.webp",
+    "cid": "img7@newsletter"
+  },
+  {
+    "src": "../images-optimized/shaolin/kungfu-performance.webp",
+    "cid": "img8@newsletter"
+  },
+  {
+    "src": "../images-optimized/shaolin/pagoda-forest.webp",
+    "cid": "img9@newsletter"
+  },
+  {
+    "src": "../images-optimized/shaolin/dr-sun-hike-g.webp",
+    "cid": "img10@newsletter"
+  },
+  {
+    "src": "../images-optimized/shaolin/dharma-cave-g.webp",
+    "cid": "img11@newsletter"
+  },
+  {
+    "src": "../images-optimized/shaolin/hike-1-g.webp",
+    "cid": "img12@newsletter"
+  },
+  {
+    "src": "../images-optimized/shaolin/hike2-g.webp",
+    "cid": "img13@newsletter"
+  },
+  {
+    "src": "../images-optimized/shaolin/zhongyue.webp",
+    "cid": "img14@newsletter"
+  },
+  {
+    "src": "../images-optimized/shaolin/dharma-summit.webp",
+    "cid": "img15@newsletter"
+  },
+  {
+    "src": "../images-optimized/shaolin/zhongyue-tree-g.webp",
+    "cid": "img16@newsletter"
+  },
+  {
+    "src": "../images-optimized/shaolin/zhongyue-policy.webp",
+    "cid": "img17@newsletter"
+  },
+  {
+    "src": "../images-optimized/shaolin/zhongyue-deer-g.webp",
+    "cid": "img18@newsletter"
+  },
+  {
+    "src": "../images-optimized/shaolin/zhongyue-dog-g.webp",
+    "cid": "img19@newsletter"
+  }
+]

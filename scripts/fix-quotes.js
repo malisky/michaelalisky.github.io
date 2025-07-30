@@ -23,9 +23,6 @@ function replaceQuotesWithQTags(content) {
     // Replace double quotes that are likely actual quotes
     text = text.replace(/"([^"]{2,})"/g, '<q>$1</q>');
     
-    // Replace single quotes that are likely actual quotes
-    text = text.replace(/'([^']{2,})'/g, '<q>$1</q>');
-    
     parts[i] = text;
   }
   
