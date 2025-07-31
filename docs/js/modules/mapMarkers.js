@@ -236,7 +236,7 @@ export function initMapMarkers(map) {
       console.log('Newsletter data loaded:', data);
       
       // Define favorite IDs
-      const favoriteIds = ["ili"];
+      const favoriteIds = [];
       
       // Create all markers first
       const markers = [];
