@@ -277,9 +277,8 @@ async function main() {
 🖼️  Image Optimizer
 
 Usage:
-  node optimize-images.js optimize              # Optimize all folders and update HTML
-  node optimize-images.js optimize-folder <folder-name> # Optimize images in a specific folder
-  node optimize-images.js update-html           # Update HTML files only
+  node optimize-images.js scripts/optimize              # Optimize all folders and update HTML
+  node optimize-images.js scripts/optimize-folder <folder-name> # Optimize images in a specific folder
 
 This will:
 1. Create optimized WebP versions of all images
